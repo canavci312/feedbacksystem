@@ -1,0 +1,22 @@
+name: fms_api
+description: Services that app uses
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+dependencies:
+    dio: ^4.0.6
+    json_annotation: ^4.5.0
+    pretty_dio_logger: ^1.1.1
+    flutter_secure_storage: ^5.0.2
+    logger: ^1.1.0
+    fresh_dio: ^0.3.2
+dev_dependencies:
+  json_serializable: ^6.1.4
+  build_runner:
+  freezed:
+  coverage: ^1.1.0
+  mocktail: ^0.2.0
+  test: ^1.19.2
+  very_good_analysis: ^2.4.0

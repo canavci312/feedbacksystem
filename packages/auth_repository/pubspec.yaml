@@ -1,0 +1,20 @@
+name: auth_repository
+description: Authentication repository
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+dependencies:
+  jwt_decoder: ^2.0.1
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^5.0.2
+  fms_api:
+    path: ../fms_api
+  json_serializable: any
+dev_dependencies:
+  build_runner: ^2.1.10
+  freezed: ^2.0.2
+  json_annotation: ^4.5.0
+  very_good_analysis: ^2.4.0
