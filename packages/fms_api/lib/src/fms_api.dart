@@ -290,4 +290,5 @@ class FmsApi {
 
     return CompanyList.fromJson(response.data as Map<String, dynamic>);
   }
-}
+
+ }

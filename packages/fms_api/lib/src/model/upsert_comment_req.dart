@@ -5,12 +5,15 @@ part 'upsert_comment_req.g.dart';
 
 @freezed
 class UpsertCommentRequest with _$UpsertCommentRequest {
+    @JsonSerializable(
+    includeIfNull: false,
+  )
   const factory UpsertCommentRequest({
-    required int id,
-    required int feedbackId,
-    required int parentCommentId,
-    required String text,
-    required bool isAnonym,
+     int? id,
+     int? feedbackId,
+     int? parentCommentId,
+     String? text,
+     bool? isAnonym,
   }) = _UpsertCommentRequest;
 
   factory UpsertCommentRequest.fromJson(Map<String, dynamic> json) =>

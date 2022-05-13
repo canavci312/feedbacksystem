@@ -1,5 +1,6 @@
 import 'package:feedback_repository/feedback_repository.dart';
 import 'package:feedbacksystem/customer_add_feedback/cubit/customer_add_feedback_cubit.dart';
+import 'package:feedbacksystem/customer_add_feedback/view/widgets/filter.dart';
 import 'package:feedbacksystem/customer_home/view/customer_home.dart';
 import 'package:feedbacksystem/locator.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,6 +41,7 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
     super.dispose();
   }
 
+  int selectedTypeId = 1;
   int? scrolledCompanyId;
   String? selectedCompanyName;
   int? selectedCompanyId;
@@ -248,6 +250,21 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                      height: 40,
+                      child: ChipsFilter((value) {
+                        selectedTypeId = value;
+                        print(selectedTypeId);
+                      },
+                          // Select the second filter as default
+                          [
+                            Filter("Şikayet", CupertinoIcons.heart_slash),
+                            Filter("Memnuniyet", CupertinoIcons.smiley),
+                            Filter("Öneri", CupertinoIcons.light_max),
+                          ], 1),
+                    ),
                     const Text('Başlık'),
                     const SizedBox(
                       height: 5,
@@ -398,10 +415,11 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                               context
                                   .read<CustomerAddFeedbackCubit>()
                                   .postFeedback(
+                                    selectedTypeId,
                                       _titleController.text,
                                       _textController.text,
                                       selectedProductId ?? -1,
-                                      true);
+                                      isAnonym);
                             },
                           ),
                         );

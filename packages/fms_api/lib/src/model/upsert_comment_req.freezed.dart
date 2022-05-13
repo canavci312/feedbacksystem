@@ -20,11 +20,11 @@ UpsertCommentRequest _$UpsertCommentRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UpsertCommentRequest {
-  int get id => throw _privateConstructorUsedError;
-  int get feedbackId => throw _privateConstructorUsedError;
-  int get parentCommentId => throw _privateConstructorUsedError;
-  String get text => throw _privateConstructorUsedError;
-  bool get isAnonym => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  int? get feedbackId => throw _privateConstructorUsedError;
+  int? get parentCommentId => throw _privateConstructorUsedError;
+  String? get text => throw _privateConstructorUsedError;
+  bool? get isAnonym => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,11 +38,11 @@ abstract class $UpsertCommentRequestCopyWith<$Res> {
           $Res Function(UpsertCommentRequest) then) =
       _$UpsertCommentRequestCopyWithImpl<$Res>;
   $Res call(
-      {int id,
-      int feedbackId,
-      int parentCommentId,
-      String text,
-      bool isAnonym});
+      {int? id,
+      int? feedbackId,
+      int? parentCommentId,
+      String? text,
+      bool? isAnonym});
 }
 
 /// @nodoc
@@ -66,23 +66,23 @@ class _$UpsertCommentRequestCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       feedbackId: feedbackId == freezed
           ? _value.feedbackId
           : feedbackId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       parentCommentId: parentCommentId == freezed
           ? _value.parentCommentId
           : parentCommentId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       text: text == freezed
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isAnonym: isAnonym == freezed
           ? _value.isAnonym
           : isAnonym // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -95,11 +95,11 @@ abstract class _$UpsertCommentRequestCopyWith<$Res>
       __$UpsertCommentRequestCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int id,
-      int feedbackId,
-      int parentCommentId,
-      String text,
-      bool isAnonym});
+      {int? id,
+      int? feedbackId,
+      int? parentCommentId,
+      String? text,
+      bool? isAnonym});
 }
 
 /// @nodoc
@@ -125,50 +125,51 @@ class __$UpsertCommentRequestCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       feedbackId: feedbackId == freezed
           ? _value.feedbackId
           : feedbackId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       parentCommentId: parentCommentId == freezed
           ? _value.parentCommentId
           : parentCommentId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       text: text == freezed
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isAnonym: isAnonym == freezed
           ? _value.isAnonym
           : isAnonym // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(includeIfNull: false)
 class _$_UpsertCommentRequest implements _UpsertCommentRequest {
   const _$_UpsertCommentRequest(
-      {required this.id,
-      required this.feedbackId,
-      required this.parentCommentId,
-      required this.text,
-      required this.isAnonym});
+      {this.id,
+      this.feedbackId,
+      this.parentCommentId,
+      this.text,
+      this.isAnonym});
 
   factory _$_UpsertCommentRequest.fromJson(Map<String, dynamic> json) =>
       _$$_UpsertCommentRequestFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
-  final int feedbackId;
+  final int? feedbackId;
   @override
-  final int parentCommentId;
+  final int? parentCommentId;
   @override
-  final String text;
+  final String? text;
   @override
-  final bool isAnonym;
+  final bool? isAnonym;
 
   @override
   String toString() {
@@ -213,25 +214,25 @@ class _$_UpsertCommentRequest implements _UpsertCommentRequest {
 
 abstract class _UpsertCommentRequest implements UpsertCommentRequest {
   const factory _UpsertCommentRequest(
-      {required final int id,
-      required final int feedbackId,
-      required final int parentCommentId,
-      required final String text,
-      required final bool isAnonym}) = _$_UpsertCommentRequest;
+      {final int? id,
+      final int? feedbackId,
+      final int? parentCommentId,
+      final String? text,
+      final bool? isAnonym}) = _$_UpsertCommentRequest;
 
   factory _UpsertCommentRequest.fromJson(Map<String, dynamic> json) =
       _$_UpsertCommentRequest.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
-  int get feedbackId => throw _privateConstructorUsedError;
+  int? get feedbackId => throw _privateConstructorUsedError;
   @override
-  int get parentCommentId => throw _privateConstructorUsedError;
+  int? get parentCommentId => throw _privateConstructorUsedError;
   @override
-  String get text => throw _privateConstructorUsedError;
+  String? get text => throw _privateConstructorUsedError;
   @override
-  bool get isAnonym => throw _privateConstructorUsedError;
+  bool? get isAnonym => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UpsertCommentRequestCopyWith<_UpsertCommentRequest> get copyWith =>

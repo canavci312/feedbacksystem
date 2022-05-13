@@ -13,6 +13,7 @@ class FeedbackRepository {
       return response.data?.publicFeedbackList;
     }
   }
+
   Future<List<CompanyFeedbackList>?> getCompanyFeedbackList(
       FeedbackGetListRequest request) async {
     final response = await _fmsApi.getFeedbackList(request);
@@ -20,6 +21,7 @@ class FeedbackRepository {
       return response.data?.companyFeedbackList;
     }
   }
+
   Future<FeedbackDetailResponse?> getFeedbackDetail(int id) async {
     final response = await _fmsApi.getFeedbackDetail(id);
     if (response != null) {
@@ -27,9 +29,18 @@ class FeedbackRepository {
     }
   }
 
-  Future<void> upsertFeedback(
-      String title, String text, int productId, bool isAnonym) async {
+  Future<void> upsertFeedback(int typeId, String title, String text,
+      int productId, bool isAnonym) async {
     final response = await _fmsApi.upsertFeedback(UpsertFeedbackRequest(
-        title: title, text: text, productId: productId, isAnonym: isAnonym));
+        typeId: typeId,
+        title: title,
+        text: text,
+        productId: productId,
+        isAnonym: isAnonym));
+  }
+
+  Future<void> sendComment(int feedbackId, String comment) async {
+    final response = await _fmsApi.upsertComment(UpsertCommentRequest(
+        feedbackId: feedbackId, text: comment, isAnonym: false));
   }
 }

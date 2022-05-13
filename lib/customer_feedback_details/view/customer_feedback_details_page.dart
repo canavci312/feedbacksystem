@@ -16,15 +16,29 @@ class CustomerFeedbackDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          CustomerFeedbackDetailsCubit(getIt<FeedbackRepository>())
-            ..fetchDetails(item.id!),
+          CustomerFeedbackDetailsCubit(getIt<FeedbackRepository>(),item.id!)
+            ..fetchDetails(),
       child: const CustomerFeedbackDetailView(),
     );
   }
 }
 
-class CustomerFeedbackDetailView extends StatelessWidget {
+class CustomerFeedbackDetailView extends StatefulWidget {
   const CustomerFeedbackDetailView({Key? key}) : super(key: key);
+
+  @override
+  State<CustomerFeedbackDetailView> createState() =>
+      _CustomerFeedbackDetailViewState();
+}
+
+class _CustomerFeedbackDetailViewState
+    extends State<CustomerFeedbackDetailView> {
+  TextEditingController _commentController = TextEditingController();
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,30 +65,33 @@ class CustomerFeedbackDetailView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(details.data?.title ?? '',
-                                  style:
-                                      const TextStyle(fontWeight: FontWeight.bold)),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
                               SizedBox(
                                   width: double.infinity,
                                   child: CustomStepper(status)),
                               FeedbackMessage(
-                                  details.data?.customerFirstName ?? '',
-                                  details.data?.text ?? '',
-                                  details.data?.createdAt ?? DateTime.now()),
+                                details.data?.customerFirstName ?? '',
+                                details.data?.text ?? '',
+                                details.data?.createdAt ?? DateTime.now(),
+                                likeCount: details.data?.likeCount,
+                              ),
                               const Text(
                                 'Firmadan Cevaplar:',
-                                style:  TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               details.data?.replyList?.length == 0
                                   ? const Padding(
                                       padding: EdgeInsets.all(4.0),
                                       child: Center(
-                                        child:  Text('Henüz cevap yok'),
+                                        child: Text('Henüz cevap yok'),
                                       ),
                                     )
                                   : ListView.builder(
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       itemCount:
                                           details.data?.replyList?.length,
                                       itemBuilder:
@@ -98,14 +115,15 @@ class CustomerFeedbackDetailView extends StatelessWidget {
                               details.data?.commentList?.length == 0
                                   ? const Padding(
                                       padding: EdgeInsets.all(4.0),
-                                      child:  Center(
-                                        child:  Text('Henüz yorum yok'),
+                                      child: Center(
+                                        child: Text('Henüz yorum yok'),
                                       ),
                                     )
                                   : ListView.builder(
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       itemCount:
                                           details.data?.commentList?.length,
                                       itemBuilder:
@@ -122,6 +140,30 @@ class CustomerFeedbackDetailView extends StatelessWidget {
                                                 DateTime.now());
                                       },
                                     ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: CupertinoTextField(
+                                  controller: _commentController,
+                                  prefix: const Icon(
+                                    CupertinoIcons.bubble_right,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: CupertinoButton(
+                                  child: const Text('Gönder'),
+                                  onPressed: () {
+                                    context
+                                        .read<CustomerFeedbackDetailsCubit>()
+                                        .sendComment(_commentController.text,
+                                            );
+                                    _commentController.clear();
+                                  },
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -138,7 +180,9 @@ class FeedbackMessage extends StatelessWidget {
   final String senderName;
   final String text;
   final DateTime date;
-  const FeedbackMessage(this.senderName, this.text, this.date, {Key? key})
+  final int? likeCount;
+  const FeedbackMessage(this.senderName, this.text, this.date,
+      {this.likeCount, Key? key})
       : super(key: key);
 
   @override
@@ -157,15 +201,45 @@ class FeedbackMessage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(text),
           ),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: Text(
-                DateFormat.yMMMEd('tr')
+          likeCount != null
+              ? Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(likeCount.toString()),
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .read<CustomerFeedbackDetailsCubit>()
+                              .sendReaction();
+                        },
+                        child: const Icon(
+                          Icons.thumb_up,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        DateFormat.yMMMEd('tr')
 
-                    // displaying formatted date
-                    .format(date.toLocal()),
-                style: const TextStyle(fontStyle: FontStyle.italic),
-              ))
+                            // displaying formatted date
+                            .format(date.toLocal()),
+                        style: const TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ],
+                  ))
+              : Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    DateFormat.yMMMEd('tr')
+
+                        // displaying formatted date
+                        .format(date.toLocal()),
+                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  ))
         ],
       )),
     );

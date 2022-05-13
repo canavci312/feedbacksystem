@@ -32,6 +32,8 @@ mixin _$Data {
   String? get companyName => throw _privateConstructorUsedError;
   int? get productId => throw _privateConstructorUsedError;
   String? get productName => throw _privateConstructorUsedError;
+  int? get likeCount => throw _privateConstructorUsedError;
+  int? get dislikeCount => throw _privateConstructorUsedError;
   int? get typeId => throw _privateConstructorUsedError;
   String? get typeName => throw _privateConstructorUsedError;
   dynamic get subTypeId => throw _privateConstructorUsedError;
@@ -63,6 +65,8 @@ abstract class $DataCopyWith<$Res> {
       String? companyName,
       int? productId,
       String? productName,
+      int? likeCount,
+      int? dislikeCount,
       int? typeId,
       String? typeName,
       dynamic subTypeId,
@@ -95,6 +99,8 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
     Object? companyName = freezed,
     Object? productId = freezed,
     Object? productName = freezed,
+    Object? likeCount = freezed,
+    Object? dislikeCount = freezed,
     Object? typeId = freezed,
     Object? typeName = freezed,
     Object? subTypeId = freezed,
@@ -153,6 +159,14 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
               as String?,
+      likeCount: likeCount == freezed
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dislikeCount: dislikeCount == freezed
+          ? _value.dislikeCount
+          : dislikeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       typeId: typeId == freezed
           ? _value.typeId
           : typeId // ignore: cast_nullable_to_non_nullable
@@ -207,6 +221,8 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       String? companyName,
       int? productId,
       String? productName,
+      int? likeCount,
+      int? dislikeCount,
       int? typeId,
       String? typeName,
       dynamic subTypeId,
@@ -240,6 +256,8 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
     Object? companyName = freezed,
     Object? productId = freezed,
     Object? productName = freezed,
+    Object? likeCount = freezed,
+    Object? dislikeCount = freezed,
     Object? typeId = freezed,
     Object? typeName = freezed,
     Object? subTypeId = freezed,
@@ -298,6 +316,14 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
               as String?,
+      likeCount: likeCount == freezed
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dislikeCount: dislikeCount == freezed
+          ? _value.dislikeCount
+          : dislikeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       typeId: typeId == freezed
           ? _value.typeId
           : typeId // ignore: cast_nullable_to_non_nullable
@@ -350,6 +376,8 @@ class _$_Data implements _Data {
       this.companyName,
       this.productId,
       this.productName,
+      this.likeCount,
+      this.dislikeCount,
       this.typeId,
       this.typeName,
       this.subTypeId,
@@ -402,6 +430,10 @@ class _$_Data implements _Data {
   @override
   final String? productName;
   @override
+  final int? likeCount;
+  @override
+  final int? dislikeCount;
+  @override
   final int? typeId;
   @override
   final String? typeName;
@@ -420,7 +452,7 @@ class _$_Data implements _Data {
 
   @override
   String toString() {
-    return 'Data(replyList: $replyList, commentList: $commentList, id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved)';
+    return 'Data(replyList: $replyList, commentList: $commentList, id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, likeCount: $likeCount, dislikeCount: $dislikeCount, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved)';
   }
 
   @override
@@ -445,6 +477,9 @@ class _$_Data implements _Data {
             const DeepCollectionEquality().equals(other.productId, productId) &&
             const DeepCollectionEquality()
                 .equals(other.productName, productName) &&
+            const DeepCollectionEquality().equals(other.likeCount, likeCount) &&
+            const DeepCollectionEquality()
+                .equals(other.dislikeCount, dislikeCount) &&
             const DeepCollectionEquality().equals(other.typeId, typeId) &&
             const DeepCollectionEquality().equals(other.typeName, typeName) &&
             const DeepCollectionEquality().equals(other.subTypeId, subTypeId) &&
@@ -472,6 +507,8 @@ class _$_Data implements _Data {
         const DeepCollectionEquality().hash(companyName),
         const DeepCollectionEquality().hash(productId),
         const DeepCollectionEquality().hash(productName),
+        const DeepCollectionEquality().hash(likeCount),
+        const DeepCollectionEquality().hash(dislikeCount),
         const DeepCollectionEquality().hash(typeId),
         const DeepCollectionEquality().hash(typeName),
         const DeepCollectionEquality().hash(subTypeId),
@@ -507,6 +544,8 @@ abstract class _Data implements Data {
       final String? companyName,
       final int? productId,
       final String? productName,
+      final int? likeCount,
+      final int? dislikeCount,
       final int? typeId,
       final String? typeName,
       final dynamic subTypeId,
@@ -542,6 +581,10 @@ abstract class _Data implements Data {
   int? get productId => throw _privateConstructorUsedError;
   @override
   String? get productName => throw _privateConstructorUsedError;
+  @override
+  int? get likeCount => throw _privateConstructorUsedError;
+  @override
+  int? get dislikeCount => throw _privateConstructorUsedError;
   @override
   int? get typeId => throw _privateConstructorUsedError;
   @override

@@ -21,6 +21,8 @@ class Data with _$Data {
     String? companyName,
     int? productId,
     String? productName,
+    int? likeCount,
+    int? dislikeCount,
     int? typeId,
     String? typeName,
     dynamic subTypeId,

@@ -10,11 +10,12 @@ enum FeedbackStatus { available, answered, solved }
 
 class CustomerFeedbackDetailsCubit extends Cubit<CustomerFeedbackDetailsState> {
   FeedbackRepository _feedbackRepository;
-  CustomerFeedbackDetailsCubit(this._feedbackRepository)
+  final int feedbackId;
+  CustomerFeedbackDetailsCubit(this._feedbackRepository, this.feedbackId)
       : super(CustomerFeedbackDetailsState.initial());
-  fetchDetails(int id) async {
+  fetchDetails() async {
     emit(CustomerFeedbackDetailsState.loading());
-    final response = await _feedbackRepository.getFeedbackDetail(id);
+    final response = await _feedbackRepository.getFeedbackDetail(feedbackId);
     if (response != null) {
       emit(CustomerFeedbackDetailsState.success(response, getStatus(response)));
     }
@@ -28,5 +29,11 @@ class CustomerFeedbackDetailsCubit extends Cubit<CustomerFeedbackDetailsState> {
     } else {
       return FeedbackStatus.available;
     }
+  }
+
+  void sendComment(String text) async {
+    emit(CustomerFeedbackDetailsState.loading());
+    final response = await _feedbackRepository.sendComment(feedbackId, text);
+    fetchDetails();
   }
 }
