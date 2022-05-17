@@ -415,7 +415,7 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                               context
                                   .read<CustomerAddFeedbackCubit>()
                                   .postFeedback(
-                                    selectedTypeId,
+                                      selectedTypeId,
                                       _titleController.text,
                                       _textController.text,
                                       selectedProductId ?? -1,

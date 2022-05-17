@@ -18,7 +18,7 @@ class FeedbackGetListRequest with _$FeedbackGetListRequest {
       String? createdAtBefore,
       String? createdAtAfter,
       int? sectorId,
-       int? userId,
+      int? userId,
       int? companyId,
       int? productId,
       int? typeId,

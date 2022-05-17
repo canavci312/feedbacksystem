@@ -104,23 +104,24 @@ class _$CustomerAddFeedbackStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res>
+abstract class _$$_InitialCopyWith<$Res>
     implements $CustomerAddFeedbackStateCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
   @override
   $Res call({bool? isLoading, bool? showErrorDialog, bool? isSuccessful});
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$CustomerAddFeedbackStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 
   @override
   $Res call({
@@ -128,7 +129,7 @@ class __$InitialCopyWithImpl<$Res>
     Object? showErrorDialog = freezed,
     Object? isSuccessful = freezed,
   }) {
-    return _then(_Initial(
+    return _then(_$_Initial(
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -166,7 +167,7 @@ class _$_Initial implements _Initial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Initial &&
+            other is _$_Initial &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality()
                 .equals(other.showErrorDialog, showErrorDialog) &&
@@ -183,8 +184,8 @@ class _$_Initial implements _Initial {
 
   @JsonKey(ignore: true)
   @override
-  _$InitialCopyWith<_Initial> get copyWith =>
-      __$InitialCopyWithImpl<_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -263,6 +264,6 @@ abstract class _Initial implements CustomerAddFeedbackState {
   bool? get isSuccessful => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$InitialCopyWith<_Initial> get copyWith =>
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
 }

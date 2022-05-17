@@ -86,20 +86,21 @@ class _$EmployeeFeedbackStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$EmployeeFeedbackStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -115,7 +116,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -201,20 +202,21 @@ abstract class _Initial implements EmployeeFeedbackState {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
+class __$$_LoadingCopyWithImpl<$Res>
     extends _$EmployeeFeedbackStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -230,7 +232,7 @@ class _$_Loading implements _Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -316,35 +318,36 @@ abstract class _Loading implements EmployeeFeedbackState {
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
   $Res call(
       {List<CompanyFeedbackList> list, List<CompanyFeedbackList> filteredList});
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
+class __$$_SuccessCopyWithImpl<$Res>
     extends _$EmployeeFeedbackStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, (v) => _then(v as _$_Success));
 
   @override
-  _Success get _value => super._value as _Success;
+  _$_Success get _value => super._value as _$_Success;
 
   @override
   $Res call({
     Object? list = freezed,
     Object? filteredList = freezed,
   }) {
-    return _then(_Success(
+    return _then(_$_Success(
       list == freezed
-          ? _value.list
+          ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<CompanyFeedbackList>,
       filteredList == freezed
-          ? _value.filteredList
+          ? _value._filteredList
           : filteredList // ignore: cast_nullable_to_non_nullable
               as List<CompanyFeedbackList>,
     ));
@@ -382,22 +385,22 @@ class _$_Success implements _Success {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Success &&
-            const DeepCollectionEquality().equals(other.list, list) &&
+            other is _$_Success &&
+            const DeepCollectionEquality().equals(other._list, _list) &&
             const DeepCollectionEquality()
-                .equals(other.filteredList, filteredList));
+                .equals(other._filteredList, _filteredList));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(list),
-      const DeepCollectionEquality().hash(filteredList));
+      const DeepCollectionEquality().hash(_list),
+      const DeepCollectionEquality().hash(_filteredList));
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<_Success> get copyWith =>
-      __$SuccessCopyWithImpl<_Success>(this, _$identity);
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -482,6 +485,6 @@ abstract class _Success implements EmployeeFeedbackState {
   List<CompanyFeedbackList> get filteredList =>
       throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<_Success> get copyWith =>
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }

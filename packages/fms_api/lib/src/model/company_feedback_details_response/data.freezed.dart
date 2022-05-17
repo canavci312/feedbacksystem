@@ -20,9 +20,15 @@ Data _$DataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Data {
-  List<ReplyList>? get replyList => throw _privateConstructorUsedError;
-  List<CommentList>? get commentList => throw _privateConstructorUsedError;
+  List<Reply>? get replyList => throw _privateConstructorUsedError;
+  List<dynamic>? get commentList => throw _privateConstructorUsedError;
+  String? get customerEmail => throw _privateConstructorUsedError;
+  String? get customerPhone => throw _privateConstructorUsedError;
+  String? get customerLastName => throw _privateConstructorUsedError;
+  dynamic get directedToEmploteeId => throw _privateConstructorUsedError;
+  bool? get isArchived => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
   String? get customerFirstName => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get text => throw _privateConstructorUsedError;
@@ -31,18 +37,19 @@ mixin _$Data {
   int? get companyId => throw _privateConstructorUsedError;
   String? get companyName => throw _privateConstructorUsedError;
   int? get productId => throw _privateConstructorUsedError;
-  bool? get isMine => throw _privateConstructorUsedError;
   String? get productName => throw _privateConstructorUsedError;
-  int? get likeCount => throw _privateConstructorUsedError;
-  int? get dislikeCount => throw _privateConstructorUsedError;
   int? get typeId => throw _privateConstructorUsedError;
   String? get typeName => throw _privateConstructorUsedError;
   dynamic get subTypeId => throw _privateConstructorUsedError;
   dynamic get subTypeName => throw _privateConstructorUsedError;
+  int? get likeCount => throw _privateConstructorUsedError;
+  int? get dislikeCount => throw _privateConstructorUsedError;
+  dynamic get userReaction => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   bool? get isAnonym => throw _privateConstructorUsedError;
   bool? get isReplied => throw _privateConstructorUsedError;
   bool? get isSolved => throw _privateConstructorUsedError;
+  bool? get isMine => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,9 +61,15 @@ abstract class $DataCopyWith<$Res> {
   factory $DataCopyWith(Data value, $Res Function(Data) then) =
       _$DataCopyWithImpl<$Res>;
   $Res call(
-      {List<ReplyList>? replyList,
-      List<CommentList>? commentList,
+      {List<Reply>? replyList,
+      List<dynamic>? commentList,
+      String? customerEmail,
+      String? customerPhone,
+      String? customerLastName,
+      dynamic directedToEmploteeId,
+      bool? isArchived,
       int? id,
+      int? userId,
       String? customerFirstName,
       String? title,
       String? text,
@@ -65,18 +78,19 @@ abstract class $DataCopyWith<$Res> {
       int? companyId,
       String? companyName,
       int? productId,
-      bool? isMine,
       String? productName,
-      int? likeCount,
-      int? dislikeCount,
       int? typeId,
       String? typeName,
       dynamic subTypeId,
       dynamic subTypeName,
+      int? likeCount,
+      int? dislikeCount,
+      dynamic userReaction,
       DateTime? createdAt,
       bool? isAnonym,
       bool? isReplied,
-      bool? isSolved});
+      bool? isSolved,
+      bool? isMine});
 }
 
 /// @nodoc
@@ -91,7 +105,13 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
   $Res call({
     Object? replyList = freezed,
     Object? commentList = freezed,
+    Object? customerEmail = freezed,
+    Object? customerPhone = freezed,
+    Object? customerLastName = freezed,
+    Object? directedToEmploteeId = freezed,
+    Object? isArchived = freezed,
     Object? id = freezed,
+    Object? userId = freezed,
     Object? customerFirstName = freezed,
     Object? title = freezed,
     Object? text = freezed,
@@ -100,31 +120,56 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
     Object? companyId = freezed,
     Object? companyName = freezed,
     Object? productId = freezed,
-    Object? isMine = freezed,
     Object? productName = freezed,
-    Object? likeCount = freezed,
-    Object? dislikeCount = freezed,
     Object? typeId = freezed,
     Object? typeName = freezed,
     Object? subTypeId = freezed,
     Object? subTypeName = freezed,
+    Object? likeCount = freezed,
+    Object? dislikeCount = freezed,
+    Object? userReaction = freezed,
     Object? createdAt = freezed,
     Object? isAnonym = freezed,
     Object? isReplied = freezed,
     Object? isSolved = freezed,
+    Object? isMine = freezed,
   }) {
     return _then(_value.copyWith(
       replyList: replyList == freezed
           ? _value.replyList
           : replyList // ignore: cast_nullable_to_non_nullable
-              as List<ReplyList>?,
+              as List<Reply>?,
       commentList: commentList == freezed
           ? _value.commentList
           : commentList // ignore: cast_nullable_to_non_nullable
-              as List<CommentList>?,
+              as List<dynamic>?,
+      customerEmail: customerEmail == freezed
+          ? _value.customerEmail
+          : customerEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerPhone: customerPhone == freezed
+          ? _value.customerPhone
+          : customerPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerLastName: customerLastName == freezed
+          ? _value.customerLastName
+          : customerLastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      directedToEmploteeId: directedToEmploteeId == freezed
+          ? _value.directedToEmploteeId
+          : directedToEmploteeId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      isArchived: isArchived == freezed
+          ? _value.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as int?,
       customerFirstName: customerFirstName == freezed
           ? _value.customerFirstName
@@ -158,22 +203,10 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as int?,
-      isMine: isMine == freezed
-          ? _value.isMine
-          : isMine // ignore: cast_nullable_to_non_nullable
-              as bool?,
       productName: productName == freezed
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
               as String?,
-      likeCount: likeCount == freezed
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      dislikeCount: dislikeCount == freezed
-          ? _value.dislikeCount
-          : dislikeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       typeId: typeId == freezed
           ? _value.typeId
           : typeId // ignore: cast_nullable_to_non_nullable
@@ -189,6 +222,18 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       subTypeName: subTypeName == freezed
           ? _value.subTypeName
           : subTypeName // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      likeCount: likeCount == freezed
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dislikeCount: dislikeCount == freezed
+          ? _value.dislikeCount
+          : dislikeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userReaction: userReaction == freezed
+          ? _value.userReaction
+          : userReaction // ignore: cast_nullable_to_non_nullable
               as dynamic,
       createdAt: createdAt == freezed
           ? _value.createdAt
@@ -206,6 +251,10 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
           ? _value.isSolved
           : isSolved // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isMine: isMine == freezed
+          ? _value.isMine
+          : isMine // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -216,9 +265,15 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       __$DataCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<ReplyList>? replyList,
-      List<CommentList>? commentList,
+      {List<Reply>? replyList,
+      List<dynamic>? commentList,
+      String? customerEmail,
+      String? customerPhone,
+      String? customerLastName,
+      dynamic directedToEmploteeId,
+      bool? isArchived,
       int? id,
+      int? userId,
       String? customerFirstName,
       String? title,
       String? text,
@@ -227,18 +282,19 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       int? companyId,
       String? companyName,
       int? productId,
-      bool? isMine,
       String? productName,
-      int? likeCount,
-      int? dislikeCount,
       int? typeId,
       String? typeName,
       dynamic subTypeId,
       dynamic subTypeName,
+      int? likeCount,
+      int? dislikeCount,
+      dynamic userReaction,
       DateTime? createdAt,
       bool? isAnonym,
       bool? isReplied,
-      bool? isSolved});
+      bool? isSolved,
+      bool? isMine});
 }
 
 /// @nodoc
@@ -254,7 +310,13 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
   $Res call({
     Object? replyList = freezed,
     Object? commentList = freezed,
+    Object? customerEmail = freezed,
+    Object? customerPhone = freezed,
+    Object? customerLastName = freezed,
+    Object? directedToEmploteeId = freezed,
+    Object? isArchived = freezed,
     Object? id = freezed,
+    Object? userId = freezed,
     Object? customerFirstName = freezed,
     Object? title = freezed,
     Object? text = freezed,
@@ -263,31 +325,56 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
     Object? companyId = freezed,
     Object? companyName = freezed,
     Object? productId = freezed,
-    Object? isMine = freezed,
     Object? productName = freezed,
-    Object? likeCount = freezed,
-    Object? dislikeCount = freezed,
     Object? typeId = freezed,
     Object? typeName = freezed,
     Object? subTypeId = freezed,
     Object? subTypeName = freezed,
+    Object? likeCount = freezed,
+    Object? dislikeCount = freezed,
+    Object? userReaction = freezed,
     Object? createdAt = freezed,
     Object? isAnonym = freezed,
     Object? isReplied = freezed,
     Object? isSolved = freezed,
+    Object? isMine = freezed,
   }) {
     return _then(_Data(
       replyList: replyList == freezed
           ? _value.replyList
           : replyList // ignore: cast_nullable_to_non_nullable
-              as List<ReplyList>?,
+              as List<Reply>?,
       commentList: commentList == freezed
           ? _value.commentList
           : commentList // ignore: cast_nullable_to_non_nullable
-              as List<CommentList>?,
+              as List<dynamic>?,
+      customerEmail: customerEmail == freezed
+          ? _value.customerEmail
+          : customerEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerPhone: customerPhone == freezed
+          ? _value.customerPhone
+          : customerPhone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerLastName: customerLastName == freezed
+          ? _value.customerLastName
+          : customerLastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      directedToEmploteeId: directedToEmploteeId == freezed
+          ? _value.directedToEmploteeId
+          : directedToEmploteeId // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      isArchived: isArchived == freezed
+          ? _value.isArchived
+          : isArchived // ignore: cast_nullable_to_non_nullable
+              as bool?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as int?,
       customerFirstName: customerFirstName == freezed
           ? _value.customerFirstName
@@ -321,22 +408,10 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as int?,
-      isMine: isMine == freezed
-          ? _value.isMine
-          : isMine // ignore: cast_nullable_to_non_nullable
-              as bool?,
       productName: productName == freezed
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
               as String?,
-      likeCount: likeCount == freezed
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      dislikeCount: dislikeCount == freezed
-          ? _value.dislikeCount
-          : dislikeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       typeId: typeId == freezed
           ? _value.typeId
           : typeId // ignore: cast_nullable_to_non_nullable
@@ -352,6 +427,18 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       subTypeName: subTypeName == freezed
           ? _value.subTypeName
           : subTypeName // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      likeCount: likeCount == freezed
+          ? _value.likeCount
+          : likeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dislikeCount: dislikeCount == freezed
+          ? _value.dislikeCount
+          : dislikeCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      userReaction: userReaction == freezed
+          ? _value.userReaction
+          : userReaction // ignore: cast_nullable_to_non_nullable
               as dynamic,
       createdAt: createdAt == freezed
           ? _value.createdAt
@@ -369,6 +456,10 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
           ? _value.isSolved
           : isSolved // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isMine: isMine == freezed
+          ? _value.isMine
+          : isMine // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -377,9 +468,15 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Data implements _Data {
   _$_Data(
-      {final List<ReplyList>? replyList,
-      final List<CommentList>? commentList,
+      {final List<Reply>? replyList,
+      final List<dynamic>? commentList,
+      this.customerEmail,
+      this.customerPhone,
+      this.customerLastName,
+      this.directedToEmploteeId,
+      this.isArchived,
       this.id,
+      this.userId,
       this.customerFirstName,
       this.title,
       this.text,
@@ -388,35 +485,36 @@ class _$_Data implements _Data {
       this.companyId,
       this.companyName,
       this.productId,
-      this.isMine,
       this.productName,
-      this.likeCount,
-      this.dislikeCount,
       this.typeId,
       this.typeName,
       this.subTypeId,
       this.subTypeName,
+      this.likeCount,
+      this.dislikeCount,
+      this.userReaction,
       this.createdAt,
       this.isAnonym,
       this.isReplied,
-      this.isSolved})
+      this.isSolved,
+      this.isMine})
       : _replyList = replyList,
         _commentList = commentList;
 
   factory _$_Data.fromJson(Map<String, dynamic> json) => _$$_DataFromJson(json);
 
-  final List<ReplyList>? _replyList;
+  final List<Reply>? _replyList;
   @override
-  List<ReplyList>? get replyList {
+  List<Reply>? get replyList {
     final value = _replyList;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
-  final List<CommentList>? _commentList;
+  final List<dynamic>? _commentList;
   @override
-  List<CommentList>? get commentList {
+  List<dynamic>? get commentList {
     final value = _commentList;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -424,7 +522,19 @@ class _$_Data implements _Data {
   }
 
   @override
+  final String? customerEmail;
+  @override
+  final String? customerPhone;
+  @override
+  final String? customerLastName;
+  @override
+  final dynamic directedToEmploteeId;
+  @override
+  final bool? isArchived;
+  @override
   final int? id;
+  @override
+  final int? userId;
   @override
   final String? customerFirstName;
   @override
@@ -442,13 +552,7 @@ class _$_Data implements _Data {
   @override
   final int? productId;
   @override
-  final bool? isMine;
-  @override
   final String? productName;
-  @override
-  final int? likeCount;
-  @override
-  final int? dislikeCount;
   @override
   final int? typeId;
   @override
@@ -458,6 +562,12 @@ class _$_Data implements _Data {
   @override
   final dynamic subTypeName;
   @override
+  final int? likeCount;
+  @override
+  final int? dislikeCount;
+  @override
+  final dynamic userReaction;
+  @override
   final DateTime? createdAt;
   @override
   final bool? isAnonym;
@@ -465,10 +575,12 @@ class _$_Data implements _Data {
   final bool? isReplied;
   @override
   final bool? isSolved;
+  @override
+  final bool? isMine;
 
   @override
   String toString() {
-    return 'Data(replyList: $replyList, commentList: $commentList, id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, isMine: $isMine, productName: $productName, likeCount: $likeCount, dislikeCount: $dislikeCount, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved)';
+    return 'Data(replyList: $replyList, commentList: $commentList, customerEmail: $customerEmail, customerPhone: $customerPhone, customerLastName: $customerLastName, directedToEmploteeId: $directedToEmploteeId, isArchived: $isArchived, id: $id, userId: $userId, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, likeCount: $likeCount, dislikeCount: $dislikeCount, userReaction: $userReaction, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved, isMine: $isMine)';
   }
 
   @override
@@ -479,7 +591,18 @@ class _$_Data implements _Data {
             const DeepCollectionEquality().equals(other.replyList, replyList) &&
             const DeepCollectionEquality()
                 .equals(other.commentList, commentList) &&
+            const DeepCollectionEquality()
+                .equals(other.customerEmail, customerEmail) &&
+            const DeepCollectionEquality()
+                .equals(other.customerPhone, customerPhone) &&
+            const DeepCollectionEquality()
+                .equals(other.customerLastName, customerLastName) &&
+            const DeepCollectionEquality()
+                .equals(other.directedToEmploteeId, directedToEmploteeId) &&
+            const DeepCollectionEquality()
+                .equals(other.isArchived, isArchived) &&
             const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality()
                 .equals(other.customerFirstName, customerFirstName) &&
             const DeepCollectionEquality().equals(other.title, title) &&
@@ -491,21 +614,23 @@ class _$_Data implements _Data {
             const DeepCollectionEquality()
                 .equals(other.companyName, companyName) &&
             const DeepCollectionEquality().equals(other.productId, productId) &&
-            const DeepCollectionEquality().equals(other.isMine, isMine) &&
             const DeepCollectionEquality()
                 .equals(other.productName, productName) &&
-            const DeepCollectionEquality().equals(other.likeCount, likeCount) &&
-            const DeepCollectionEquality()
-                .equals(other.dislikeCount, dislikeCount) &&
             const DeepCollectionEquality().equals(other.typeId, typeId) &&
             const DeepCollectionEquality().equals(other.typeName, typeName) &&
             const DeepCollectionEquality().equals(other.subTypeId, subTypeId) &&
             const DeepCollectionEquality()
                 .equals(other.subTypeName, subTypeName) &&
+            const DeepCollectionEquality().equals(other.likeCount, likeCount) &&
+            const DeepCollectionEquality()
+                .equals(other.dislikeCount, dislikeCount) &&
+            const DeepCollectionEquality()
+                .equals(other.userReaction, userReaction) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.isAnonym, isAnonym) &&
             const DeepCollectionEquality().equals(other.isReplied, isReplied) &&
-            const DeepCollectionEquality().equals(other.isSolved, isSolved));
+            const DeepCollectionEquality().equals(other.isSolved, isSolved) &&
+            const DeepCollectionEquality().equals(other.isMine, isMine));
   }
 
   @JsonKey(ignore: true)
@@ -514,7 +639,13 @@ class _$_Data implements _Data {
         runtimeType,
         const DeepCollectionEquality().hash(replyList),
         const DeepCollectionEquality().hash(commentList),
+        const DeepCollectionEquality().hash(customerEmail),
+        const DeepCollectionEquality().hash(customerPhone),
+        const DeepCollectionEquality().hash(customerLastName),
+        const DeepCollectionEquality().hash(directedToEmploteeId),
+        const DeepCollectionEquality().hash(isArchived),
         const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(userId),
         const DeepCollectionEquality().hash(customerFirstName),
         const DeepCollectionEquality().hash(title),
         const DeepCollectionEquality().hash(text),
@@ -523,18 +654,19 @@ class _$_Data implements _Data {
         const DeepCollectionEquality().hash(companyId),
         const DeepCollectionEquality().hash(companyName),
         const DeepCollectionEquality().hash(productId),
-        const DeepCollectionEquality().hash(isMine),
         const DeepCollectionEquality().hash(productName),
-        const DeepCollectionEquality().hash(likeCount),
-        const DeepCollectionEquality().hash(dislikeCount),
         const DeepCollectionEquality().hash(typeId),
         const DeepCollectionEquality().hash(typeName),
         const DeepCollectionEquality().hash(subTypeId),
         const DeepCollectionEquality().hash(subTypeName),
+        const DeepCollectionEquality().hash(likeCount),
+        const DeepCollectionEquality().hash(dislikeCount),
+        const DeepCollectionEquality().hash(userReaction),
         const DeepCollectionEquality().hash(createdAt),
         const DeepCollectionEquality().hash(isAnonym),
         const DeepCollectionEquality().hash(isReplied),
-        const DeepCollectionEquality().hash(isSolved)
+        const DeepCollectionEquality().hash(isSolved),
+        const DeepCollectionEquality().hash(isMine)
       ]);
 
   @JsonKey(ignore: true)
@@ -550,9 +682,15 @@ class _$_Data implements _Data {
 
 abstract class _Data implements Data {
   factory _Data(
-      {final List<ReplyList>? replyList,
-      final List<CommentList>? commentList,
+      {final List<Reply>? replyList,
+      final List<dynamic>? commentList,
+      final String? customerEmail,
+      final String? customerPhone,
+      final String? customerLastName,
+      final dynamic directedToEmploteeId,
+      final bool? isArchived,
       final int? id,
+      final int? userId,
       final String? customerFirstName,
       final String? title,
       final String? text,
@@ -561,27 +699,40 @@ abstract class _Data implements Data {
       final int? companyId,
       final String? companyName,
       final int? productId,
-      final bool? isMine,
       final String? productName,
-      final int? likeCount,
-      final int? dislikeCount,
       final int? typeId,
       final String? typeName,
       final dynamic subTypeId,
       final dynamic subTypeName,
+      final int? likeCount,
+      final int? dislikeCount,
+      final dynamic userReaction,
       final DateTime? createdAt,
       final bool? isAnonym,
       final bool? isReplied,
-      final bool? isSolved}) = _$_Data;
+      final bool? isSolved,
+      final bool? isMine}) = _$_Data;
 
   factory _Data.fromJson(Map<String, dynamic> json) = _$_Data.fromJson;
 
   @override
-  List<ReplyList>? get replyList => throw _privateConstructorUsedError;
+  List<Reply>? get replyList => throw _privateConstructorUsedError;
   @override
-  List<CommentList>? get commentList => throw _privateConstructorUsedError;
+  List<dynamic>? get commentList => throw _privateConstructorUsedError;
+  @override
+  String? get customerEmail => throw _privateConstructorUsedError;
+  @override
+  String? get customerPhone => throw _privateConstructorUsedError;
+  @override
+  String? get customerLastName => throw _privateConstructorUsedError;
+  @override
+  dynamic get directedToEmploteeId => throw _privateConstructorUsedError;
+  @override
+  bool? get isArchived => throw _privateConstructorUsedError;
   @override
   int? get id => throw _privateConstructorUsedError;
+  @override
+  int? get userId => throw _privateConstructorUsedError;
   @override
   String? get customerFirstName => throw _privateConstructorUsedError;
   @override
@@ -599,13 +750,7 @@ abstract class _Data implements Data {
   @override
   int? get productId => throw _privateConstructorUsedError;
   @override
-  bool? get isMine => throw _privateConstructorUsedError;
-  @override
   String? get productName => throw _privateConstructorUsedError;
-  @override
-  int? get likeCount => throw _privateConstructorUsedError;
-  @override
-  int? get dislikeCount => throw _privateConstructorUsedError;
   @override
   int? get typeId => throw _privateConstructorUsedError;
   @override
@@ -615,6 +760,12 @@ abstract class _Data implements Data {
   @override
   dynamic get subTypeName => throw _privateConstructorUsedError;
   @override
+  int? get likeCount => throw _privateConstructorUsedError;
+  @override
+  int? get dislikeCount => throw _privateConstructorUsedError;
+  @override
+  dynamic get userReaction => throw _privateConstructorUsedError;
+  @override
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @override
   bool? get isAnonym => throw _privateConstructorUsedError;
@@ -622,6 +773,8 @@ abstract class _Data implements Data {
   bool? get isReplied => throw _privateConstructorUsedError;
   @override
   bool? get isSolved => throw _privateConstructorUsedError;
+  @override
+  bool? get isMine => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;

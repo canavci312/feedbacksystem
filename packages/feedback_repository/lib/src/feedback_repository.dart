@@ -22,6 +22,10 @@ class FeedbackRepository {
     }
   }
 
+  Future<void> upsertReply(int id, int feedbackId, String text) async {
+   await _fmsApi.upsertReply(id, feedbackId, text);
+  }
+
   Future<FeedbackDetailResponse?> getFeedbackDetail(int id) async {
     final response = await _fmsApi.getFeedbackDetail(id);
     if (response != null) {
@@ -43,4 +47,15 @@ class FeedbackRepository {
     final response = await _fmsApi.upsertComment(UpsertCommentRequest(
         feedbackId: feedbackId, text: comment, isAnonym: false));
   }
+
+  Future<void> toggleSolved(int feedbackId) async {
+    final response = await _fmsApi.toggleFeedbackSolved(feedbackId);
+  }
+
+ Future<CompanyFeedbackDetailsResponse?> getCompanyFeedbackDetail(int feedbackId)async {
+       final response = await _fmsApi.getCompanyFeedbackDetail(feedbackId);
+    if (response != null) {
+      return response;
+    }
+ }
 }

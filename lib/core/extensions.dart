@@ -6,8 +6,8 @@ extension CupertinoThemeExtenion on BuildContext {
 }
 
 extension TypeToTurkishExtension on String? {
- String? xToTurkish() {
-  switch (this) {
+  String? xToTurkish() {
+    switch (this) {
       case 'Complaint':
         return 'Şikayet';
       case 'Suggestion':

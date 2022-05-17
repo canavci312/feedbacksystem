@@ -10,16 +10,15 @@ class ReactionRepository {
     _fmsApi.reactFeedback(feedbackId, true);
   }
 
-  Future<void> reactToComment(int feedbackId)async {
+  Future<void> reactToComment(int feedbackId) async {
     _fmsApi.reactComment(feedbackId, true);
   }
 
-  Future<void> deleteFeedbackReaction(int feedbackId)async {
+  Future<void> deleteFeedbackReaction(int feedbackId) async {
     _fmsApi.deleteFeedbackReaction(feedbackId);
   }
 
-  Future<void> deleteCommentReaction(int feedbackId) async{
-        _fmsApi.deleteCommentReaction(feedbackId);
-
+  Future<void> deleteCommentReaction(int feedbackId) async {
+    _fmsApi.deleteCommentReaction(feedbackId);
   }
 }

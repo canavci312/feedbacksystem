@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_api/fms_api.dart';
+import 'package:fms_api/src/model/company_feedback_details_response/company_feedback_details_response.dart';
 import 'package:fms_api/src/model/user_login_response/user_login_response.dart';
 import 'package:fms_api/src/token_storage.dart';
 import 'package:fresh_dio/fresh_dio.dart';
@@ -125,6 +126,22 @@ class FmsApi {
     }
   }
 
+  Future<void> upsertReply(int id, int feedbackId, String text) async {
+    try {
+      final response = await _dioClient.post<Map<String, dynamic>>(
+        baseURL + '/Reply/UpsertReply',
+        data: <String, dynamic>{
+   
+          'feedbackId': feedbackId,
+          'text': text
+        },
+      );
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   Future<FeedbackList?> getFeedbackList(FeedbackGetListRequest request) async {
     try {
       final response = await _dioClient.post<Map<String, dynamic>>(
@@ -151,10 +168,14 @@ class FmsApi {
     } catch (e) {}
   }
 
-  Future<void> getCompanyFeedbackDetail(int id) async {
+  Future<CompanyFeedbackDetailsResponse?> getCompanyFeedbackDetail(
+      int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
       baseURL + '/Feedback/GetCompanyFeedbackDetail/$id',
     );
+    if (response != null) {
+      return CompanyFeedbackDetailsResponse.fromJson(response.data!);
+    }
   }
 
   Future<void> getAdminFeedbackDetail(int id) async {
@@ -290,5 +311,4 @@ class FmsApi {
 
     return CompanyList.fromJson(response.data as Map<String, dynamic>);
   }
-
- }
+}

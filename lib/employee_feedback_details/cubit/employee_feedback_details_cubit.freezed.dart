@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'customer_feedbacks_cubit.dart';
+part of 'employee_feedback_details_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,13 +15,13 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CustomerFeedbacksState {
+mixin _$EmployeeFeedbackDetailsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)
+    required TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)
         success,
   }) =>
       throw _privateConstructorUsedError;
@@ -29,8 +29,8 @@ mixin _$CustomerFeedbacksState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,8 +38,8 @@ mixin _$CustomerFeedbacksState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
     required TResult orElse(),
   }) =>
@@ -69,20 +69,21 @@ mixin _$CustomerFeedbacksState {
 }
 
 /// @nodoc
-abstract class $CustomerFeedbacksStateCopyWith<$Res> {
-  factory $CustomerFeedbacksStateCopyWith(CustomerFeedbacksState value,
-          $Res Function(CustomerFeedbacksState) then) =
-      _$CustomerFeedbacksStateCopyWithImpl<$Res>;
+abstract class $EmployeeFeedbackDetailsStateCopyWith<$Res> {
+  factory $EmployeeFeedbackDetailsStateCopyWith(
+          EmployeeFeedbackDetailsState value,
+          $Res Function(EmployeeFeedbackDetailsState) then) =
+      _$EmployeeFeedbackDetailsStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CustomerFeedbacksStateCopyWithImpl<$Res>
-    implements $CustomerFeedbacksStateCopyWith<$Res> {
-  _$CustomerFeedbacksStateCopyWithImpl(this._value, this._then);
+class _$EmployeeFeedbackDetailsStateCopyWithImpl<$Res>
+    implements $EmployeeFeedbackDetailsStateCopyWith<$Res> {
+  _$EmployeeFeedbackDetailsStateCopyWithImpl(this._value, this._then);
 
-  final CustomerFeedbacksState _value;
+  final EmployeeFeedbackDetailsState _value;
   // ignore: unused_field
-  final $Res Function(CustomerFeedbacksState) _then;
+  final $Res Function(EmployeeFeedbackDetailsState) _then;
 }
 
 /// @nodoc
@@ -94,7 +95,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$CustomerFeedbacksStateCopyWithImpl<$Res>
+    extends _$EmployeeFeedbackDetailsStateCopyWithImpl<$Res>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, (v) => _then(v as _$_Initial));
@@ -110,7 +111,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'CustomerFeedbacksState.initial()';
+    return 'EmployeeFeedbackDetailsState.initial()';
   }
 
   @override
@@ -127,8 +128,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)
+    required TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)
         success,
   }) {
     return initial();
@@ -139,8 +140,8 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
   }) {
     return initial?.call();
@@ -151,8 +152,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
     required TResult orElse(),
   }) {
@@ -197,7 +198,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements CustomerFeedbacksState {
+abstract class _Initial implements EmployeeFeedbackDetailsState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -210,7 +211,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$CustomerFeedbacksStateCopyWithImpl<$Res>
+    extends _$EmployeeFeedbackDetailsStateCopyWithImpl<$Res>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, (v) => _then(v as _$_Loading));
@@ -226,7 +227,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'CustomerFeedbacksState.loading()';
+    return 'EmployeeFeedbackDetailsState.loading()';
   }
 
   @override
@@ -243,8 +244,8 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)
+    required TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)
         success,
   }) {
     return loading();
@@ -255,8 +256,8 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
   }) {
     return loading?.call();
@@ -267,8 +268,8 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
     required TResult orElse(),
   }) {
@@ -313,7 +314,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements CustomerFeedbacksState {
+abstract class _Loading implements EmployeeFeedbackDetailsState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -323,12 +324,14 @@ abstract class _$$_SuccessCopyWith<$Res> {
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   $Res call(
-      {List<PublicFeedbackList> list, List<PublicFeedbackList> filteredList});
+      {CompanyFeedbackDetailsResponse feedbackDetail, FeedbackStatus status});
+
+  $CompanyFeedbackDetailsResponseCopyWith<$Res> get feedbackDetail;
 }
 
 /// @nodoc
 class __$$_SuccessCopyWithImpl<$Res>
-    extends _$CustomerFeedbacksStateCopyWithImpl<$Res>
+    extends _$EmployeeFeedbackDetailsStateCopyWithImpl<$Res>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
       : super(_value, (v) => _then(v as _$_Success));
@@ -338,47 +341,43 @@ class __$$_SuccessCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? list = freezed,
-    Object? filteredList = freezed,
+    Object? feedbackDetail = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$_Success(
-      list == freezed
-          ? _value._list
-          : list // ignore: cast_nullable_to_non_nullable
-              as List<PublicFeedbackList>,
-      filteredList == freezed
-          ? _value._filteredList
-          : filteredList // ignore: cast_nullable_to_non_nullable
-              as List<PublicFeedbackList>,
+      feedbackDetail == freezed
+          ? _value.feedbackDetail
+          : feedbackDetail // ignore: cast_nullable_to_non_nullable
+              as CompanyFeedbackDetailsResponse,
+      status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as FeedbackStatus,
     ));
+  }
+
+  @override
+  $CompanyFeedbackDetailsResponseCopyWith<$Res> get feedbackDetail {
+    return $CompanyFeedbackDetailsResponseCopyWith<$Res>(_value.feedbackDetail,
+        (value) {
+      return _then(_value.copyWith(feedbackDetail: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_Success implements _Success {
-  const _$_Success(final List<PublicFeedbackList> list,
-      final List<PublicFeedbackList> filteredList)
-      : _list = list,
-        _filteredList = filteredList;
+  const _$_Success(this.feedbackDetail, this.status);
 
-  final List<PublicFeedbackList> _list;
   @override
-  List<PublicFeedbackList> get list {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_list);
-  }
-
-  final List<PublicFeedbackList> _filteredList;
+  final CompanyFeedbackDetailsResponse feedbackDetail;
   @override
-  List<PublicFeedbackList> get filteredList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_filteredList);
-  }
+  final FeedbackStatus status;
 
   @override
   String toString() {
-    return 'CustomerFeedbacksState.success(list: $list, filteredList: $filteredList)';
+    return 'EmployeeFeedbackDetailsState.success(feedbackDetail: $feedbackDetail, status: $status)';
   }
 
   @override
@@ -386,16 +385,16 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
-            const DeepCollectionEquality().equals(other._list, _list) &&
             const DeepCollectionEquality()
-                .equals(other._filteredList, _filteredList));
+                .equals(other.feedbackDetail, feedbackDetail) &&
+            const DeepCollectionEquality().equals(other.status, status));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_list),
-      const DeepCollectionEquality().hash(_filteredList));
+      const DeepCollectionEquality().hash(feedbackDetail),
+      const DeepCollectionEquality().hash(status));
 
   @JsonKey(ignore: true)
   @override
@@ -407,11 +406,11 @@ class _$_Success implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)
+    required TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)
         success,
   }) {
-    return success(list, filteredList);
+    return success(feedbackDetail, status);
   }
 
   @override
@@ -419,11 +418,11 @@ class _$_Success implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
   }) {
-    return success?.call(list, filteredList);
+    return success?.call(feedbackDetail, status);
   }
 
   @override
@@ -431,13 +430,13 @@ class _$_Success implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<PublicFeedbackList> list,
-            List<PublicFeedbackList> filteredList)?
+    TResult Function(CompanyFeedbackDetailsResponse feedbackDetail,
+            FeedbackStatus status)?
         success,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(list, filteredList);
+      return success(feedbackDetail, status);
     }
     return orElse();
   }
@@ -477,13 +476,13 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements CustomerFeedbacksState {
-  const factory _Success(final List<PublicFeedbackList> list,
-      final List<PublicFeedbackList> filteredList) = _$_Success;
+abstract class _Success implements EmployeeFeedbackDetailsState {
+  const factory _Success(final CompanyFeedbackDetailsResponse feedbackDetail,
+      final FeedbackStatus status) = _$_Success;
 
-  List<PublicFeedbackList> get list => throw _privateConstructorUsedError;
-  List<PublicFeedbackList> get filteredList =>
+  CompanyFeedbackDetailsResponse get feedbackDetail =>
       throw _privateConstructorUsedError;
+  FeedbackStatus get status => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;

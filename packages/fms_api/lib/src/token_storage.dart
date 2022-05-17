@@ -1,4 +1,3 @@
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fresh/fresh.dart';
 
@@ -25,9 +24,7 @@ class FmsTokenStorage implements TokenStorage<String> {
   Future<void> write(String token) async {
     await storage.write(
       key: 'token',
-      value: 
-        token,
-      
+      value: token,
     );
   }
 }

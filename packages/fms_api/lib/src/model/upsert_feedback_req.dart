@@ -5,16 +5,16 @@ part 'upsert_feedback_req.g.dart';
 
 @freezed
 class UpsertFeedbackRequest with _$UpsertFeedbackRequest {
-    @JsonSerializable(
+  @JsonSerializable(
     includeIfNull: false,
   )
   const factory UpsertFeedbackRequest({
-     int? id,
+    int? id,
     required String title,
     required String text,
     required int productId,
-     int? typeId,
-     int? subTypeId,
+    int? typeId,
+    int? subTypeId,
     required bool isAnonym,
   }) = _UpsertFeedbackRequest;
 
