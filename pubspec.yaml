@@ -29,8 +29,9 @@ environment:
 dependencies:
   auth_repository:
     path: packages/auth_repository
-  reaction_repository:
-    path: packages/reaction_repository
+  user_repository:
+    path: packages/user_repository
+  awesome_select: ^5.2.0
   bloc: ^8.0.3
   country_code_picker: ^2.0.2
   cupertino_icons: ^1.0.2
@@ -44,7 +45,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^5.0.2
-  awesome_select: ^5.2.0
   fms_api:
     path: packages/fms_api
   freezed_annotation: any
@@ -55,7 +55,10 @@ dependencies:
   lookup_repository:
     path: packages/lookup_repository
   pretty_dio_logger: ^1.1.1
+  reaction_repository:
+    path: packages/reaction_repository
   timeago: ^3.2.2
+  url_launcher: ^6.1.2
 dev_dependencies:
   build_runner: ^2.1.10
   flutter_lints: ^1.0.0

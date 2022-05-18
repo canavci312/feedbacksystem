@@ -6,5 +6,6 @@ class EmployeeFeedbackDetailsState with _$EmployeeFeedbackDetailsState {
   const factory EmployeeFeedbackDetailsState.loading() = _Loading;
 
   const factory EmployeeFeedbackDetailsState.success(
-      CompanyFeedbackDetailsResponse feedbackDetail, FeedbackStatus status) = _Success;
+      CompanyFeedbackDetailsResponse feedbackDetail,
+      FeedbackStatus status) = _Success;
 }

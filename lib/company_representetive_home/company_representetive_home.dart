@@ -1,9 +1,10 @@
 import 'package:feedbacksystem/customer_feedbacks/view/customer_feedback_view.dart';
+import 'package:feedbacksystem/employee_feedback/view/employee_feedback_page.dart';
 import 'package:feedbacksystem/user_profile/view/user_profile_page.dart';
 import 'package:flutter/cupertino.dart';
 
-class RepresentetiveHomePage extends StatelessWidget {
-  const RepresentetiveHomePage({Key? key}) : super(key: key);
+class CompanyRepresentetiveHome extends StatelessWidget {
+  const CompanyRepresentetiveHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +24,12 @@ class RepresentetiveHomePage extends StatelessWidget {
           builder: (BuildContext context) {
             switch (index) {
               case 0:
-                return CustomerFeedbackPage();
+                return EmployeeFeedbackPage();
               case 1:
                 return UserProfilePage();
 
               default:
-                return CustomerFeedbackPage();
+                return EmployeeFeedbackPage();
             }
           },
         );

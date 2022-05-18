@@ -1,3 +1,4 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:feedback_repository/feedback_repository.dart';
 import 'package:fms_api/fms_api.dart';
@@ -10,17 +11,18 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
   final FeedbackRepository _feedbackRepository;
   List<CompanyFeedbackList>? feedbacks;
   List<CompanyFeedbackList> filteredList = [];
-
-  EmployeeFeedbackCubit(this._feedbackRepository)
+  final AuthRepository _authRepository;
+  late User _curUser;
+  EmployeeFeedbackCubit(this._feedbackRepository, this._authRepository)
       : super(EmployeeFeedbackState.initial());
   getFeedbackList() async {
     emit(EmployeeFeedbackState.loading());
-
+    var _curUser = await _authRepository.currentUser();
     feedbacks = await _feedbackRepository.getCompanyFeedbackList(
       FeedbackGetListRequest(),
     );
     if (feedbacks != null) {
-      emit(EmployeeFeedbackState.success(feedbacks!, []));
+      emit(EmployeeFeedbackState.success(feedbacks!, [], _curUser!.roleName!));
     }
   }
 
@@ -32,13 +34,15 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
           feedbacks!.where((element) => element.isReplied == true).toList());
       var tempSet = filteredList.toSet();
       filteredList = tempSet.toList();
-      emit(EmployeeFeedbackState.success(feedbacks!, filteredList));
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser.roleName!));
     } else {
       filteredList.addAll(
           feedbacks!.where((element) => element.isReplied == false).toList());
       var tempSet = filteredList.toSet();
       filteredList = tempSet.toList();
-      emit(EmployeeFeedbackState.success(feedbacks!, filteredList));
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser.roleName!));
     }
   }
 }

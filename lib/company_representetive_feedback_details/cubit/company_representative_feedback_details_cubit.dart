@@ -6,23 +6,25 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../customer_feedback_details/cubit/customer_feedback_details_cubit.dart';
 
-part 'employee_feedback_details_state.dart';
-part 'employee_feedback_details_cubit.freezed.dart';
+part 'company_representative_feedback_details_state.dart';
+part 'company_representative_feedback_details_cubit.freezed.dart';
 
-class EmployeeFeedbackDetailsCubit extends Cubit<EmployeeFeedbackDetailsState> {
+class CompanyRepresentativeFeedbackDetailsCubit
+    extends Cubit<CompanyRepresentativeFeedbackDetailsState> {
   final FeedbackRepository _feedbackRepository;
   final AuthRepository _authRepository;
   final int feedbackId;
-  EmployeeFeedbackDetailsCubit(
+  CompanyRepresentativeFeedbackDetailsCubit(
       this._authRepository, this._feedbackRepository, this.feedbackId)
-      : super(EmployeeFeedbackDetailsState.initial());
+      : super(CompanyRepresentativeFeedbackDetailsState.initial());
 
   fetchDetails() async {
-    emit(EmployeeFeedbackDetailsState.loading());
+    emit(CompanyRepresentativeFeedbackDetailsState.loading());
     final response =
         await _feedbackRepository.getCompanyFeedbackDetail(feedbackId);
     if (response != null) {
-      emit(EmployeeFeedbackDetailsState.success(response, getStatus(response)));
+      emit(CompanyRepresentativeFeedbackDetailsState.success(
+          response, getStatus(response)));
     }
   }
 
@@ -37,7 +39,7 @@ class EmployeeFeedbackDetailsCubit extends Cubit<EmployeeFeedbackDetailsState> {
   }
 
   Future<void> sendFeedback(String text) async {
-    emit(EmployeeFeedbackDetailsState.loading());
+    emit(CompanyRepresentativeFeedbackDetailsState.loading());
     var curUser = await _authRepository.currentUser();
 
     final response = await _feedbackRepository.upsertReply(

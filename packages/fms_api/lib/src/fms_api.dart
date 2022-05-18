@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:fms_api/src/model/company_feedback_details_response/company_feedback_details_response.dart';
+import 'package:fms_api/src/model/user_get_list_response/user_get_list_response.dart';
 import 'package:fms_api/src/model/user_login_response/user_login_response.dart';
 import 'package:fms_api/src/token_storage.dart';
 import 'package:fresh_dio/fresh_dio.dart';
@@ -130,11 +131,7 @@ class FmsApi {
     try {
       final response = await _dioClient.post<Map<String, dynamic>>(
         baseURL + '/Reply/UpsertReply',
-        data: <String, dynamic>{
-   
-          'feedbackId': feedbackId,
-          'text': text
-        },
+        data: <String, dynamic>{'feedbackId': feedbackId, 'text': text},
       );
     } catch (e) {
       log(e.toString());
@@ -308,7 +305,14 @@ class FmsApi {
           baseURL + '/Lookup/Product',
           queryParameters: <String, dynamic>{'companyId': companyId});
     }
+  }
 
-    return CompanyList.fromJson(response.data as Map<String, dynamic>);
+  Future<UserGetListResponse?> getUserList() async {
+    Response<dynamic> response;
+    response = await _dioClient.post<Map<String, dynamic>>(
+      baseURL + '/User/GetList',
+      data: <String,dynamic>{}
+    );
+    return UserGetListResponse.fromJson(response.data as Map<String, dynamic>);
   }
 }

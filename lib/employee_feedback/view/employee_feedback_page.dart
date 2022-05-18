@@ -1,8 +1,11 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:feedback_repository/feedback_repository.dart';
+import 'package:feedbacksystem/company_representetive_feedback_details/view/company_representetive_feedback_details_page.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
 import 'package:feedbacksystem/employee_feedback/cubit/employeefeedback_cubit.dart';
 import 'package:feedbacksystem/employee_feedback_details/view/employee_feedback_details_page.dart';
 import 'package:feedbacksystem/locator.dart';
+import 'package:feedbacksystem/root_page/cubit/root_page_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,8 +18,9 @@ class EmployeeFeedbackPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          EmployeeFeedbackCubit(getIt<FeedbackRepository>())..getFeedbackList(),
+      create: (context) => EmployeeFeedbackCubit(
+          getIt<FeedbackRepository>(), getIt<AuthRepository>())
+        ..getFeedbackList(),
       child: EmployeeFeedbackView(),
     );
   }
@@ -49,10 +53,11 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
       ),
       child: Column(children: [
         const SizedBox(
-          height: 70,
+          height: 60,
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(context).viewPadding.top, bottom: 8),
           child: CupertinoSearchTextField(
             placeholder: 'Geribildirim Ara',
             controller: controller,
@@ -103,7 +108,7 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
             return state.when(
               initial: () => const SizedBox(),
               loading: () => const CircularProgressIndicator(),
-              success: (list, filteredList) => controller.text.length > 2
+              success: (list, filteredList, role) => controller.text.length > 2
                   ? Expanded(
                       child: Material(
                         child: ListView.separated(
@@ -151,10 +156,20 @@ class CompanyFeedbackListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (() => Navigator.of(context).push(
-            CupertinoPageRoute(
-                builder: (context) => EmployeeFeedbackDetailsPage(item)),
-          )),
+      onTap: (() {
+        context.read<EmployeeFeedbackCubit>().state.whenOrNull(
+          success: (list, filteredList, roleName) {
+            if (roleName == 'Company Representative') {
+              return Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) =>
+                      CompanyRepresentativeFeedbackDetailsPage(item)));
+            } else {
+              return Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => EmployeeFeedbackDetailsPage(item)));
+            }
+          },
+        );
+      }),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(

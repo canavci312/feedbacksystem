@@ -1,25 +1,25 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:feedback_repository/feedback_repository.dart';
-import 'package:feedbacksystem/customer_feedback_details/cubit/customer_feedback_details_cubit.dart';
+import 'package:feedbacksystem/company_representetive_feedback_details/cubit/company_representative_feedback_details_cubit.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/widget/custom_stepper.dart';
-import 'package:feedbacksystem/employee_feedback_details/cubit/employee_feedback_details_cubit.dart';
+import 'package:feedbacksystem/direct_feedback/view/direct_feedback_dialog.dart';
 import 'package:feedbacksystem/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
-import 'package:reaction_repository/reaction_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class EmployeeFeedbackDetailsPage extends StatelessWidget {
+class CompanyRepresentativeFeedbackDetailsPage extends StatelessWidget {
   final CompanyFeedbackList item;
-  const EmployeeFeedbackDetailsPage(this.item, {Key? key}) : super(key: key);
+  const CompanyRepresentativeFeedbackDetailsPage(this.item, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EmployeeFeedbackDetailsCubit(
+      create: (context) => CompanyRepresentativeFeedbackDetailsCubit(
           getIt<AuthRepository>(), getIt<FeedbackRepository>(), item.id!)
         ..fetchDetails(),
       child: const EmployeeFeedbackDetailView(),
@@ -46,75 +46,90 @@ class _EmployeeFeedbackDetailViewState
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<EmployeeFeedbackDetailsCubit>();
+    var cubit = context.read<CompanyRepresentativeFeedbackDetailsCubit>();
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: CupertinoNavigationBarBackButton(
           onPressed: () => Navigator.of(context).pop(),
         ),
         middle: const Text('Detaylar'),
-        trailing: GestureDetector(
-            onTap: (() {
-              showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) => CupertinoActionSheet(
-                        title: const Text('Müşteriye ulaşın'),
-                        actions: [
-                          CupertinoActionSheetAction(
-                            onPressed: () async {
-                              var reponse = await launchUrl(Uri(
-                                  scheme: 'tel',
-                                  path: cubit.state.whenOrNull(
-                                    success: (feedbackDetail, status) =>
-                                        feedbackDetail.data!.customerPhone!,
-                                  )));
-                              print(reponse);
-                            },
-                            child: Row(
-                              children: [
-                                const Icon(CupertinoIcons.phone),
-                                const SizedBox(
-                                  width: 5,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GestureDetector(
+                onTap: (() {
+                  showCupertinoDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) => DirectFeedbackDialogPage(cubit.feedbackId));
+                }),
+                child: Icon(Icons.forward_outlined)),
+            GestureDetector(
+                onTap: (() {
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (context) => CupertinoActionSheet(
+                            title: const Text('Müşteriye ulaşın'),
+                            actions: [
+                              CupertinoActionSheetAction(
+                                onPressed: () async {
+                                  var reponse = await launchUrl(Uri(
+                                      scheme: 'tel',
+                                      path: cubit.state.whenOrNull(
+                                        success: (feedbackDetail, status) =>
+                                            feedbackDetail.data!.customerPhone!,
+                                      )));
+                                  print(reponse);
+                                },
+                                child: Row(
+                                  children: [
+                                    const Icon(CupertinoIcons.phone),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(cubit.state.whenOrNull(
+                                          success: (feedbackDetail, status) =>
+                                              feedbackDetail
+                                                  .data!.customerPhone!,
+                                        ) ??
+                                        '')
+                                  ],
                                 ),
-                                Text(cubit.state.whenOrNull(
-                                      success: (feedbackDetail, status) =>
-                                          feedbackDetail.data!.customerPhone!,
-                                    ) ??
-                                    '')
-                              ],
-                            ),
-                          ),
-                          CupertinoActionSheetAction(
-                            onPressed: () async {
-                              var reponse = await launchUrl(Uri(
-                                  scheme: 'mailto',
-                                  path: cubit.state.whenOrNull(
-                                    success: (feedbackDetail, status) =>
-                                        feedbackDetail.data!.customerEmail!,
-                                  )));
-                              print(reponse);
-                            },
-                            child: Row(
-                              children: [
-                                const Icon(CupertinoIcons.mail),
-                                const SizedBox(
-                                  width: 5,
+                              ),
+                              CupertinoActionSheetAction(
+                                onPressed: () async {
+                                  var reponse = await launchUrl(Uri(
+                                      scheme: 'mailto',
+                                      path: cubit.state.whenOrNull(
+                                        success: (feedbackDetail, status) =>
+                                            feedbackDetail.data!.customerEmail!,
+                                      )));
+                                  print(reponse);
+                                },
+                                child: Row(
+                                  children: [
+                                    const Icon(CupertinoIcons.mail),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(cubit.state.whenOrNull(
+                                          success: (feedbackDetail, status) =>
+                                              feedbackDetail
+                                                  .data!.customerEmail!,
+                                        ) ??
+                                        '')
+                                  ],
                                 ),
-                                Text(cubit.state.whenOrNull(
-                                      success: (feedbackDetail, status) =>
-                                          feedbackDetail.data!.customerEmail!,
-                                    ) ??
-                                    '')
-                              ],
-                            ),
-                          )
-                        ],
-                      ));
-            }),
-            child: const Icon(CupertinoIcons.phone)),
+                              )
+                            ],
+                          ));
+                }),
+                child: const Icon(CupertinoIcons.phone)),
+          ],
+        ),
       ),
-      child: BlocBuilder<EmployeeFeedbackDetailsCubit,
-          EmployeeFeedbackDetailsState>(
+      child: BlocBuilder<CompanyRepresentativeFeedbackDetailsCubit,
+          CompanyRepresentativeFeedbackDetailsState>(
         builder: (context, state) {
           return state.when(
               initial: () => const SizedBox(),
@@ -226,7 +241,7 @@ class _EmployeeFeedbackDetailViewState
                                       onPressed: () {
                                         context
                                             .read<
-                                                EmployeeFeedbackDetailsCubit>()
+                                                CompanyRepresentativeFeedbackDetailsCubit>()
                                             .sendFeedback(
                                                 _replyController.text);
                                         _replyController.clear();

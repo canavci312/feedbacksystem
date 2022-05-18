@@ -9,3 +9,5 @@ export 'company_list/company_list.dart';
 export 'feedback_detail_response/feedback_detail_response.dart';
 export 'user_login_response/user_login_response.dart';
 export 'feedback_list_response/feedback_list_response.dart';
+export 'user_get_list_response/user_get_list_response.dart';
+export 'user_get_list_response/user_list.dart';
