@@ -31,6 +31,8 @@ dependencies:
     path: packages/auth_repository
   user_repository:
     path: packages/user_repository
+  system_repository:
+    path: packages/system_repository
   awesome_select: ^5.2.0
   bloc: ^8.0.3
   country_code_picker: ^2.0.2

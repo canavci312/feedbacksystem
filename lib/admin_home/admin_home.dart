@@ -1,3 +1,4 @@
+import 'package:feedbacksystem/admin_settings/view/admin_settings_page.dart';
 import 'package:feedbacksystem/customer_feedbacks/view/customer_feedback_view.dart';
 import 'package:feedbacksystem/user_profile/view/user_profile_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,9 @@ class AdminHome extends StatelessWidget {
             icon: Icon(CupertinoIcons.news),
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.settings),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.profile_circled),
           ),
         ],
@@ -25,8 +29,9 @@ class AdminHome extends StatelessWidget {
               case 0:
                 return CustomerFeedbackPage();
               case 1:
+                return AdminSettingsPage();
+              case 2:
                 return UserProfilePage();
-
               default:
                 return CustomerFeedbackPage();
             }

@@ -310,9 +310,21 @@ class FmsApi {
   Future<UserGetListResponse?> getUserList() async {
     Response<dynamic> response;
     response = await _dioClient.post<Map<String, dynamic>>(
-      baseURL + '/User/GetList',
-      data: <String,dynamic>{}
-    );
+        baseURL + '/User/GetList',
+        data: <String, dynamic>{});
     return UserGetListResponse.fromJson(response.data as Map<String, dynamic>);
+  }
+
+  Future<void> setModeOfOperation(int modeId) async {
+    await _dioClient.put<Map<String, dynamic>>(
+        baseURL + '/System/SetModeOfOperation',
+        data: <String, dynamic>{"modeId": modeId});
+  }
+
+  Future<int> getModeOfOperation() async {
+    var response = await _dioClient.get<Map<String, dynamic>>(
+      baseURL + '/System/GetModeOfOperation',
+    );
+    return response.data?['data']['id'] as int;
   }
 }

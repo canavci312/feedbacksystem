@@ -1,5 +1,5 @@
-name: user_repository
-description: Repository for User related api calls
+name: system_repository
+description: Repository for System related api calls
 version: 1.0.0+1
 publish_to: none
 

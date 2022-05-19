@@ -3,6 +3,7 @@ import 'package:feedbacksystem/customer_home/view/customer_home.dart';
 import 'package:feedbacksystem/locator.dart';
 import 'package:feedbacksystem/login/cubit/login_cubit.dart';
 import 'package:feedbacksystem/register/register.dart';
+import 'package:feedbacksystem/root_page/view/root_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,7 +80,7 @@ class _LoginViewState extends State<LoginView> {
               } else {}
             },
             success: () => Navigator.of(context).pushReplacement(
-                CupertinoPageRoute(builder: (context) => CustomerHome())));
+                CupertinoPageRoute(builder: (context) => RootPage())));
       },
       child: CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(

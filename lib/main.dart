@@ -11,6 +11,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
   var storage = await FlutterSecureStorage();
+  const admin =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjEiLCJuYW1lIjoiT3JhbGxhcyIsImVtYWlsIjoib2xhcnMwQHdhbG1hcnQuY29tIiwibmJmIjoxNjUwMDY2OTQ4LCJleHAiOjE2ODE2MDI5NDgsImlhdCI6MTY1MDA2Njk0OH0.uE9JfecoOIzZrHi59KCfBN5wLfSHQcVhqDkGBNryvyc';
   const employee =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjYxIiwibmFtZSI6IkJhcnJpZSIsImVtYWlsIjoiYm1jZ2x5bm4xb0BkZWxpY2lvdXMuY29tIiwiUm9sZU5hbWUiOiJDb21wYW55IEVtcGxveWVlIiwibmJmIjoxNjUwMjczOTAxLCJleHAiOjE2ODE4MDk5MDEsImlhdCI6MTY1MDI3MzkwMX0.UbTGzVvBywkUPscstSAN3C7lTvCigHfYKKgcmMMGWZk';
   const representative =
@@ -21,7 +23,7 @@ void main() async {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjQzIiwibmFtZSI6IkRpZXRlciIsImVtYWlsIjoiZGNyYWZ0MTZAc2luYS5jb20uY24iLCJSb2xlTmFtZSI6IkN1c3RvbWVyIiwibmJmIjoxNjUwMzc1NTgzLCJleHAiOjE2ODE5MTE1ODMsImlhdCI6MTY1MDM3NTU4M30.JwOruTsWyzDdNXy3MQI_P4d1OU_R7BneOuSNcHvBs7U';
   const customer_50 =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjUwIiwibmFtZSI6Ikxpc2UiLCJlbWFpbCI6ImxjYWxsZW4xZEB0dXR0b2NpdHRhLml0IiwiUm9sZU5hbWUiOiJDdXN0b21lciIsIm5iZiI6MTY1MDM3NTYzNiwiZXhwIjoxNjgxOTExNjM2LCJpYXQiOjE2NTAzNzU2MzZ9._XHs0Bvw2ruETQMdZAEp9eA8QojNzAp1F-jjKz88UZc';
-  await storage.write(key: 'token', value: representative);
+  await storage.write(key: 'token', value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjQiLCJuYW1lIjoiUm9iZW5pYSIsImVtYWlsIjoiY2FuLmF2Y2lAbWV0dS5lZHUudHIiLCJSb2xlTmFtZSI6IlN5c3RlbSBBZG1pbmlzdHJhdG9yIiwibmJmIjoxNjUyODkzNzUwLCJleHAiOjE2NTI4OTU1NTAsImlhdCI6MTY1Mjg5Mzc1MH0.9BF-P1TiYM66W-9CYEjUs5VJMYCv2CaouHe43BCYy_o');
   runApp(MyApp());
 }
 
