@@ -19,18 +19,21 @@ mixin _$RootPageState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() unauth,
     required TResult Function(Roles role) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? unauth,
     TResult Function(Roles role)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? unauth,
     TResult Function(Roles role)? success,
     required TResult orElse(),
   }) =>
@@ -38,18 +41,21 @@ mixin _$RootPageState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_UnAuth value) unauth,
     required TResult Function(_Success value) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
     TResult Function(_Success value)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) =>
@@ -113,6 +119,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() unauth,
     required TResult Function(Roles role) success,
   }) {
     return initial();
@@ -122,6 +129,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? unauth,
     TResult Function(Roles role)? success,
   }) {
     return initial?.call();
@@ -131,6 +139,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? unauth,
     TResult Function(Roles role)? success,
     required TResult orElse(),
   }) {
@@ -144,6 +153,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_UnAuth value) unauth,
     required TResult Function(_Success value) success,
   }) {
     return initial(this);
@@ -153,6 +163,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
     TResult Function(_Success value)? success,
   }) {
     return initial?.call(this);
@@ -162,6 +173,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
@@ -174,6 +186,114 @@ class _$_Initial implements _Initial {
 
 abstract class _Initial implements RootPageState {
   const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$$_UnAuthCopyWith<$Res> {
+  factory _$$_UnAuthCopyWith(_$_UnAuth value, $Res Function(_$_UnAuth) then) =
+      __$$_UnAuthCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_UnAuthCopyWithImpl<$Res> extends _$RootPageStateCopyWithImpl<$Res>
+    implements _$$_UnAuthCopyWith<$Res> {
+  __$$_UnAuthCopyWithImpl(_$_UnAuth _value, $Res Function(_$_UnAuth) _then)
+      : super(_value, (v) => _then(v as _$_UnAuth));
+
+  @override
+  _$_UnAuth get _value => super._value as _$_UnAuth;
+}
+
+/// @nodoc
+
+class _$_UnAuth implements _UnAuth {
+  const _$_UnAuth();
+
+  @override
+  String toString() {
+    return 'RootPageState.unauth()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_UnAuth);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() unauth,
+    required TResult Function(Roles role) success,
+  }) {
+    return unauth();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? unauth,
+    TResult Function(Roles role)? success,
+  }) {
+    return unauth?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? unauth,
+    TResult Function(Roles role)? success,
+    required TResult orElse(),
+  }) {
+    if (unauth != null) {
+      return unauth();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_UnAuth value) unauth,
+    required TResult Function(_Success value) success,
+  }) {
+    return unauth(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
+    TResult Function(_Success value)? success,
+  }) {
+    return unauth?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
+    TResult Function(_Success value)? success,
+    required TResult orElse(),
+  }) {
+    if (unauth != null) {
+      return unauth(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UnAuth implements RootPageState {
+  const factory _UnAuth() = _$_UnAuth;
 }
 
 /// @nodoc
@@ -240,6 +360,7 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() unauth,
     required TResult Function(Roles role) success,
   }) {
     return success(role);
@@ -249,6 +370,7 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? unauth,
     TResult Function(Roles role)? success,
   }) {
     return success?.call(role);
@@ -258,6 +380,7 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? unauth,
     TResult Function(Roles role)? success,
     required TResult orElse(),
   }) {
@@ -271,6 +394,7 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_UnAuth value) unauth,
     required TResult Function(_Success value) success,
   }) {
     return success(this);
@@ -280,6 +404,7 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
     TResult Function(_Success value)? success,
   }) {
     return success?.call(this);
@@ -289,6 +414,7 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_UnAuth value)? unauth,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {

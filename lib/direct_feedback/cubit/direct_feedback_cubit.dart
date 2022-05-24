@@ -17,7 +17,10 @@ class DirectFeedbackCubit extends Cubit<DirectFeedbackState> {
   fetchEmployees() async {
     emit(DirectFeedbackState.loading());
     var response = await _userRepository.getUserList();
-    emit(DirectFeedbackState.success(response!.data!.userList ?? []));
+    var userList = response!.data!.userList
+        ?.where((element) => element.roleName == 'Company Employee')
+        .toList();
+    emit(DirectFeedbackState.success(userList ?? []));
   }
 
   directFeedback(int employeeId) {

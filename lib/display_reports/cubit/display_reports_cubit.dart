@@ -13,7 +13,7 @@ class DisplayReportsCubit extends Cubit<DisplayReportsState> {
 
   fetchFeedbackCountReports() async {
     emit(DisplayReportsState.loading());
-    final response =await _reportRepository.feedbackCounts();
+    final response = await _reportRepository.feedbackCounts();
     emit(DisplayReportsState.success(response));
   }
 }

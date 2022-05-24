@@ -42,7 +42,7 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
   }
 
   bool isAnswered = false;
-  bool notAnswered = false;
+  bool directedToMe = false;
   bool notSolved = false;
 
   @override
@@ -73,29 +73,41 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
               scrollDirection: Axis.horizontal,
               children: [
                 FilterChip(
+                  label: Text('Bana Yönlendirilen'),
+                  onSelected: (isSelected) {
+                    directedToMe = isSelected;
+                    setState(() {});
+                    context
+                        .read<EmployeeFeedbackCubit>()
+                        .directedToMe(isSelected);
+                  },
+                  selected: directedToMe,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                FilterChip(
                   label: Text('Cevaplanan'),
                   onSelected: (isSelected) {
                     isAnswered = isSelected;
                     setState(() {});
                     context
                         .read<EmployeeFeedbackCubit>()
-                        .filterIsAnswered(true);
+                        .filterIsAnswered(isSelected);
                   },
                   selected: isAnswered,
                 ),
-                FilterChip(
-                  label: Text('Cevaplanmamış'),
-                  onSelected: (isSelected) {
-                    notAnswered = isSelected;
-                    setState(() {});
-                  },
-                  selected: notAnswered,
+                SizedBox(
+                  width: 5,
                 ),
                 FilterChip(
                   label: Text('Çözülmemiş'),
                   onSelected: (isSelected) {
                     notSolved = isSelected;
                     setState(() {});
+                    context
+                        .read<EmployeeFeedbackCubit>()
+                        .filterNotSolved(isSelected);
                   },
                   selected: notSolved,
                 ),
@@ -108,10 +120,11 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
             return state.when(
               initial: () => const SizedBox(),
               loading: () => const CircularProgressIndicator(),
-              success: (list, filteredList, role) => controller.text.length > 2
+              success: (list, filteredList, role) => filteredList.isNotEmpty
                   ? Expanded(
                       child: Material(
                         child: ListView.separated(
+                          padding: EdgeInsets.zero,
                           itemCount: filteredList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CompanyFeedbackListTile(filteredList[index]);
@@ -127,6 +140,7 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
                   : Expanded(
                       child: Material(
                         child: ListView.separated(
+                          padding: EdgeInsets.zero,
                           itemCount: list.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CompanyFeedbackListTile(list[index]);
@@ -141,6 +155,9 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
                     ),
             );
           },
+        ),
+        SizedBox(
+          height: 70,
         )
       ]),
     );

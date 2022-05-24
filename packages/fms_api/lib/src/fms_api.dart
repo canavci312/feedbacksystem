@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:fms_api/src/model/company_feedback_details_response/company_feedback_details_response.dart';
 import 'package:fms_api/src/model/customer_statistics_response/customer_statistics_response.dart';
+import 'package:fms_api/src/model/education_response/education_response.dart';
 import 'package:fms_api/src/model/employee_report_response/employee_report.dart';
 import 'package:fms_api/src/model/employee_report_response/employee_report_response.dart';
 import 'package:fms_api/src/model/feedback_counts_response/feedback_counts_response.dart';
@@ -309,6 +310,13 @@ class FmsApi {
           baseURL + '/Lookup/Product',
           queryParameters: <String, dynamic>{'companyId': companyId});
     }
+  }
+
+  Future<EducationResponse?> getEducation() async {
+    final response = await _dioClient.get<Map<String, dynamic>>(
+      baseURL + '/Lookup/Education',
+    );
+   return EducationResponse.fromJson(response.data!);
   }
 
   Future<UserGetListResponse?> getUserList() async {

@@ -60,6 +60,7 @@ class _EmployeeFeedbackDetailViewState
             GestureDetector(
                 onTap: (() {
                   showCupertinoDialog<void>(
+                      barrierDismissible: true,
                       context: context,
                       builder: (BuildContext context) =>
                           DirectFeedbackDialogPage(cubit.feedbackId));

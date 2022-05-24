@@ -27,7 +27,7 @@ class CompanyFeedbackList with _$CompanyFeedbackList {
     String? customerEmail,
     String? customerPhone,
     String? customerLastName,
-    int? directedToEmploteeId,
+    int? directedToEmployeeId,
     bool? isArchived,
   }) = _CompanyFeedbackList;
 

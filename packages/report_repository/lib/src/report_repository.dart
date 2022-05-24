@@ -12,10 +12,10 @@ class ReportRepository {
   }
 
   Future<EmployeeReportResponse> employeeReport() async {
-    return  _fmsApi.getEmployeeReport();
+    return _fmsApi.getEmployeeReport();
   }
 
   Future<CustomerStatisticsResponse> customerStatistics() async {
-   return  _fmsApi.getCustomerStatistics();
+    return _fmsApi.getCustomerStatistics();
   }
 }

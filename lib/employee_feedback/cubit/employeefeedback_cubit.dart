@@ -12,12 +12,13 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
   List<CompanyFeedbackList>? feedbacks;
   List<CompanyFeedbackList> filteredList = [];
   final AuthRepository _authRepository;
-  late User _curUser;
+  User? _curUser;
   EmployeeFeedbackCubit(this._feedbackRepository, this._authRepository)
       : super(EmployeeFeedbackState.initial());
   getFeedbackList() async {
     emit(EmployeeFeedbackState.loading());
-    var _curUser = await _authRepository.currentUser();
+
+    _curUser = await _authRepository.currentUser();
     feedbacks = await _feedbackRepository.getCompanyFeedbackList(
       FeedbackGetListRequest(),
     );
@@ -26,7 +27,44 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
     }
   }
 
-  void searchFeedbacks(String value) {}
+  directedToMe(bool isTrue) {
+    if (isTrue) {
+      filteredList.addAll(feedbacks!
+          .where((element) => element.directedToEmployeeId.toString() == _curUser?.id)
+          .toList());
+      var tempSet = filteredList.toSet();
+      filteredList = tempSet.toList();
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    } else {
+      filteredList.removeWhere(
+          (element) => element.directedToEmployeeId.toString()== _curUser?.id);
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    }
+  }
+
+  void searchFeedbacks(String value) {
+    if (filteredList.isNotEmpty) {
+      filteredList = filteredList
+          .where((element) => element.title!.contains(value))
+          .toList();
+    } else {
+      filteredList.addAll(feedbacks ?? []);
+      var tempSet = filteredList.toSet();
+      filteredList = tempSet.toList();
+      filteredList = filteredList
+          .where((element) => element.title!.contains(value))
+          .toList();
+    }
+    if (value.length < 2) {
+      filteredList.addAll(feedbacks ?? []);
+      var tempSet = filteredList.toSet();
+      filteredList = tempSet.toList();
+    }
+    emit(EmployeeFeedbackState.success(
+        feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+  }
 
   void filterIsAnswered(bool bool) {
     if (bool) {
@@ -35,14 +73,26 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
       var tempSet = filteredList.toSet();
       filteredList = tempSet.toList();
       emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser.roleName!));
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
     } else {
+      filteredList.removeWhere((element) => element.isReplied == true);
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    }
+  }
+
+  void filterNotSolved(bool bool) {
+    if (bool) {
       filteredList.addAll(
-          feedbacks!.where((element) => element.isReplied == false).toList());
+          feedbacks!.where((element) => element.isSolved == false).toList());
       var tempSet = filteredList.toSet();
       filteredList = tempSet.toList();
       emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser.roleName!));
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    } else {
+      filteredList.removeWhere((element) => element.isSolved == false);
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
     }
   }
 }

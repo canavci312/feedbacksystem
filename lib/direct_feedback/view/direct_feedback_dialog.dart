@@ -49,6 +49,7 @@ class DirectFeedbackDialog extends StatelessWidget {
                               context
                                   .read<DirectFeedbackCubit>()
                                   .directFeedback(list[index].id ?? 0);
+                              Navigator.pop(context);
                             },
                             trailing: Icon(CupertinoIcons.forward),
                             title: Text(list[index].firstName! +

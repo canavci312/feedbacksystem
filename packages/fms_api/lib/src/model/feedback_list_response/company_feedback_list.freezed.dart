@@ -41,7 +41,7 @@ mixin _$CompanyFeedbackList {
   String? get customerEmail => throw _privateConstructorUsedError;
   String? get customerPhone => throw _privateConstructorUsedError;
   String? get customerLastName => throw _privateConstructorUsedError;
-  int? get directedToEmploteeId => throw _privateConstructorUsedError;
+  int? get directedToEmployeeId => throw _privateConstructorUsedError;
   bool? get isArchived => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -77,7 +77,7 @@ abstract class $CompanyFeedbackListCopyWith<$Res> {
       String? customerEmail,
       String? customerPhone,
       String? customerLastName,
-      int? directedToEmploteeId,
+      int? directedToEmployeeId,
       bool? isArchived});
 }
 
@@ -113,7 +113,7 @@ class _$CompanyFeedbackListCopyWithImpl<$Res>
     Object? customerEmail = freezed,
     Object? customerPhone = freezed,
     Object? customerLastName = freezed,
-    Object? directedToEmploteeId = freezed,
+    Object? directedToEmployeeId = freezed,
     Object? isArchived = freezed,
   }) {
     return _then(_value.copyWith(
@@ -201,9 +201,9 @@ class _$CompanyFeedbackListCopyWithImpl<$Res>
           ? _value.customerLastName
           : customerLastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      directedToEmploteeId: directedToEmploteeId == freezed
-          ? _value.directedToEmploteeId
-          : directedToEmploteeId // ignore: cast_nullable_to_non_nullable
+      directedToEmployeeId: directedToEmployeeId == freezed
+          ? _value.directedToEmployeeId
+          : directedToEmployeeId // ignore: cast_nullable_to_non_nullable
               as int?,
       isArchived: isArchived == freezed
           ? _value.isArchived
@@ -242,7 +242,7 @@ abstract class _$CompanyFeedbackListCopyWith<$Res>
       String? customerEmail,
       String? customerPhone,
       String? customerLastName,
-      int? directedToEmploteeId,
+      int? directedToEmployeeId,
       bool? isArchived});
 }
 
@@ -280,7 +280,7 @@ class __$CompanyFeedbackListCopyWithImpl<$Res>
     Object? customerEmail = freezed,
     Object? customerPhone = freezed,
     Object? customerLastName = freezed,
-    Object? directedToEmploteeId = freezed,
+    Object? directedToEmployeeId = freezed,
     Object? isArchived = freezed,
   }) {
     return _then(_CompanyFeedbackList(
@@ -368,9 +368,9 @@ class __$CompanyFeedbackListCopyWithImpl<$Res>
           ? _value.customerLastName
           : customerLastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      directedToEmploteeId: directedToEmploteeId == freezed
-          ? _value.directedToEmploteeId
-          : directedToEmploteeId // ignore: cast_nullable_to_non_nullable
+      directedToEmployeeId: directedToEmployeeId == freezed
+          ? _value.directedToEmployeeId
+          : directedToEmployeeId // ignore: cast_nullable_to_non_nullable
               as int?,
       isArchived: isArchived == freezed
           ? _value.isArchived
@@ -405,7 +405,7 @@ class _$_CompanyFeedbackList implements _CompanyFeedbackList {
       this.customerEmail,
       this.customerPhone,
       this.customerLastName,
-      this.directedToEmploteeId,
+      this.directedToEmployeeId,
       this.isArchived});
 
   factory _$_CompanyFeedbackList.fromJson(Map<String, dynamic> json) =>
@@ -454,13 +454,13 @@ class _$_CompanyFeedbackList implements _CompanyFeedbackList {
   @override
   final String? customerLastName;
   @override
-  final int? directedToEmploteeId;
+  final int? directedToEmployeeId;
   @override
   final bool? isArchived;
 
   @override
   String toString() {
-    return 'CompanyFeedbackList(id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved, customerEmail: $customerEmail, customerPhone: $customerPhone, customerLastName: $customerLastName, directedToEmploteeId: $directedToEmploteeId, isArchived: $isArchived)';
+    return 'CompanyFeedbackList(id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved, customerEmail: $customerEmail, customerPhone: $customerPhone, customerLastName: $customerLastName, directedToEmployeeId: $directedToEmployeeId, isArchived: $isArchived)';
   }
 
   @override
@@ -498,7 +498,7 @@ class _$_CompanyFeedbackList implements _CompanyFeedbackList {
             const DeepCollectionEquality()
                 .equals(other.customerLastName, customerLastName) &&
             const DeepCollectionEquality()
-                .equals(other.directedToEmploteeId, directedToEmploteeId) &&
+                .equals(other.directedToEmployeeId, directedToEmployeeId) &&
             const DeepCollectionEquality()
                 .equals(other.isArchived, isArchived));
   }
@@ -528,7 +528,7 @@ class _$_CompanyFeedbackList implements _CompanyFeedbackList {
         const DeepCollectionEquality().hash(customerEmail),
         const DeepCollectionEquality().hash(customerPhone),
         const DeepCollectionEquality().hash(customerLastName),
-        const DeepCollectionEquality().hash(directedToEmploteeId),
+        const DeepCollectionEquality().hash(directedToEmployeeId),
         const DeepCollectionEquality().hash(isArchived)
       ]);
 
@@ -567,7 +567,7 @@ abstract class _CompanyFeedbackList implements CompanyFeedbackList {
       final String? customerEmail,
       final String? customerPhone,
       final String? customerLastName,
-      final int? directedToEmploteeId,
+      final int? directedToEmployeeId,
       final bool? isArchived}) = _$_CompanyFeedbackList;
 
   factory _CompanyFeedbackList.fromJson(Map<String, dynamic> json) =
@@ -616,7 +616,7 @@ abstract class _CompanyFeedbackList implements CompanyFeedbackList {
   @override
   String? get customerLastName => throw _privateConstructorUsedError;
   @override
-  int? get directedToEmploteeId => throw _privateConstructorUsedError;
+  int? get directedToEmployeeId => throw _privateConstructorUsedError;
   @override
   bool? get isArchived => throw _privateConstructorUsedError;
   @override

@@ -30,7 +30,7 @@ _$_CompanyFeedbackList _$$_CompanyFeedbackListFromJson(
       customerEmail: json['customerEmail'] as String?,
       customerPhone: json['customerPhone'] as String?,
       customerLastName: json['customerLastName'] as String?,
-      directedToEmploteeId: json['directedToEmploteeId'] as int?,
+      directedToEmployeeId: json['directedToEmployeeId'] as int?,
       isArchived: json['isArchived'] as bool?,
     );
 
@@ -58,6 +58,6 @@ Map<String, dynamic> _$$_CompanyFeedbackListToJson(
       'customerEmail': instance.customerEmail,
       'customerPhone': instance.customerPhone,
       'customerLastName': instance.customerLastName,
-      'directedToEmploteeId': instance.directedToEmploteeId,
+      'directedToEmployeeId': instance.directedToEmployeeId,
       'isArchived': instance.isArchived,
     };

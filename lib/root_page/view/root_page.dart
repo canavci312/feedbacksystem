@@ -5,8 +5,10 @@ import 'package:feedbacksystem/company_representetive_home/company_representetiv
 import 'package:feedbacksystem/customer_home/view/customer_home.dart';
 import 'package:feedbacksystem/employee_home/view/employee_home.dart';
 import 'package:feedbacksystem/locator.dart';
+import 'package:feedbacksystem/login/login_page.dart';
 import 'package:feedbacksystem/root_page/cubit/root_page_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RootPage extends StatelessWidget {
@@ -15,7 +17,7 @@ class RootPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RootPageCubit(getIt<AuthRepository>())..getRole(),
+      create: (context) => RootPageCubit(getIt<AuthRepository>())..checkUser(),
       child: RootView(),
     );
   }
@@ -29,7 +31,8 @@ class RootView extends StatelessWidget {
     return BlocBuilder<RootPageCubit, RootPageState>(
       builder: (context, state) {
         return state.when(
-            initial: () => const SizedBox(),
+            initial: () =>  Container(color: Colors.white,),
+            unauth: () => LoginPage(),
             success: (role) {
               switch (role) {
                 case Roles.admin:

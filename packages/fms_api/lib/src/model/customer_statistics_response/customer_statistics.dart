@@ -17,7 +17,6 @@ class CustomerStatistics with _$CustomerStatistics {
     List<AccountAgeInterval>? accountAgeInterval,
     List<EducationDistribution>? educationDistribution,
     List<CityDistribution>? cityDistribution,
-
   }) = _CustomerStatistics;
 
   factory CustomerStatistics.fromJson(Map<String, dynamic> json) =>

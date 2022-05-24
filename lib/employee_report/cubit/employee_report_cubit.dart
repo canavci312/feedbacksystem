@@ -7,12 +7,13 @@ part 'employee_report_state.dart';
 part 'employee_report_cubit.freezed.dart';
 
 class EmployeeReportCubit extends Cubit<EmployeeReportState> {
-    final ReportRepository _reportRepository;
+  final ReportRepository _reportRepository;
 
-  EmployeeReportCubit(this._reportRepository) : super(EmployeeReportState.initial());
-    fetchEmployeeReport() async {
+  EmployeeReportCubit(this._reportRepository)
+      : super(EmployeeReportState.initial());
+  fetchEmployeeReport() async {
     emit(EmployeeReportState.loading());
-    final response =await _reportRepository.employeeReport();
+    final response = await _reportRepository.employeeReport();
     emit(EmployeeReportState.success(response));
   }
 }
