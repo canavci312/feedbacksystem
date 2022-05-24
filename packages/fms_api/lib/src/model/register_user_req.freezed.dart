@@ -27,10 +27,10 @@ mixin _$RegisterUserRequest {
   String get firstName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
   String get birthDate => throw _privateConstructorUsedError;
-  int get cityId => throw _privateConstructorUsedError;
-  int get educationId => throw _privateConstructorUsedError;
-  int get roleId => throw _privateConstructorUsedError;
-  int get companyId => throw _privateConstructorUsedError;
+  int? get cityId => throw _privateConstructorUsedError;
+  int? get educationId => throw _privateConstructorUsedError;
+  int? get roleId => throw _privateConstructorUsedError;
+  int? get companyId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,10 +51,10 @@ abstract class $RegisterUserRequestCopyWith<$Res> {
       String firstName,
       String lastName,
       String birthDate,
-      int cityId,
-      int educationId,
-      int roleId,
-      int companyId});
+      int? cityId,
+      int? educationId,
+      int? roleId,
+      int? companyId});
 }
 
 /// @nodoc
@@ -112,19 +112,19 @@ class _$RegisterUserRequestCopyWithImpl<$Res>
       cityId: cityId == freezed
           ? _value.cityId
           : cityId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       educationId: educationId == freezed
           ? _value.educationId
           : educationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       roleId: roleId == freezed
           ? _value.roleId
           : roleId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       companyId: companyId == freezed
           ? _value.companyId
           : companyId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -144,10 +144,10 @@ abstract class _$RegisterUserRequestCopyWith<$Res>
       String firstName,
       String lastName,
       String birthDate,
-      int cityId,
-      int educationId,
-      int roleId,
-      int companyId});
+      int? cityId,
+      int? educationId,
+      int? roleId,
+      int? companyId});
 }
 
 /// @nodoc
@@ -207,25 +207,26 @@ class __$RegisterUserRequestCopyWithImpl<$Res>
       cityId: cityId == freezed
           ? _value.cityId
           : cityId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       educationId: educationId == freezed
           ? _value.educationId
           : educationId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       roleId: roleId == freezed
           ? _value.roleId
           : roleId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       companyId: companyId == freezed
           ? _value.companyId
           : companyId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(includeIfNull: false)
 class _$_RegisterUserRequest implements _RegisterUserRequest {
   const _$_RegisterUserRequest(
       {required this.email,
@@ -235,10 +236,10 @@ class _$_RegisterUserRequest implements _RegisterUserRequest {
       required this.firstName,
       required this.lastName,
       required this.birthDate,
-      required this.cityId,
-      required this.educationId,
-      required this.roleId,
-      required this.companyId});
+      this.cityId,
+      this.educationId,
+      this.roleId,
+      this.companyId});
 
   factory _$_RegisterUserRequest.fromJson(Map<String, dynamic> json) =>
       _$$_RegisterUserRequestFromJson(json);
@@ -258,13 +259,13 @@ class _$_RegisterUserRequest implements _RegisterUserRequest {
   @override
   final String birthDate;
   @override
-  final int cityId;
+  final int? cityId;
   @override
-  final int educationId;
+  final int? educationId;
   @override
-  final int roleId;
+  final int? roleId;
   @override
-  final int companyId;
+  final int? companyId;
 
   @override
   String toString() {
@@ -327,10 +328,10 @@ abstract class _RegisterUserRequest implements RegisterUserRequest {
       required final String firstName,
       required final String lastName,
       required final String birthDate,
-      required final int cityId,
-      required final int educationId,
-      required final int roleId,
-      required final int companyId}) = _$_RegisterUserRequest;
+      final int? cityId,
+      final int? educationId,
+      final int? roleId,
+      final int? companyId}) = _$_RegisterUserRequest;
 
   factory _RegisterUserRequest.fromJson(Map<String, dynamic> json) =
       _$_RegisterUserRequest.fromJson;
@@ -350,13 +351,13 @@ abstract class _RegisterUserRequest implements RegisterUserRequest {
   @override
   String get birthDate => throw _privateConstructorUsedError;
   @override
-  int get cityId => throw _privateConstructorUsedError;
+  int? get cityId => throw _privateConstructorUsedError;
   @override
-  int get educationId => throw _privateConstructorUsedError;
+  int? get educationId => throw _privateConstructorUsedError;
   @override
-  int get roleId => throw _privateConstructorUsedError;
+  int? get roleId => throw _privateConstructorUsedError;
   @override
-  int get companyId => throw _privateConstructorUsedError;
+  int? get companyId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$RegisterUserRequestCopyWith<_RegisterUserRequest> get copyWith =>

@@ -61,7 +61,8 @@ class _EmployeeFeedbackDetailViewState
                 onTap: (() {
                   showCupertinoDialog<void>(
                       context: context,
-                      builder: (BuildContext context) => DirectFeedbackDialogPage(cubit.feedbackId));
+                      builder: (BuildContext context) =>
+                          DirectFeedbackDialogPage(cubit.feedbackId));
                 }),
                 child: Icon(Icons.forward_outlined)),
             GestureDetector(

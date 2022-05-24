@@ -47,8 +47,9 @@ class _LoginViewState extends State<LoginView> {
                 showCupertinoDialog<void>(
                   context: context,
                   builder: (BuildContext context) => CupertinoAlertDialog(
-                    title: const Text('Login Error'),
-                    content: const Text('You don\'t have internet connection'),
+                    title: const Text('Hata!'),
+                    content: const Text(
+                        'Lütfen internet bağlantınızı kontrol ediniz'),
                     actions: <CupertinoDialogAction>[
                       CupertinoDialogAction(
                         child: const Text('Ok'),
@@ -64,8 +65,8 @@ class _LoginViewState extends State<LoginView> {
                 showCupertinoDialog<void>(
                   context: context,
                   builder: (BuildContext context) => CupertinoAlertDialog(
-                    title: const Text('Login Error'),
-                    content: const Text('Wrong password'),
+                    title: const Text('Hata!'),
+                    content: const Text('Yanlış şifre'),
                     actions: <CupertinoDialogAction>[
                       CupertinoDialogAction(
                         child: const Text('Ok'),
@@ -98,6 +99,7 @@ class _LoginViewState extends State<LoginView> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: CupertinoTextField(
+                placeholder: 'Email',
                 controller: _emailController,
                 prefix: Icon(CupertinoIcons.mail),
               ),
@@ -108,6 +110,7 @@ class _LoginViewState extends State<LoginView> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: CupertinoTextField(
+                placeholder: 'Şifre',
                 controller: _passwordController,
                 prefix: Icon(CupertinoIcons.lock),
                 obscureText: true,
@@ -151,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => const RegisterScreen()));
+                              builder: (context) => const RegisterPage()));
                     }),
               ],
             )

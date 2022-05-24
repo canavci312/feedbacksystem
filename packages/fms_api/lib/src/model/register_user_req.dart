@@ -5,6 +5,9 @@ part 'register_user_req.g.dart';
 
 @freezed
 class RegisterUserRequest with _$RegisterUserRequest {
+  @JsonSerializable(
+    includeIfNull: false,
+  )
   const factory RegisterUserRequest({
     required String email,
     required int phoneCode,
@@ -13,10 +16,10 @@ class RegisterUserRequest with _$RegisterUserRequest {
     required String firstName,
     required String lastName,
     required String birthDate,
-    required int cityId,
-    required int educationId,
-    required int roleId,
-    required int companyId,
+    int? cityId,
+    int? educationId,
+    int? roleId,
+    int? companyId,
   }) = _RegisterUserRequest;
 
   factory RegisterUserRequest.fromJson(Map<String, dynamic> json) =>

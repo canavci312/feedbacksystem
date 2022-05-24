@@ -21,6 +21,6 @@ class DirectFeedbackCubit extends Cubit<DirectFeedbackState> {
   }
 
   directFeedback(int employeeId) {
-    _feedbackRepository.directFeedback(feedbackId,employeeId);
+    _feedbackRepository.directFeedback(feedbackId, employeeId);
   }
 }

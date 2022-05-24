@@ -1,0 +1,15 @@
+name: report_repository
+description: Repository for Report related api calls
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+dependencies:
+  fms_api:
+    path: ../fms_api
+dev_dependencies:
+  coverage: ^1.1.0
+  mocktail: ^0.2.0
+  test: ^1.19.2
+  very_good_analysis: ^3.0.0

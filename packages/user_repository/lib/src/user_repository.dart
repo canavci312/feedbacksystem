@@ -7,7 +7,6 @@ class UserRepository {
   UserRepository(this._fmsApi);
   final FmsApi _fmsApi;
   Future<UserGetListResponse?> getUserList() async {
-   return await _fmsApi.getUserList();
+    return await _fmsApi.getUserList();
   }
-
 }

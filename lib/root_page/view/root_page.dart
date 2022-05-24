@@ -1,5 +1,6 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:feedbacksystem/admin_home/admin_home.dart';
+import 'package:feedbacksystem/company_manager_home/view/company_manager_home.dart';
 import 'package:feedbacksystem/company_representetive_home/company_representetive_home.dart';
 import 'package:feedbacksystem/customer_home/view/customer_home.dart';
 import 'package:feedbacksystem/employee_home/view/employee_home.dart';
@@ -39,6 +40,8 @@ class RootView extends StatelessWidget {
                   return const CompanyRepresentetiveHome();
                 case Roles.employee:
                   return const EmployeeHome();
+                case Roles.manager:
+                  return const CompanyManagerHome();
                 default:
                   return const CustomerHome();
               }

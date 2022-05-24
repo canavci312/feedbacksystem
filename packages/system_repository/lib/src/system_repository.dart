@@ -10,7 +10,8 @@ class SystemRepository {
   Future<void> setModeOfOperation(int modeId) async {
     await _fmsApi.setModeOfOperation(modeId);
   }
-    Future<int> getModeOfOperation() async {
-   return  _fmsApi.getModeOfOperation();
+
+  Future<int> getModeOfOperation() async {
+    return _fmsApi.getModeOfOperation();
   }
 }

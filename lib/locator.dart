@@ -5,6 +5,7 @@ import 'package:fms_api/fms_api.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lookup_repository/lookup_repository.dart';
 import 'package:reaction_repository/reaction_repository.dart';
+import 'package:report_repository/report_repository.dart';
 import 'package:system_repository/system_repository.dart';
 import 'package:user_repository/user_repository.dart';
 
@@ -19,6 +20,9 @@ Future<void> setup() async {
   getIt.registerLazySingleton<ReactionRepository>(
       () => ReactionRepository(getIt()));
   getIt.registerLazySingleton<UserRepository>(() => UserRepository(getIt()));
+  getIt
+      .registerLazySingleton<ReportRepository>(() => ReportRepository(getIt()));
+
   getIt
       .registerLazySingleton<SystemRepository>(() => SystemRepository(getIt()));
   getIt

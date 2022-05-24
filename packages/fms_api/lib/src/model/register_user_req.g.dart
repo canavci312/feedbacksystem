@@ -16,24 +16,33 @@ _$_RegisterUserRequest _$$_RegisterUserRequestFromJson(
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       birthDate: json['birthDate'] as String,
-      cityId: json['cityId'] as int,
-      educationId: json['educationId'] as int,
-      roleId: json['roleId'] as int,
-      companyId: json['companyId'] as int,
+      cityId: json['cityId'] as int?,
+      educationId: json['educationId'] as int?,
+      roleId: json['roleId'] as int?,
+      companyId: json['companyId'] as int?,
     );
 
 Map<String, dynamic> _$$_RegisterUserRequestToJson(
-        _$_RegisterUserRequest instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-      'phoneCode': instance.phoneCode,
-      'phone': instance.phone,
-      'password': instance.password,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'birthDate': instance.birthDate,
-      'cityId': instance.cityId,
-      'educationId': instance.educationId,
-      'roleId': instance.roleId,
-      'companyId': instance.companyId,
-    };
+    _$_RegisterUserRequest instance) {
+  final val = <String, dynamic>{
+    'email': instance.email,
+    'phoneCode': instance.phoneCode,
+    'phone': instance.phone,
+    'password': instance.password,
+    'firstName': instance.firstName,
+    'lastName': instance.lastName,
+    'birthDate': instance.birthDate,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('cityId', instance.cityId);
+  writeNotNull('educationId', instance.educationId);
+  writeNotNull('roleId', instance.roleId);
+  writeNotNull('companyId', instance.companyId);
+  return val;
+}

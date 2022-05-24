@@ -4,6 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:fms_api/src/model/company_feedback_details_response/company_feedback_details_response.dart';
+import 'package:fms_api/src/model/customer_statistics_response/customer_statistics_response.dart';
+import 'package:fms_api/src/model/employee_report_response/employee_report.dart';
+import 'package:fms_api/src/model/employee_report_response/employee_report_response.dart';
+import 'package:fms_api/src/model/feedback_counts_response/feedback_counts_response.dart';
 import 'package:fms_api/src/model/user_get_list_response/user_get_list_response.dart';
 import 'package:fms_api/src/model/user_login_response/user_login_response.dart';
 import 'package:fms_api/src/token_storage.dart';
@@ -326,5 +330,23 @@ class FmsApi {
       baseURL + '/System/GetModeOfOperation',
     );
     return response.data?['data']['id'] as int;
+  }
+
+  Future<FeedbackCountsResponse> getFeedbackCounts() async {
+    var response = await _dioClient
+        .get<Map<String, dynamic>>(baseURL + '/Report/FeedbackCounts');
+    return FeedbackCountsResponse.fromJson(response.data!);
+  }
+
+  Future<EmployeeReportResponse> getEmployeeReport() async {
+    var response = await _dioClient
+        .get<Map<String, dynamic>>(baseURL + '/Report/EmployeeReport');
+    return EmployeeReportResponse.fromJson(response.data!);
+  }
+
+  Future<CustomerStatisticsResponse> getCustomerStatistics() async {
+    var response = await _dioClient
+        .get<Map<String, dynamic>>(baseURL + '/Report/CustomerStatistics');
+    return CustomerStatisticsResponse.fromJson(response.data!);
   }
 }

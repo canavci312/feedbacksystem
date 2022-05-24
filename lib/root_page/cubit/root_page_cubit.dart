@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'root_page_state.dart';
 part 'root_page_cubit.freezed.dart';
 
-enum Roles { admin, customer, guest, representative, employee }
+enum Roles { admin, customer, guest, representative, employee, manager }
 
 class RootPageCubit extends Cubit<RootPageState> {
   final AuthRepository _authRepository;
@@ -31,7 +31,10 @@ class RootPageCubit extends Cubit<RootPageState> {
         print('employee');
 
         return emit(RootPageState.success(Roles.employee));
+      case 'Company Manager':
+        print('manager');
 
+        return emit(RootPageState.success(Roles.manager));
       default:
         print('default');
 

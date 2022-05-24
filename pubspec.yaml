@@ -27,6 +27,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  syncfusion_flutter_charts: ^20.1.57
+  report_repository:
+    path: packages/report_repository
   auth_repository:
     path: packages/auth_repository
   user_repository:
