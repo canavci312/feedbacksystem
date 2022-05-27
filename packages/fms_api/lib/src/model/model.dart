@@ -21,3 +21,4 @@ export 'customer_statistics_response/city_distribution.dart';
 export 'feedback_counts_response/feedbacks_per_type.dart';
 export 'feedback_counts_response/feedbacks_per_product.dart';
 export 'education_response/education_response.dart';
+export 'admin_feedback_details_response/admin_feedback_details_response.dart';

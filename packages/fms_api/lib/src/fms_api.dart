@@ -74,7 +74,7 @@ class FmsApi {
 
   static final _fresh = Fresh<String>(
     refreshToken: (token, httpClient) async {
-      return 'hhh';
+      return '';
     },
     tokenStorage: FmsTokenStorage(),
     tokenHeader: (token) {
@@ -83,7 +83,7 @@ class FmsApi {
       };
     },
     shouldRefresh: (response) {
-      return response?.statusCode == 401;
+      return false;
     },
   );
   Future<String?> login(String email, String password) async {
@@ -96,6 +96,7 @@ class FmsApi {
       final parsedResponse = UserLoginResponse.fromJson(response.data!);
       if (parsedResponse.meta?.successStatus != null) {
         if (parsedResponse.meta?.successStatus == true) {
+          await _fresh.setToken(parsedResponse.data);
           return parsedResponse.data!;
         } else {
           throw Exception();
@@ -107,6 +108,10 @@ class FmsApi {
       log(e.toString());
       rethrow;
     }
+  }
+
+  Future<void> unauthenticate() async {
+    await _fresh.clearToken();
   }
 
   Future<void> registerUser(RegisterUserRequest registerUserRequest) async {
@@ -180,10 +185,13 @@ class FmsApi {
     }
   }
 
-  Future<void> getAdminFeedbackDetail(int id) async {
+  Future<AdminFeedbackDetailsResponse?> getAdminFeedbackDetail(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
       baseURL + '/Feedback/GetAdminFeedbackDetail/$id',
     );
+    if (response != null) {
+      return AdminFeedbackDetailsResponse.fromJson(response.data!);
+    }
   }
 
   Future<void> toggleFeedbackAbility(int id) async {
@@ -316,7 +324,7 @@ class FmsApi {
     final response = await _dioClient.get<Map<String, dynamic>>(
       baseURL + '/Lookup/Education',
     );
-   return EducationResponse.fromJson(response.data!);
+    return EducationResponse.fromJson(response.data!);
   }
 
   Future<UserGetListResponse?> getUserList() async {

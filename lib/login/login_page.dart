@@ -66,7 +66,8 @@ class _LoginViewState extends State<LoginView> {
                   context: context,
                   builder: (BuildContext context) => CupertinoAlertDialog(
                     title: const Text('Hata!'),
-                    content: const Text('Yanlış şifre'),
+                    content: const Text(
+                        'Lütfen şifrenizi kontrol ediniz veya hesabınızı aktive ediniz'),
                     actions: <CupertinoDialogAction>[
                       CupertinoDialogAction(
                         child: const Text('Ok'),

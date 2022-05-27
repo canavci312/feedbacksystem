@@ -31,7 +31,9 @@ class RootView extends StatelessWidget {
     return BlocBuilder<RootPageCubit, RootPageState>(
       builder: (context, state) {
         return state.when(
-            initial: () =>  Container(color: Colors.white,),
+            initial: () => Container(
+                  color: Colors.white,
+                ),
             unauth: () => LoginPage(),
             success: (role) {
               switch (role) {

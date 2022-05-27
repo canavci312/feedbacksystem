@@ -16,7 +16,8 @@ class RootPageCubit extends Cubit<RootPageState> {
       emit(RootPageState.unauth());
     } else {
       if (user.exp != null) {
-        if (DateTime.now().isAfter(DateTime.fromMillisecondsSinceEpoch(user.exp!*1000))) {
+        if (DateTime.now()
+            .isAfter(DateTime.fromMillisecondsSinceEpoch(user.exp! * 1000))) {
           emit(RootPageState.unauth());
         } else {
           getRole();

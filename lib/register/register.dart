@@ -283,7 +283,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CountryCodePicker(
                     initialSelection: '+90',
                   ),
-                  const Expanded(child: CupertinoTextField()),
+                  Expanded(
+                      child: CupertinoTextField(
+                    controller: phoneController,
+                  )),
                 ],
               ),
             ),
@@ -930,11 +933,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             passwordController.text,
                             nameController.text,
                             lastNameController.text,
-                            selectedDate.toString(),
+                            selectedDate!.toIso8601String(),
                             roleId,
                             companyId,
                             education,
-                            2);
+                            cityId);
                       });
                 },
               ),

@@ -22,6 +22,14 @@ class FeedbackRepository {
     }
   }
 
+  Future<List<AdminFeedbackList>?> getAdminFeedbackList(
+      FeedbackGetListRequest request) async {
+    final response = await _fmsApi.getFeedbackList(request);
+    if (response != null) {
+      return response.data?.adminFeedbackList;
+    }
+  }
+
   Future<void> upsertReply(int id, int feedbackId, String text) async {
     await _fmsApi.upsertReply(id, feedbackId, text);
   }
@@ -51,7 +59,9 @@ class FeedbackRepository {
   Future<void> toggleSolved(int feedbackId) async {
     final response = await _fmsApi.toggleFeedbackSolved(feedbackId);
   }
-
+  Future<void> toggleFeedbackChecked(int feedbackId) async {
+    final response = await _fmsApi.toggleFeedbackChecked(feedbackId);
+  }
   Future<CompanyFeedbackDetailsResponse?> getCompanyFeedbackDetail(
       int feedbackId) async {
     final response = await _fmsApi.getCompanyFeedbackDetail(feedbackId);
@@ -62,5 +72,13 @@ class FeedbackRepository {
 
   Future<void> directFeedback(int feedbackId, int employeeId) async {
     await _fmsApi.directFeedback(feedbackId, employeeId);
+  }
+
+  Future<AdminFeedbackDetailsResponse?> getAdminFeedbackDetail(
+      int feedbackId) async {
+    final response = await _fmsApi.getAdminFeedbackDetail(feedbackId);
+    if (response != null) {
+      return response;
+    }
   }
 }

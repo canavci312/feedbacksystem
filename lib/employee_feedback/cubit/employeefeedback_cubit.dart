@@ -30,7 +30,8 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
   directedToMe(bool isTrue) {
     if (isTrue) {
       filteredList.addAll(feedbacks!
-          .where((element) => element.directedToEmployeeId.toString() == _curUser?.id)
+          .where((element) =>
+              element.directedToEmployeeId.toString() == _curUser?.id)
           .toList());
       var tempSet = filteredList.toSet();
       filteredList = tempSet.toList();
@@ -38,7 +39,7 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
           feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
     } else {
       filteredList.removeWhere(
-          (element) => element.directedToEmployeeId.toString()== _curUser?.id);
+          (element) => element.directedToEmployeeId.toString() == _curUser?.id);
       emit(EmployeeFeedbackState.success(
           feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
     }

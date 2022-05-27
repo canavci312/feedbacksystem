@@ -1,3 +1,4 @@
+import 'package:feedbacksystem/admin_feedback_list/view/admin_feedback_list_page.dart';
 import 'package:feedbacksystem/admin_settings/view/admin_settings_page.dart';
 import 'package:feedbacksystem/customer_feedbacks/view/customer_feedback_view.dart';
 import 'package:feedbacksystem/user_profile/view/user_profile_page.dart';
@@ -27,13 +28,13 @@ class AdminHome extends StatelessWidget {
           builder: (BuildContext context) {
             switch (index) {
               case 0:
-                return CustomerFeedbackPage();
+                return AdminFeedbackListPage();
               case 1:
                 return AdminSettingsPage();
               case 2:
                 return UserProfilePage();
               default:
-                return CustomerFeedbackPage();
+                return AdminFeedbackListPage();
             }
           },
         );

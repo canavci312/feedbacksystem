@@ -1,5 +1,7 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:feedbacksystem/locator.dart';
+import 'package:fms_api/fms_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_profile_state.dart';

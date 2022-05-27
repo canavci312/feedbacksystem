@@ -15,8 +15,12 @@ class AuthRepository {
   Future<User?> currentUser() async {
     final token = await storage.read(key: 'token');
     if (token != null) {
-      if (!JwtDecoder.isExpired(token)) {
-        _user = User.fromJson(JwtDecoder.decode(token));
+      try {
+        if (!JwtDecoder.isExpired(token)) {
+          _user = User.fromJson(JwtDecoder.decode(token));
+        }
+      } catch (e) {
+        return null;
       }
     }
     return _user;
@@ -26,9 +30,7 @@ class AuthRepository {
   Future<void> login(String email, String password) async {
     try {
       String? token = await _fmsApi.login(email, password);
-
       if (token != null) {
-        await storage.write(key: 'token', value: token);
         _user = User.fromJson(JwtDecoder.decode(token));
       }
     } catch (e) {
@@ -38,7 +40,7 @@ class AuthRepository {
 
   Future<void> logout() async {
     try {
-      await storage.deleteAll();
+     await _fmsApi.unauthenticate();
     } catch (e) {
       rethrow;
     }
