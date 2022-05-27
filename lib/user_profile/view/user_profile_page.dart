@@ -3,6 +3,7 @@ import 'package:feedbacksystem/locator.dart';
 import 'package:feedbacksystem/login/login_page.dart';
 import 'package:feedbacksystem/user_profile/cubit/user_profile_cubit.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserProfilePage extends StatelessWidget {
@@ -33,7 +34,22 @@ class UserProfileView extends StatelessWidget {
               initial: () => SizedBox(),
               success: (user) {
                 return user == null
-                    ? Center(child: Text('offline'))
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Henüz giriş yapmadınız.'),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pushReplacement(CupertinoPageRoute(
+                                          builder: ((context) => LoginPage())));
+                                },
+                                child: Text('Giriş yapmak için tıklayın'))
+                          ],
+                        ),
+                      )
                     : SizedBox(
                         width: double.infinity,
                         child: Column(

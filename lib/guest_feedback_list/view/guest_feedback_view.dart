@@ -1,35 +1,35 @@
 import 'package:feedback_repository/feedback_repository.dart';
-import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
-import 'package:feedbacksystem/customer_feedbacks/cubit/customer_feedbacks_cubit.dart';
+import 'package:feedbacksystem/guest_feedback_details/view/guest_feedback_details_page.dart';
+
+import 'package:feedbacksystem/guest_feedback_list/cubit/guest_feedbacks_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:feedbacksystem/core/extensions.dart';
-import '../../customer_add_feedback/view/customer_add_feedback_page.dart';
 
-class CustomerFeedbackPage extends StatelessWidget {
-  const CustomerFeedbackPage({Key? key}) : super(key: key);
+class GuestFeedbackPage extends StatelessWidget {
+  const GuestFeedbackPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CustomerFeedbacksCubit(FeedbackRepository(FmsApi()))
-        ..fetchFeedbacks(),
-      child: const CustomerFeedbackView(),
+      create: (context) =>
+          GuestFeedbacksCubit(FeedbackRepository(FmsApi()))..fetchFeedbacks(),
+      child: const GuestFeedbackView(),
     );
   }
 }
 
-class CustomerFeedbackView extends StatefulWidget {
-  const CustomerFeedbackView({Key? key}) : super(key: key);
+class GuestFeedbackView extends StatefulWidget {
+  const GuestFeedbackView({Key? key}) : super(key: key);
 
   @override
-  State<CustomerFeedbackView> createState() => _CustomerFeedbackViewState();
+  State<GuestFeedbackView> createState() => _GuestFeedbackViewState();
 }
 
-class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
+class _GuestFeedbackViewState extends State<GuestFeedbackView> {
   TextEditingController controller = TextEditingController();
   @override
   void dispose() {
@@ -42,16 +42,11 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
     timeago.setLocaleMessages('tr', timeago.TrMessages());
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        trailing: GestureDetector(
-            onTap: () => Navigator.of(context).push(CupertinoPageRoute(
-                  builder: (context) => CustomerAddFeedbackPage(),
-                )),
-            child: Icon(Icons.add)),
-        middle: Text('Geribildirimler'),
+      navigationBar: const CupertinoNavigationBar(
+        middle:  Text('Geribildirimler'),
       ),
       child: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 70,
         ),
         Padding(
@@ -60,11 +55,11 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
             placeholder: 'Geribildirim Ara',
             controller: controller,
             onChanged: (String value) {
-              context.read<CustomerFeedbacksCubit>().searchFeedbacks(value);
+              context.read<GuestFeedbacksCubit>().searchFeedbacks(value);
             },
           ),
         ),
-        BlocBuilder<CustomerFeedbacksCubit, CustomerFeedbacksState>(
+        BlocBuilder<GuestFeedbacksCubit, GuestFeedbacksState>(
           builder: (context, state) {
             return state.when(
               initial: () => const SizedBox(),
@@ -75,8 +70,7 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
                         child: ListView.separated(
                           itemCount: filteredList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return CustomerFeedbackListTile(
-                                filteredList[index]);
+                            return GuestFeedbackListTile(filteredList[index]);
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return const Divider(
@@ -91,7 +85,7 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
                         child: ListView.separated(
                           itemCount: list.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return CustomerFeedbackListTile(list[index]);
+                            return GuestFeedbackListTile(list[index]);
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return const Divider(
@@ -109,8 +103,8 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
   }
 }
 
-class CustomerFeedbackListTile extends StatelessWidget {
-  const CustomerFeedbackListTile(
+class GuestFeedbackListTile extends StatelessWidget {
+  const GuestFeedbackListTile(
     this.item, {
     Key? key,
   }) : super(key: key);
@@ -120,7 +114,7 @@ class CustomerFeedbackListTile extends StatelessWidget {
     return GestureDetector(
       onTap: (() => Navigator.of(context).push(
             CupertinoPageRoute(
-                builder: (context) => CustomerFeedbackDetailsPage(item)),
+                builder: (context) => GuestFeedbackDetailsPage(item)),
           )),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -161,7 +155,7 @@ class CustomerFeedbackListTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(item.typeName.xToTurkish() ?? ''),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(timeago.format(DateTime.parse(item.createdAt!),

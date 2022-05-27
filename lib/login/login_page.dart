@@ -1,5 +1,6 @@
 import 'package:feedbacksystem/core/extensions.dart';
 import 'package:feedbacksystem/customer_home/view/customer_home.dart';
+import 'package:feedbacksystem/guest_home/guest_home.dart';
 import 'package:feedbacksystem/locator.dart';
 import 'package:feedbacksystem/login/cubit/login_cubit.dart';
 import 'package:feedbacksystem/register/register.dart';
@@ -156,6 +157,20 @@ class _LoginViewState extends State<LoginView> {
                           context,
                           CupertinoPageRoute(
                               builder: (context) => const RegisterPage()));
+                    }),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Misafir olarak '),
+                CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.centerLeft,
+                    child: const Text('devam et'),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                          CupertinoPageRoute(builder: (context) => GuestHome()));
                     }),
               ],
             )
