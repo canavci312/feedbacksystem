@@ -89,92 +89,97 @@ class _LoginViewState extends State<LoginView> {
         navigationBar: const CupertinoNavigationBar(
           middle: Text('Welcome to CRM'),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const FlutterLogo(
-              size: 100,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: CupertinoTextField(
-                placeholder: 'Email',
-                controller: _emailController,
-                prefix: Icon(CupertinoIcons.mail),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 100),
+              const FlutterLogo(
+                size: 100,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: CupertinoTextField(
-                placeholder: 'Şifre',
-                controller: _passwordController,
-                prefix: Icon(CupertinoIcons.lock),
-                obscureText: true,
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state) {
-                return state.whenOrNull(
-                      initial: (errorStatus, loadStatus) {
-                        {
-                          return CupertinoButton(
-                              color: context.theme.primaryColor,
-                              child: loadStatus == LoginLoadStatus.idle
-                                  ? Text('Giriş')
-                                  : CircularProgressIndicator.adaptive(),
-                              onPressed: () {
-                                if (loadStatus == LoginLoadStatus.idle) {
-                                  context.read<LoginCubit>().login(
-                                      _emailController.text,
-                                      _passwordController.text);
-                                }
-                              });
-                        }
-                      },
-                    ) ??
-                    SizedBox();
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Üyeliğiniz yok mu? Hemen '),
-                CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                    child: const Text('kayıt ol'),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const RegisterPage()));
-                    }),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Misafir olarak '),
-                CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                    child: const Text('devam et'),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(CupertinoPageRoute(
-                          builder: (context) => GuestHome()));
-                    }),
-              ],
-            )
-          ],
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: CupertinoTextField(
+                  placeholder: 'Email',
+                  controller: _emailController,
+                  prefix: Icon(CupertinoIcons.mail),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: CupertinoTextField(
+                  placeholder: 'Şifre',
+                  controller: _passwordController,
+                  prefix: Icon(CupertinoIcons.lock),
+                  obscureText: true,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, state) {
+                  return state.whenOrNull(
+                        initial: (errorStatus, loadStatus) {
+                          {
+                            return CupertinoButton(
+                                color: context.theme.primaryColor,
+                                child: loadStatus == LoginLoadStatus.idle
+                                    ? Text('Giriş')
+                                    : CircularProgressIndicator.adaptive(),
+                                onPressed: () {
+                                  if (loadStatus == LoginLoadStatus.idle) {
+                                    context.read<LoginCubit>().login(
+                                        _emailController.text,
+                                        _passwordController.text);
+                                  }
+                                });
+                          }
+                        },
+                      ) ??
+                      SizedBox();
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Üyeliğiniz yok mu? Hemen '),
+                  CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.centerLeft,
+                      child: const Text('kayıt ol'),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => const RegisterPage()));
+                      }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Misafir olarak '),
+                  CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.centerLeft,
+                      child: const Text('devam et'),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            CupertinoPageRoute(
+                                builder: (context) => GuestHome()));
+                      }),
+                ],
+              ),
+              Padding(padding: MediaQuery.of(context).viewInsets)
+            ],
+          ),
         ),
       ),
     );

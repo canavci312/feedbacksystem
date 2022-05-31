@@ -331,7 +331,7 @@ class FmsApi {
           baseURL + '/Lookup/Product',
           queryParameters: <String, dynamic>{'companyId': companyId});
     }
-    return CompanyList.fromJson(response.data as Map<String,dynamic>);
+    return CompanyList.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<EducationResponse?> getEducation() async {
@@ -345,7 +345,7 @@ class FmsApi {
     Response<dynamic> response;
     response = await _dioClient.post<Map<String, dynamic>>(
         baseURL + '/User/GetList',
-        data: <String, dynamic>{});
+        data: <String, dynamic>{'objectsPerPage': 200});
     return UserGetListResponse.fromJson(response.data as Map<String, dynamic>);
   }
 

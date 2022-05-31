@@ -20,7 +20,7 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
 
     _curUser = await _authRepository.currentUser();
     feedbacks = await _feedbackRepository.getCompanyFeedbackList(
-      FeedbackGetListRequest(),
+      FeedbackGetListRequest(objectsPerPage: 100),
     );
     if (feedbacks != null) {
       emit(EmployeeFeedbackState.success(feedbacks!, [], _curUser!.roleName!));

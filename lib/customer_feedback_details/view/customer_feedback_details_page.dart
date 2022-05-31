@@ -77,13 +77,35 @@ class _CustomerFeedbackDetailViewState
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(details.data?.title ?? '',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
+                              Row(
+                                children: [
+                                  Text(details.data?.title ?? '',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  details.data?.typeId == 1
+                                      ? Icon(
+                                          CupertinoIcons.heart_slash_fill,
+                                          color: Colors.red,
+                                        )
+                                      : details.data?.typeId == 2
+                                          ? Icon(
+                                              CupertinoIcons.smiley,
+                                              color: Colors.green,
+                                            )
+                                          : Icon(
+                                              CupertinoIcons.light_max,
+                                              color: Colors.yellow[900],
+                                            )
+                                ],
+                              ),
                               Row(
                                 children: [
                                   Text(
                                     details.data?.productName ?? '',
+                                    overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontStyle: FontStyle.italic),
                                   ),

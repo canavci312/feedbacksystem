@@ -243,37 +243,90 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                      height: 40,
-                      child: ChipsFilter((value) {
-                        selectedTypeId = value;
-                        print(selectedTypeId);
-                      },
-                          // Select the second filter as default
-                          [
-                            Filter("Şikayet", CupertinoIcons.heart_slash),
-                            Filter("Memnuniyet", CupertinoIcons.smiley),
-                            Filter("Öneri", CupertinoIcons.light_max),
-                          ], 1),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    height: 40,
+                    child: ChipsFilter((value) {
+                      selectedTypeId = value;
+                      print(selectedTypeId);
+                    },
+                        // Select the second filter as default
+                        [
+                          Filter("Şikayet", CupertinoIcons.heart_slash),
+                          Filter("Memnuniyet", CupertinoIcons.smiley),
+                          Filter("Öneri", CupertinoIcons.light_max),
+                        ], 1),
+                  ),
+                  const Text('Başlık'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CupertinoTextField(
+                    controller: _titleController,
+                    padding: const EdgeInsets.all(10),
+                    placeholder: "Geribildiriminizin konusu nedir?",
+                    maxLines: null,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      borderRadius: const BorderRadius.all(Radius.circular(
+                              25.0) //                 <--- border radius here
+                          ),
                     ),
-                    const Text('Başlık'),
-                    const SizedBox(
-                      height: 5,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text('Geribildirim Detayı'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CupertinoTextField(
+                    controller: _textController,
+                    keyboardType: TextInputType.multiline,
+                    padding: const EdgeInsets.all(10),
+                    placeholder:
+                        "Ürün veya hizmetle ilgili nasıl bir sorun yaşadınız?",
+                    expands: true,
+                    maxLines: null,
+                    minLines: null,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.0, color: Colors.grey),
+                      borderRadius: const BorderRadius.all(Radius.circular(
+                              25.0) //                 <--- border radius here
+                          ),
                     ),
-                    CupertinoTextField(
-                      controller: _titleController,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text('Şirket'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      showPicker();
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.all(10),
-                      placeholder: "Geribildiriminizin konusu nedir?",
-                      maxLines: null,
+                      child: Text(
+                        selectedCompanyName == null
+                            ? 'Şirket seçiniz'
+                            : selectedCompanyName!,
+                        style: selectedCompanyName == null
+                            ? const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: CupertinoColors.placeholderText,
+                              )
+                            : const TextStyle(),
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(width: 1.0, color: Colors.grey),
                         borderRadius: const BorderRadius.all(Radius.circular(
@@ -281,48 +334,30 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                             ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text('Geribildirim Detayı'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CupertinoTextField(
-                      controller: _textController,
-                      keyboardType: TextInputType.multiline,
-                      padding: const EdgeInsets.all(10),
-                      placeholder:
-                          "Ürün veya hizmetle ilgili nasıl bir sorun yaşadınız?",
-                      expands: true,
-                      maxLines: null,
-                      minLines: null,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1.0, color: Colors.grey),
-                        borderRadius: const BorderRadius.all(Radius.circular(
-                                25.0) //                 <--- border radius here
-                            ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text('Şirket'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    GestureDetector(
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Visibility(
+                      visible: selectedCompanyName != null,
+                      child: const Text('Ürün')),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Visibility(
+                    visible: selectedCompanyName != null,
+                    child: GestureDetector(
                       onTap: () {
-                        showPicker();
+                        showProductPicker();
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          selectedCompanyName == null
-                              ? 'Şirket seçiniz'
-                              : selectedCompanyName!,
-                          style: selectedCompanyName == null
+                          selectedProductName == null
+                              ? 'Ürün seçiniz'
+                              : selectedProductName!,
+                          style: selectedProductName == null
                               ? const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   color: CupertinoColors.placeholderText,
@@ -337,96 +372,57 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Visibility(
-                        visible: selectedCompanyName != null,
-                        child: const Text('Ürün')),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Visibility(
-                      visible: selectedCompanyName != null,
-                      child: GestureDetector(
-                        onTap: () {
-                          showProductPicker();
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            selectedProductName == null
-                                ? 'Ürün seçiniz'
-                                : selectedProductName!,
-                            style: selectedProductName == null
-                                ? const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    color: CupertinoColors.placeholderText,
-                                  )
-                                : const TextStyle(),
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0, color: Colors.grey),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                    25.0) //                 <--- border radius here
-                                ),
-                          ),
-                        ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      const Text('Anonim olarak yolla:'),
+                      const SizedBox(
+                        width: 5,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        const Text('Anonim olarak yolla:'),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        CupertinoSwitch(
-                          activeColor: Theme.of(context).primaryColor,
-                          value: isAnonym,
-                          onChanged: (bool value) {
-                            setState(() {
-                              isAnonym = value;
-                            });
+                      CupertinoSwitch(
+                        activeColor: Theme.of(context).primaryColor,
+                        value: isAnonym,
+                        onChanged: (bool value) {
+                          setState(() {
+                            isAnonym = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BlocBuilder<CustomerAddFeedbackCubit,
+                      CustomerAddFeedbackState>(
+                    builder: (context, state) {
+                      return Center(
+                        child: CupertinoButton.filled(
+                          child: state.when(
+                            initial:
+                                (isLoading, showErrorDialog, isSuccessful) =>
+                                    isLoading!
+                                        ? const CircularProgressIndicator()
+                                        : const Text('Gönder'),
+                          ),
+                          onPressed: () {
+                            context
+                                .read<CustomerAddFeedbackCubit>()
+                                .postFeedback(
+                                    selectedTypeId,
+                                    _titleController.text,
+                                    _textController.text,
+                                    selectedProductId ?? -1,
+                                    isAnonym);
                           },
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    BlocBuilder<CustomerAddFeedbackCubit,
-                        CustomerAddFeedbackState>(
-                      builder: (context, state) {
-                        return Center(
-                          child: CupertinoButton.filled(
-                            child: state.when(
-                              initial: (isLoading, showErrorDialog,
-                                      isSuccessful) =>
-                                  isLoading!
-                                      ? const CircularProgressIndicator()
-                                      : const Text('Gönder'),
-                            ),
-                            onPressed: () {
-                              context
-                                  .read<CustomerAddFeedbackCubit>()
-                                  .postFeedback(
-                                      selectedTypeId,
-                                      _titleController.text,
-                                      _textController.text,
-                                      selectedProductId ?? -1,
-                                      isAnonym);
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ),

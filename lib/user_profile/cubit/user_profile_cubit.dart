@@ -17,5 +17,6 @@ class UserProfileCubit extends Cubit<UserProfileState> {
 
   logout() async {
     await _authRepository.logout();
+    
   }
 }
