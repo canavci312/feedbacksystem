@@ -59,9 +59,11 @@ class FeedbackRepository {
   Future<void> toggleSolved(int feedbackId) async {
     final response = await _fmsApi.toggleFeedbackSolved(feedbackId);
   }
+
   Future<void> toggleFeedbackChecked(int feedbackId) async {
     final response = await _fmsApi.toggleFeedbackChecked(feedbackId);
   }
+
   Future<CompanyFeedbackDetailsResponse?> getCompanyFeedbackDetail(
       int feedbackId) async {
     final response = await _fmsApi.getCompanyFeedbackDetail(feedbackId);

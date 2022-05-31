@@ -21,7 +21,7 @@ mixin _$RegisterState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function() error,
+    required TResult Function(String errorMessage) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$RegisterState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$RegisterState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,7 +127,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function() error,
+    required TResult Function(String errorMessage) error,
   }) {
     return initial();
   }
@@ -138,7 +138,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
   }) {
     return initial?.call();
   }
@@ -149,7 +149,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -242,7 +242,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function() error,
+    required TResult Function(String errorMessage) error,
   }) {
     return loading();
   }
@@ -253,7 +253,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
   }) {
     return loading?.call();
   }
@@ -264,7 +264,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -357,7 +357,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function() error,
+    required TResult Function(String errorMessage) error,
   }) {
     return success();
   }
@@ -368,7 +368,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
   }) {
     return success?.call();
   }
@@ -379,7 +379,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -434,6 +434,7 @@ abstract class _Success implements RegisterState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
@@ -444,26 +445,50 @@ class __$$_ErrorCopyWithImpl<$Res> extends _$RegisterStateCopyWithImpl<$Res>
 
   @override
   _$_Error get _value => super._value as _$_Error;
+
+  @override
+  $Res call({
+    Object? errorMessage = freezed,
+  }) {
+    return _then(_$_Error(
+      errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error();
+  const _$_Error(this.errorMessage);
+
+  @override
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'RegisterState.error()';
+    return 'RegisterState.error(errorMessage: $errorMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Error);
+        (other.runtimeType == runtimeType &&
+            other is _$_Error &&
+            const DeepCollectionEquality()
+                .equals(other.errorMessage, errorMessage));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(errorMessage));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -471,9 +496,9 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function() error,
+    required TResult Function(String errorMessage) error,
   }) {
-    return error();
+    return error(errorMessage);
   }
 
   @override
@@ -482,9 +507,9 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
   }) {
-    return error?.call();
+    return error?.call(errorMessage);
   }
 
   @override
@@ -493,11 +518,11 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function()? error,
+    TResult Function(String errorMessage)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(errorMessage);
     }
     return orElse();
   }
@@ -541,5 +566,10 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements RegisterState {
-  const factory _Error() = _$_Error;
+  const factory _Error(final String errorMessage) = _$_Error;
+
+  String get errorMessage => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -13,4 +13,7 @@ class LookUpRepository {
   Future<CompanyList?> getProducts({int? companyId}) async {
     return await _fmsApi.getProducts(companyId);
   }
+    Future<GetSectorResponse?> getSectors() async {
+    return await _fmsApi.getSectors();
+  }
 }

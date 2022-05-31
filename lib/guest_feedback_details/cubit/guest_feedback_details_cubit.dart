@@ -14,8 +14,7 @@ class GuestFeedbackDetailsCubit extends Cubit<GuestFeedbackDetailsState> {
   final FeedbackRepository _feedbackRepository;
 
   final int feedbackId;
-  GuestFeedbackDetailsCubit( this._feedbackRepository,
-       this.feedbackId)
+  GuestFeedbackDetailsCubit(this._feedbackRepository, this.feedbackId)
       : super(GuestFeedbackDetailsState.initial());
   fetchDetails() async {
     emit(GuestFeedbackDetailsState.loading());
@@ -35,6 +34,4 @@ class GuestFeedbackDetailsCubit extends Cubit<GuestFeedbackDetailsState> {
       return FeedbackStatus.available;
     }
   }
-
-
 }

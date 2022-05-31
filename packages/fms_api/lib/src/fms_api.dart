@@ -9,6 +9,7 @@ import 'package:fms_api/src/model/education_response/education_response.dart';
 import 'package:fms_api/src/model/employee_report_response/employee_report.dart';
 import 'package:fms_api/src/model/employee_report_response/employee_report_response.dart';
 import 'package:fms_api/src/model/feedback_counts_response/feedback_counts_response.dart';
+import 'package:fms_api/src/model/get_sector_response/get_sector_response.dart';
 import 'package:fms_api/src/model/user_get_list_response/user_get_list_response.dart';
 import 'package:fms_api/src/model/user_login_response/user_login_response.dart';
 import 'package:fms_api/src/token_storage.dart';
@@ -120,6 +121,10 @@ class FmsApi {
         baseURL + '/Account/RegisterUser',
         data: registerUserRequest.toJson(),
       );
+      var meta = Meta.fromJson(response.data?['meta'] as Map<String, dynamic>);
+      if (meta.successStatus != true) {
+        throw Exception(meta.message);
+      }
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -292,6 +297,14 @@ class FmsApi {
     );
   }
 
+  Future<GetSectorResponse?> getSectors() async {
+    Response<dynamic> response = await _dioClient.get<Map<String, dynamic>>(
+      baseURL + '/Lookup/Sector',
+    );
+
+    return GetSectorResponse.fromJson(response.data as Map<String, dynamic>);
+  }
+
   Future<CompanyList?> getCompanies(int? sectorId) async {
     Response<dynamic> response;
     if (sectorId == null) {
@@ -300,8 +313,8 @@ class FmsApi {
       );
     } else {
       response = await _dioClient.get<Map<String, dynamic>>(
-        baseURL + '/Lookup/Company/$sectorId',
-      );
+          baseURL + '/Lookup/Company',
+          queryParameters: <String, dynamic>{'sectorId': sectorId});
     }
 
     return CompanyList.fromJson(response.data as Map<String, dynamic>);
@@ -318,6 +331,7 @@ class FmsApi {
           baseURL + '/Lookup/Product',
           queryParameters: <String, dynamic>{'companyId': companyId});
     }
+    return CompanyList.fromJson(response.data as Map<String,dynamic>);
   }
 
   Future<EducationResponse?> getEducation() async {

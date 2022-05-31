@@ -38,7 +38,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           cityId: cityId));
       emit(RegisterState.success());
     } catch (e) {
-      emit(RegisterState.error());
+      emit(RegisterState.error(e.toString()));
     }
   }
 }

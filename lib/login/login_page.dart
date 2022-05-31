@@ -169,8 +169,8 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     child: const Text('devam et'),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          CupertinoPageRoute(builder: (context) => GuestHome()));
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                          builder: (context) => GuestHome()));
                     }),
               ],
             )

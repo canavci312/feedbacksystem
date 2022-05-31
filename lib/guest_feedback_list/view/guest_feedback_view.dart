@@ -43,7 +43,7 @@ class _GuestFeedbackViewState extends State<GuestFeedbackView> {
 
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle:  Text('Geribildirimler'),
+        middle: Text('Geribildirimler'),
       ),
       child: Column(children: [
         const SizedBox(

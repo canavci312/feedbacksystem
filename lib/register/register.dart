@@ -111,11 +111,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                 ),
-            error: () => showCupertinoDialog<void>(
+            error: (message) => showCupertinoDialog<void>(
                   context: context,
                   builder: (BuildContext context) => CupertinoAlertDialog(
                     title: const Text('Hata!'),
-                    content: const Text('Birşeyler ters gitti :('),
+                    content: message.isNotEmpty
+                        ? Text(message)
+                        : Text('Birşeyler ters gitti :('),
                     actions: <CupertinoDialogAction>[
                       CupertinoDialogAction(
                         child: const Text('Ok'),

@@ -1,6 +1,8 @@
 import 'package:feedback_repository/feedback_repository.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
 import 'package:feedbacksystem/customer_feedbacks/cubit/customer_feedbacks_cubit.dart';
+import 'package:feedbacksystem/customer_filter_feedbacks/model/feedback_filter_model.dart';
+import 'package:feedbacksystem/customer_filter_feedbacks/view/customer_filter_feedbacks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +42,7 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('tr', timeago.TrMessages());
-
+    var cubit = context.read<CustomerFeedbacksCubit>();
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         trailing: GestureDetector(
@@ -54,14 +56,39 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
         SizedBox(
           height: 70,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CupertinoSearchTextField(
-            placeholder: 'Geribildirim Ara',
-            controller: controller,
-            onChanged: (String value) {
-              context.read<CustomerFeedbacksCubit>().searchFeedbacks(value);
-            },
+        SizedBox(
+          height: 50,
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CupertinoSearchTextField(
+                    placeholder: 'Geribildirim Ara',
+                    controller: controller,
+                    onChanged: (String value) {
+                      context
+                          .read<CustomerFeedbacksCubit>()
+                          .searchFeedbacks(value);
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                    onTap: () async {
+                      FeedbackFilterModel? model =
+                          await showCupertinoDialog<FeedbackFilterModel?>(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  CustomerFilterFeedbacksDialog());
+                      cubit.applyFilter(model);
+                    },
+                    child: Icon(Icons.filter_alt)),
+              )
+            ],
           ),
         ),
         BlocBuilder<CustomerFeedbacksCubit, CustomerFeedbacksState>(
@@ -69,7 +96,7 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
             return state.when(
               initial: () => const SizedBox(),
               loading: () => const CircularProgressIndicator(),
-              success: (list, filteredList) => controller.text.length > 2
+              success: (list, filteredList) => filteredList.length > 0
                   ? Expanded(
                       child: Material(
                         child: ListView.separated(

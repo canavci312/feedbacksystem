@@ -8,7 +8,7 @@ part 'company_list.g.dart';
 @freezed
 class CompanyList with _$CompanyList {
   factory CompanyList({
-    List<MyList>? list,
+    List<Company>? list,
     int? count,
   }) = _CompanyList;
 

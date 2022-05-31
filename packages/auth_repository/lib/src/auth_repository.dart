@@ -40,7 +40,7 @@ class AuthRepository {
 
   Future<void> logout() async {
     try {
-     await _fmsApi.unauthenticate();
+      await _fmsApi.unauthenticate();
     } catch (e) {
       rethrow;
     }

@@ -4,11 +4,11 @@ part 'list.freezed.dart';
 part 'list.g.dart';
 
 @freezed
-class MyList with _$MyList {
-  factory MyList({
+class Company with _$Company {
+  factory Company({
     int? id,
     String? name,
   }) = _MyList;
 
-  factory MyList.fromJson(Map<String, dynamic> json) => _$MyListFromJson(json);
+  factory Company.fromJson(Map<String, dynamic> json) => _$CompanyFromJson(json);
 }

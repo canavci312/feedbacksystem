@@ -22,3 +22,6 @@ export 'feedback_counts_response/feedbacks_per_type.dart';
 export 'feedback_counts_response/feedbacks_per_product.dart';
 export 'education_response/education_response.dart';
 export 'admin_feedback_details_response/admin_feedback_details_response.dart';
+export 'get_sector_response/get_sector_response.dart';
+export 'get_sector_response/my_list.dart';
+export 'company_list/list.dart';
