@@ -2,7 +2,6 @@ import 'package:feedback_repository/feedback_repository.dart';
 import 'package:feedbacksystem/admin_feedback_details/view/admin_feedback_details_page.dart';
 import 'package:feedbacksystem/admin_feedback_list/cubit/admin_feedback_list_cubit.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
-import 'package:feedbacksystem/customer_feedbacks/cubit/customer_feedbacks_cubit.dart';
 import 'package:feedbacksystem/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

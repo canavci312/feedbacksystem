@@ -1,8 +1,9 @@
 import 'package:feedback_repository/feedback_repository.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
-import 'package:feedbacksystem/customer_feedbacks/cubit/customer_feedbacks_cubit.dart';
+import 'package:feedbacksystem/customer_feedbacks/bloc/customer_feedbacks_bloc.dart';
 import 'package:feedbacksystem/customer_filter_feedbacks/model/feedback_filter_model.dart';
 import 'package:feedbacksystem/customer_filter_feedbacks/view/customer_filter_feedbacks.dart';
+import 'package:feedbacksystem/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,14 +12,19 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:feedbacksystem/core/extensions.dart';
 import '../../customer_add_feedback/view/customer_add_feedback_page.dart';
 
-class CustomerFeedbackPage extends StatelessWidget {
+class CustomerFeedbackPage extends StatefulWidget {
   const CustomerFeedbackPage({Key? key}) : super(key: key);
 
   @override
+  State<CustomerFeedbackPage> createState() => _CustomerFeedbackPageState();
+}
+
+class _CustomerFeedbackPageState extends State<CustomerFeedbackPage> {
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CustomerFeedbacksCubit(FeedbackRepository(FmsApi()))
-        ..fetchFeedbacks(),
+      create: (context) => CustomerFeedbacksBloc(getIt())
+        ..add(CustomerFeedbacksEvent.fetchFeedbacks()),
       child: const CustomerFeedbackView(),
     );
   }
@@ -33,16 +39,17 @@ class CustomerFeedbackView extends StatefulWidget {
 
 class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
   TextEditingController controller = TextEditingController();
+  final _scrollController = ScrollController();
+  FeedbackFilterModel? model;
   @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
   }
 
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('tr', timeago.TrMessages());
-    var cubit = context.read<CustomerFeedbacksCubit>();
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         trailing: GestureDetector(
@@ -68,8 +75,8 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
                     controller: controller,
                     onChanged: (String value) {
                       context
-                          .read<CustomerFeedbacksCubit>()
-                          .searchFeedbacks(value);
+                          .read<CustomerFeedbacksBloc>()
+                          .add(CustomerFeedbacksEvent.searchFeedbacks(value));
                     },
                   ),
                 ),
@@ -78,28 +85,32 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: GestureDetector(
                     onTap: () async {
-                      FeedbackFilterModel? model =
-                          await showCupertinoDialog<FeedbackFilterModel?>(
-                              barrierDismissible: true,
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  CustomerFilterFeedbacksDialog());
-                      cubit.applyFilter(model);
+                      model = await showCupertinoDialog<FeedbackFilterModel?>(
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (BuildContext context) =>
+                              CustomerFilterFeedbacksDialog());
+                      context
+                          .read<CustomerFeedbacksBloc>()
+                          .add(CustomerFeedbacksEvent.applyFilter(model));
                     },
                     child: Icon(Icons.filter_alt)),
               )
             ],
           ),
         ),
-        BlocBuilder<CustomerFeedbacksCubit, CustomerFeedbacksState>(
+        BlocBuilder<CustomerFeedbacksBloc, CustomerFeedbacksState>(
           builder: (context, state) {
             return state.when(
-              initial: () => const SizedBox(),
+              initial: () => Center(child: const CircularProgressIndicator()),
               loading: () => const CircularProgressIndicator(),
-              success: (list, filteredList) => filteredList.length > 0
+              success: (list, filteredList, hasReachedMax) => filteredList
+                          .length >
+                      0
                   ? Expanded(
                       child: Material(
                         child: ListView.separated(
+                          controller: _scrollController,
                           itemCount: filteredList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CustomerFeedbackListTile(
@@ -116,6 +127,7 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
                   : Expanded(
                       child: Material(
                         child: ListView.separated(
+                          controller: _scrollController,
                           itemCount: list.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CustomerFeedbackListTile(list[index]);
@@ -133,6 +145,35 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
         )
       ]),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom)
+      context.read<CustomerFeedbacksBloc>().state.whenOrNull(
+        success: (list, filteredList, hasReachedMax) {
+          filteredList.isNotEmpty
+              ? null
+              : context
+                  .read<CustomerFeedbacksBloc>()
+                  .add(CustomerFeedbacksEvent.fetchFeedbacks());
+        },
+      );
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 }
 

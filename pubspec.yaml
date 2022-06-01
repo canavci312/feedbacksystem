@@ -27,17 +27,12 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  syncfusion_flutter_charts: ^20.1.57
-  report_repository:
-    path: packages/report_repository
   auth_repository:
     path: packages/auth_repository
-  user_repository:
-    path: packages/user_repository
-  system_repository:
-    path: packages/system_repository
   awesome_select: ^5.2.0
   bloc: ^8.0.3
+  bloc_concurrency: ^0.2.0
+  stream_transform: ^2.0.0
   country_code_picker: ^2.0.2
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
@@ -62,8 +57,15 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   reaction_repository:
     path: packages/reaction_repository
+  report_repository:
+    path: packages/report_repository
+  syncfusion_flutter_charts: ^20.1.57
+  system_repository:
+    path: packages/system_repository
   timeago: ^3.2.2
   url_launcher: ^6.1.2
+  user_repository:
+    path: packages/user_repository
 dev_dependencies:
   build_runner: ^2.1.10
   flutter_lints: ^1.0.0
