@@ -9,4 +9,8 @@ class UserRepository {
   Future<UserGetListResponse?> getUserList() async {
     return await _fmsApi.getUserList();
   }
+
+  Future<bool> toggleUserAbility(int userId) async {
+    return _fmsApi.toggleUserAbility(userId);
+  }
 }

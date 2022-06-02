@@ -379,4 +379,17 @@ class FmsApi {
         .get<Map<String, dynamic>>(baseURL + '/Report/CustomerStatistics');
     return CustomerStatisticsResponse.fromJson(response.data!);
   }
+
+  Future<bool> toggleUserAbility(int userId) async {
+    try {
+      var response = await _dioClient.get<Map<String, dynamic>>(
+          baseURL + '/User/ToggleUserAbility/$userId');
+      if (response.data!['meta']['successStatus'] == false) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

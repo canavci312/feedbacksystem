@@ -51,9 +51,9 @@ class FeedbackRepository {
         isAnonym: isAnonym));
   }
 
-  Future<void> sendComment(int feedbackId, String comment) async {
+  Future<void> sendComment(int feedbackId, String comment, bool isAnonym) async {
     final response = await _fmsApi.upsertComment(UpsertCommentRequest(
-        feedbackId: feedbackId, text: comment, isAnonym: false));
+        feedbackId: feedbackId, text: comment, isAnonym: isAnonym));
   }
 
   Future<void> toggleSolved(int feedbackId) async {

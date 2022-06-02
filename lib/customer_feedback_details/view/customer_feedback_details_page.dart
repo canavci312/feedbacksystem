@@ -38,6 +38,7 @@ class _CustomerFeedbackDetailViewState
     extends State<CustomerFeedbackDetailView> {
   TextEditingController _commentController = TextEditingController();
   TextEditingController _replyController = TextEditingController();
+  bool isCommentAnonym = false;
   @override
   void dispose() {
     _commentController.dispose();
@@ -203,7 +204,7 @@ class _CustomerFeedbackDetailViewState
                                                 .read<
                                                     CustomerFeedbackDetailsCubit>()
                                                 .sendReply(
-                                                  _commentController.text,
+                                                  _replyController.text,
                                                 );
                                             _replyController.clear();
                                           },
@@ -270,19 +271,35 @@ class _CustomerFeedbackDetailViewState
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: CupertinoButton(
-                                  child: const Text('Gönder'),
-                                  onPressed: () {
-                                    context
-                                        .read<CustomerFeedbackDetailsCubit>()
-                                        .sendComment(
-                                          _commentController.text,
-                                        );
-                                    _commentController.clear();
-                                  },
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text('Anonim'),
+                                  CupertinoSwitch(
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: isCommentAnonym,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        isCommentAnonym = value;
+                                      });
+                                    },
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: CupertinoButton(
+                                      child: const Text('Gönder'),
+                                      onPressed: () {
+                                        context
+                                            .read<
+                                                CustomerFeedbackDetailsCubit>()
+                                            .sendComment(
+                                                _commentController.text,
+                                                isCommentAnonym);
+                                        _commentController.clear();
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(
                                 height: 50,

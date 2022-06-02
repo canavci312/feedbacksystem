@@ -1,4 +1,4 @@
-import 'package:feedbacksystem/customer_feedbacks/view/customer_feedback_view.dart';
+import 'package:feedbacksystem/company_representative_users/view/company_representative_users_page.dart';
 import 'package:feedbacksystem/employee_feedback/view/employee_feedback_page.dart';
 import 'package:feedbacksystem/user_profile/view/user_profile_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +15,9 @@ class CompanyRepresentetiveHome extends StatelessWidget {
             icon: Icon(CupertinoIcons.news),
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person_3),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.profile_circled),
           ),
         ],
@@ -24,12 +27,14 @@ class CompanyRepresentetiveHome extends StatelessWidget {
           builder: (BuildContext context) {
             switch (index) {
               case 0:
-                return EmployeeFeedbackPage();
+                return const EmployeeFeedbackPage();
               case 1:
-                return UserProfilePage();
+                return const CompanyRepresentativeUsersPage();
+              case 2:
+                return const UserProfilePage();
 
               default:
-                return EmployeeFeedbackPage();
+                return const EmployeeFeedbackPage();
             }
           },
         );

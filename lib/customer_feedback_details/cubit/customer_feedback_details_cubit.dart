@@ -37,15 +37,16 @@ class CustomerFeedbackDetailsCubit extends Cubit<CustomerFeedbackDetailsState> {
     }
   }
 
-  void sendComment(String text) async {
+  void sendComment(String text, bool isAnonym) async {
     emit(CustomerFeedbackDetailsState.loading());
-    final response = await _feedbackRepository.sendComment(feedbackId, text);
+    final response =
+        await _feedbackRepository.sendComment(feedbackId, text, isAnonym);
     fetchDetails();
   }
 
   void sendReaction() async {
     emit(CustomerFeedbackDetailsState.loading());
-    final response = await _reactionRepository.reactToFeedback(feedbackId);
+    await _reactionRepository.reactToFeedback(feedbackId);
     await fetchDetails();
   }
 
