@@ -25,8 +25,10 @@ class CustomerAddFeedbackCubit extends Cubit<CustomerAddFeedbackState> {
     products = response!.list!;
   }
 
-  void postFeedback(int typeId, String title, String text, int productId,
-      bool isAnonym) async {
+  void postFeedback(
+      int typeId, String title, String text, int productId, bool isAnonym,
+      {int? subtypeId}) async {
+    print(typeId);
     print(title.trim().length);
     print(text.trim().length);
     if (title.trim().length < 3 || text.trim().length < 3 || productId == -1) {
@@ -40,8 +42,12 @@ class CustomerAddFeedbackCubit extends Cubit<CustomerAddFeedbackState> {
             isLoading: true, showErrorDialog: false, isSuccessful: false),
       );
       try {
+        if (typeId != 1) {
+          subtypeId = null;
+        }
         await _feedbackRepository.upsertFeedback(
-            typeId, title, text, productId, isAnonym);
+            typeId, title, text, productId, isAnonym,
+            subtypeId: subtypeId);
         emit(
           state.copyWith(
               isLoading: false, showErrorDialog: false, isSuccessful: true),

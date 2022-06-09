@@ -42,13 +42,13 @@ class FeedbackRepository {
   }
 
   Future<void> upsertFeedback(int typeId, String title, String text,
-      int productId, bool isAnonym) async {
+      int productId, bool isAnonym,{int? subtypeId}) async {
     final response = await _fmsApi.upsertFeedback(UpsertFeedbackRequest(
         typeId: typeId,
         title: title,
         text: text,
         productId: productId,
-        isAnonym: isAnonym));
+        isAnonym: isAnonym,subTypeId: subtypeId));
   }
 
   Future<void> sendComment(int feedbackId, String comment, bool isAnonym) async {

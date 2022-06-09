@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
-  var storage = await FlutterSecureStorage();
+  var storage = await const FlutterSecureStorage();
   const company_manager =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjMxNiIsIm5hbWUiOiJHYWJiaWUiLCJlbWFpbCI6Imd5ZW9sYW5kOHJAd29yZHByZXNzLmNvbSIsIlJvbGVOYW1lIjoiQ29tcGFueSBNYW5hZ2VyIiwibmJmIjoxNjUyMDk0MDc0LCJleHAiOjE2ODIwOTQwNzQsImlhdCI6MTY1MjA5NDA3NH0.46Ycw4Y1HNtOTBBF32560Bohi57uRp5oRJ8DE2tbelQ';
   const admin =
@@ -22,7 +22,7 @@ void main() async {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjQzIiwibmFtZSI6IkRpZXRlciIsImVtYWlsIjoiZGNyYWZ0MTZAc2luYS5jb20uY24iLCJSb2xlTmFtZSI6IkN1c3RvbWVyIiwibmJmIjoxNjUwMzc1NTgzLCJleHAiOjE2ODE5MTE1ODMsImlhdCI6MTY1MDM3NTU4M30.JwOruTsWyzDdNXy3MQI_P4d1OU_R7BneOuSNcHvBs7U';
   const customer_50 =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjUwIiwibmFtZSI6Ikxpc2UiLCJlbWFpbCI6ImxjYWxsZW4xZEB0dXR0b2NpdHRhLml0IiwiUm9sZU5hbWUiOiJDdXN0b21lciIsIm5iZiI6MTY1MDM3NTYzNiwiZXhwIjoxNjgxOTExNjM2LCJpYXQiOjE2NTAzNzU2MzZ9._XHs0Bvw2ruETQMdZAEp9eA8QojNzAp1F-jjKz88UZc';
-  await storage.write(key: 'token', value: representative);
+  await storage.write(key: 'token', value: customer_18);
   runApp(MyApp());
 }
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             currentFocus.focusedChild?.unfocus();
           }
         },
-        child: CupertinoApp(
+        child: const CupertinoApp(
           title: 'Feedback App',
           home: RootPage(),
           theme: CupertinoThemeData(brightness: Brightness.light),

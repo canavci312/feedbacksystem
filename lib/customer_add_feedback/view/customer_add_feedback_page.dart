@@ -42,6 +42,7 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
   }
 
   int selectedTypeId = 1;
+  int selectedSubType = 0;
   int? scrolledCompanyId;
   String? selectedCompanyName;
   int? selectedCompanyId;
@@ -250,11 +251,13 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
                     height: 40,
                     child: ChipsFilter((value) {
                       selectedTypeId = value;
                       print(selectedTypeId);
+                      setState(() {});
                     },
                         // Select the second filter as default
                         [
@@ -262,6 +265,29 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                           Filter("Memnuniyet", CupertinoIcons.smiley),
                           Filter("Öneri", CupertinoIcons.light_max),
                         ], 1),
+                  ),
+                  Visibility(
+                    visible: selectedTypeId == 0,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      height: 40,
+                      child: ChipsFilter((value) {
+                        selectedSubType = value;
+                        print(selectedSubType);
+                      },
+                          // Select the second filter as default
+                          [
+                            const Filter("Arızalı", Icons.dangerous_outlined),
+                            const Filter("Sağlığa Zararlı",
+                                Icons.health_and_safety_outlined),
+                            const Filter("Diğer", CupertinoIcons.burn),
+                          ], 1),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   const Text('Başlık'),
                   const SizedBox(
@@ -412,11 +438,12 @@ class _CustomerAddFeedbackViewState extends State<CustomerAddFeedbackView> {
                             context
                                 .read<CustomerAddFeedbackCubit>()
                                 .postFeedback(
-                                    selectedTypeId,
+                                    selectedTypeId + 1,
                                     _titleController.text,
                                     _textController.text,
                                     selectedProductId ?? -1,
-                                    isAnonym);
+                                    isAnonym,
+                                    subtypeId: selectedSubType + 1);
                           },
                         ),
                       );
