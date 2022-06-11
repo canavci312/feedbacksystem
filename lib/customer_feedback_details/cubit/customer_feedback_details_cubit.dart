@@ -51,13 +51,8 @@ class CustomerFeedbackDetailsCubit extends Cubit<CustomerFeedbackDetailsState> {
     } else {
       await _reactionRepository.reactToFeedback(feedbackId);
     }
-    await fetchDetails();
-  }
+    await Future.delayed(Duration(milliseconds: 200));
 
-  void deleteReaction() async {
-    emit(CustomerFeedbackDetailsState.loading());
-    final response =
-        await _reactionRepository.deleteFeedbackReaction(feedbackId);
     await fetchDetails();
   }
 

@@ -66,7 +66,7 @@ class _CustomerFeedbackDetailViewState
         builder: (context, state) {
           return state.when(
               initial: () => const SizedBox(),
-              loading: () => const CircularProgressIndicator(),
+              loading: () => Center(child: const CircularProgressIndicator()),
               success: (details, status) => GestureDetector(
                     onTap: (() {
                       FocusScopeNode currentFocus = FocusScope.of(context);
@@ -384,7 +384,7 @@ class FeedbackMessage extends StatelessWidget {
                         onTap: () {
                           context
                               .read<CustomerFeedbackDetailsCubit>()
-                              .sendReaction(iLiked==null?false:true);
+                              .sendReaction(iLiked == null ? false : true);
                         },
                         child: iLiked == null
                             ? Icon(
