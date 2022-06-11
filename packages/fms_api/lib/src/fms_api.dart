@@ -157,9 +157,9 @@ class FmsApi {
   Future<void> upsertProduct(int? id, String productName) async {
     try {
       if (id == null) {
-             final response = await _dioClient.post<Map<String, dynamic>>(
+        final response = await _dioClient.post<Map<String, dynamic>>(
           '$baseURL/Product/Upsert',
-          data: <String, dynamic>{ 'productName': productName},
+          data: <String, dynamic>{'productName': productName},
         );
       } else {
         final response = await _dioClient.post<Map<String, dynamic>>(
@@ -236,22 +236,18 @@ class FmsApi {
     );
   }
 
-  Future<void> toggleFeedbackArchived(int id) async {
-    final response = await _dioClient.get<Map<String, dynamic>>(
-      '$baseURL/Feedback/ToggleFeedbackArchived/$id',
-    );
-  }
-
   Future<void> deleteFeedback(int id) async {
     final response = await _dioClient.delete<Map<String, dynamic>>(
       '$baseURL/Feedback/Delete/$id',
     );
   }
+
   Future<void> deleteProduct(int id) async {
     final response = await _dioClient.delete<Map<String, dynamic>>(
       '$baseURL/Product/Delete/$id',
     );
   }
+
   Future<void> upsertFeedback(
       UpsertFeedbackRequest upsertFeedbackRequest) async {
     final response = await _dioClient.post<Map<String, dynamic>>(
@@ -283,6 +279,12 @@ class FmsApi {
   Future<void> toggleCommentAbility(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
       '$baseURL/Comment/ToggleCommentAbility/$id',
+    );
+  }
+
+  Future<void> toggleFeedbackArchieved(int id) async {
+    final response = await _dioClient.get<Map<String, dynamic>>(
+      '$baseURL/Feedback/ToggleFeedbackArchived/$id',
     );
   }
 
@@ -415,5 +417,4 @@ class FmsApi {
       return false;
     }
   }
-
 }

@@ -41,17 +41,20 @@ class FeedbackRepository {
     }
   }
 
-  Future<void> upsertFeedback(int typeId, String title, String text,
-      int productId, bool isAnonym,{int? subtypeId}) async {
+  Future<void> upsertFeedback(
+      int typeId, String title, String text, int productId, bool isAnonym,
+      {int? subtypeId}) async {
     final response = await _fmsApi.upsertFeedback(UpsertFeedbackRequest(
         typeId: typeId,
         title: title,
         text: text,
         productId: productId,
-        isAnonym: isAnonym,subTypeId: subtypeId));
+        isAnonym: isAnonym,
+        subTypeId: subtypeId));
   }
 
-  Future<void> sendComment(int feedbackId, String comment, bool isAnonym) async {
+  Future<void> sendComment(
+      int feedbackId, String comment, bool isAnonym) async {
     final response = await _fmsApi.upsertComment(UpsertCommentRequest(
         feedbackId: feedbackId, text: comment, isAnonym: isAnonym));
   }
@@ -82,5 +85,9 @@ class FeedbackRepository {
     if (response != null) {
       return response;
     }
+  }
+
+  Future<void> archive(int feedbackId) async {
+    await _fmsApi.toggleFeedbackArchieved(feedbackId);
   }
 }

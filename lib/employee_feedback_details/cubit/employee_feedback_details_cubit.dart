@@ -44,4 +44,10 @@ class EmployeeFeedbackDetailsCubit extends Cubit<EmployeeFeedbackDetailsState> {
         int.parse(curUser!.id!), feedbackId, text);
     await fetchDetails();
   }
+
+  Future<void> archive() async {
+    emit(EmployeeFeedbackDetailsState.loading());
+    await _feedbackRepository.archive(feedbackId);
+    await fetchDetails();
+  }
 }

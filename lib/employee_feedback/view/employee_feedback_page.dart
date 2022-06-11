@@ -44,6 +44,7 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
   bool isAnswered = false;
   bool directedToMe = false;
   bool notSolved = false;
+  bool isArchieved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +97,20 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
                         .filterIsAnswered(isSelected);
                   },
                   selected: isAnswered,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                FilterChip(
+                  label: Text('Arşivlenen'),
+                  onSelected: (isSelected) {
+                    isArchieved = isSelected;
+                    setState(() {});
+                    context
+                        .read<EmployeeFeedbackCubit>()
+                        .filterIsArchieved(isSelected);
+                  },
+                  selected: isArchieved,
                 ),
                 SizedBox(
                   width: 5,

@@ -1,6 +1,5 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:feedback_repository/feedback_repository.dart';
-import 'package:feedbacksystem/customer_feedback_details/cubit/customer_feedback_details_cubit.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/widget/custom_stepper.dart';
 import 'package:feedbacksystem/employee_feedback_details/cubit/employee_feedback_details_cubit.dart';
 import 'package:feedbacksystem/locator.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
-import 'package:reaction_repository/reaction_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmployeeFeedbackDetailsPage extends StatelessWidget {
@@ -37,7 +35,7 @@ class EmployeeFeedbackDetailView extends StatefulWidget {
 
 class _EmployeeFeedbackDetailViewState
     extends State<EmployeeFeedbackDetailView> {
-  TextEditingController _replyController = TextEditingController();
+  final TextEditingController _replyController = TextEditingController();
   @override
   void dispose() {
     _replyController.dispose();
@@ -47,253 +45,276 @@ class _EmployeeFeedbackDetailViewState
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<EmployeeFeedbackDetailsCubit>();
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        leading: CupertinoNavigationBarBackButton(
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        middle: const Text('Detaylar'),
-        trailing: GestureDetector(
-            onTap: (() {
-              showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) => CupertinoActionSheet(
-                        title: const Text('Müşteriye ulaşın'),
-                        actions: [
-                          CupertinoActionSheetAction(
-                            onPressed: () async {
-                              var reponse = await launchUrl(Uri(
-                                  scheme: 'tel',
-                                  path: cubit.state.whenOrNull(
-                                    success: (feedbackDetail, status) =>
-                                        feedbackDetail.data!.customerPhone!,
-                                  )));
-                              print(reponse);
-                            },
-                            child: Row(
-                              children: [
-                                const Icon(CupertinoIcons.phone),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(cubit.state.whenOrNull(
-                                      success: (feedbackDetail, status) =>
-                                          feedbackDetail.data!.customerPhone!,
-                                    ) ??
-                                    '')
-                              ],
-                            ),
+    return BlocBuilder<EmployeeFeedbackDetailsCubit,
+        EmployeeFeedbackDetailsState>(
+      builder: (context, state) {
+        return state.when(
+            initial: () => const SizedBox(),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            success: (details, status) => CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    leading: CupertinoNavigationBarBackButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    middle: const Text('Detaylar'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Material(
+                          child: IconButton(
+                            icon: const Icon(CupertinoIcons.archivebox),
+                            onPressed: details.data!.isSolved!
+                                ? () {
+                                    cubit.archive();
+                                  }
+                                : null,
                           ),
-                          CupertinoActionSheetAction(
-                            onPressed: () async {
-                              var reponse = await launchUrl(Uri(
-                                  scheme: 'mailto',
-                                  path: cubit.state.whenOrNull(
-                                    success: (feedbackDetail, status) =>
-                                        feedbackDetail.data!.customerEmail!,
-                                  )));
-                              print(reponse);
-                            },
-                            child: Row(
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                            onTap: (() {
+                              showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (context) => CupertinoActionSheet(
+                                        title: const Text('Müşteriye ulaşın'),
+                                        actions: [
+                                          CupertinoActionSheetAction(
+                                            onPressed: () async {
+                                              var reponse = await launchUrl(Uri(
+                                                  scheme: 'tel',
+                                                  path: cubit.state.whenOrNull(
+                                                    success: (feedbackDetail,
+                                                            status) =>
+                                                        feedbackDetail.data!
+                                                            .customerPhone!,
+                                                  )));
+                                              print(reponse);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                    CupertinoIcons.phone),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(cubit.state.whenOrNull(
+                                                      success: (feedbackDetail,
+                                                              status) =>
+                                                          feedbackDetail.data!
+                                                              .customerPhone!,
+                                                    ) ??
+                                                    '')
+                                              ],
+                                            ),
+                                          ),
+                                          CupertinoActionSheetAction(
+                                            onPressed: () async {
+                                              var reponse = await launchUrl(Uri(
+                                                  scheme: 'mailto',
+                                                  path: cubit.state.whenOrNull(
+                                                    success: (feedbackDetail,
+                                                            status) =>
+                                                        feedbackDetail.data!
+                                                            .customerEmail!,
+                                                  )));
+                                              print(reponse);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                const Icon(CupertinoIcons.mail),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(cubit.state.whenOrNull(
+                                                      success: (feedbackDetail,
+                                                              status) =>
+                                                          feedbackDetail.data!
+                                                              .customerEmail!,
+                                                    ) ??
+                                                    '')
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ));
+                            }),
+                            child: const Icon(CupertinoIcons.phone)),
+                      ],
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: 50 + MediaQuery.of(context).viewPadding.top,
+                        right: 8,
+                        left: 8),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                const Icon(CupertinoIcons.mail),
+                                Text(details.data?.title ?? '',
+                                    style: !details.data!.isArchived!
+                                        ? const TextStyle(fontWeight: FontWeight.bold)
+                                        : const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                            decoration:
+                                                TextDecoration.lineThrough)),
                                 const SizedBox(
                                   width: 5,
                                 ),
-                                Text(cubit.state.whenOrNull(
-                                      success: (feedbackDetail, status) =>
-                                          feedbackDetail.data!.customerEmail!,
-                                    ) ??
-                                    '')
+                                details.data!.isArchived!
+                                    ? Icon(
+                                        CupertinoIcons.archivebox_fill,
+                                        color: Theme.of(context).primaryColor,
+                                      )
+                                    : const SizedBox(),
+                                details.data?.typeId == 1
+                                    ? const Icon(
+                                        CupertinoIcons.heart_slash_fill,
+                                        color: Colors.red,
+                                      )
+                                    : details.data?.typeId == 2
+                                        ? const Icon(
+                                            CupertinoIcons.smiley,
+                                            color: Colors.green,
+                                          )
+                                        : Icon(
+                                            CupertinoIcons.light_max,
+                                            color: Colors.yellow[900],
+                                          )
                               ],
                             ),
-                          )
-                        ],
-                      ));
-            }),
-            child: const Icon(CupertinoIcons.phone)),
-      ),
-      child: BlocBuilder<EmployeeFeedbackDetailsCubit,
-          EmployeeFeedbackDetailsState>(
-        builder: (context, state) {
-          return state.when(
-              initial: () => const SizedBox(),
-              loading: () => const CircularProgressIndicator(),
-              success: (details, status) => GestureDetector(
-                    onTap: (() {
-                      FocusScopeNode currentFocus = FocusScope.of(context);
-                      if (!currentFocus.hasPrimaryFocus &&
-                          currentFocus.focusedChild != null) {
-                        currentFocus.focusedChild?.unfocus();
-                      }
-                    }),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: 50 + MediaQuery.of(context).viewPadding.top,
-                          right: 8,
-                          left: 8),
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                                   Row(
-                                children: [
-                                  Text(details.data?.title ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  SizedBox(
-                                    width: 5,
+                                Text(
+                                  details.data?.productName ?? '',
+                                  style: const TextStyle(
+                                      fontStyle: FontStyle.italic),
+                                ),
+                                const Text(
+                                  ' - ',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                                Text(
+                                  details.data?.companyName ?? '',
+                                  style: const TextStyle(
+                                      fontStyle: FontStyle.italic),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                                width: double.infinity,
+                                child: CustomStepper(status)),
+                            FeedbackMessage(
+                              details.data?.customerFirstName ?? '',
+                              details.data?.text ?? '',
+                              details.data?.createdAt ?? DateTime.now(),
+                              likeCount: details.data?.likeCount,
+                            ),
+                            const Text(
+                              'Firmadan Cevaplar:',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            details.data?.replyList?.length == 0
+                                ? const Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Center(
+                                      child: Text('Henüz cevap yok'),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: details.data?.replyList?.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return FeedbackMessage(
+                                          details.data?.replyList?[index]
+                                                  .userName ??
+                                              '',
+                                          details.data?.replyList?[index]
+                                                  .text ??
+                                              '',
+                                          DateTime.parse(details.data!
+                                              .replyList![index].createdAt!));
+                                    },
                                   ),
-                                  details.data?.typeId == 1
-                                      ? Icon(
-                                          CupertinoIcons.heart_slash_fill,
-                                          color: Colors.red,
-                                        )
-                                      : details.data?.typeId == 2
-                                          ? Icon(
-                                              CupertinoIcons.smiley,
-                                              color: Colors.green,
-                                            )
-                                          : Icon(
-                                              CupertinoIcons.light_max,
-                                              color: Colors.yellow[900],
-                                            )
-                                ],
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: CupertinoTextField(
+                                placeholder: 'Cevabınız',
+                                expands: true,
+                                maxLines: null,
+                                minLines: null,
+                                keyboardType: TextInputType.multiline,
+                                controller: _replyController,
+                                prefix: const Icon(
+                                  CupertinoIcons.bubble_right,
+                                  color: Colors.grey,
+                                ),
                               ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      details.data?.productName ?? '',
-                                      style: const TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    const Text(
-                                      ' - ',
-                                      style: TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    Text(
-                                      details.data?.companyName ?? '',
-                                      style: const TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                    width: double.infinity,
-                                    child: CustomStepper(status)),
-                                FeedbackMessage(
-                                  details.data?.customerFirstName ?? '',
-                                  details.data?.text ?? '',
-                                  details.data?.createdAt ?? DateTime.now(),
-                                  likeCount: details.data?.likeCount,
-                                ),
-                                const Text(
-                                  'Firmadan Cevaplar:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                details.data?.replyList?.length == 0
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(4.0),
-                                        child: Center(
-                                          child: Text('Henüz cevap yok'),
-                                        ),
-                                      )
-                                    : ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            details.data?.replyList?.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return FeedbackMessage(
-                                              details.data?.replyList?[index]
-                                                      .userName ??
-                                                  '',
-                                              details.data?.replyList?[index]
-                                                      .text ??
-                                                  '',
-                                              DateTime.parse(details
-                                                  .data!
-                                                  .replyList![index]
-                                                  .createdAt!));
-                                        },
-                                      ),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: CupertinoTextField(
-                                    placeholder: 'Cevabınız',
-                                    expands: true,
-                                    maxLines: null,
-                                    minLines: null,
-                                    keyboardType: TextInputType.multiline,
-                                    controller: _replyController,
-                                    prefix: const Icon(
-                                      CupertinoIcons.bubble_right,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: CupertinoButton(
-                                      child: const Text('Cevapla'),
-                                      onPressed: () {
-                                        context
-                                            .read<
-                                                EmployeeFeedbackDetailsCubit>()
-                                            .sendFeedback(
-                                                _replyController.text);
-                                        _replyController.clear();
-                                      }),
-                                ),
-                                const Text(
-                                  'Yorumlar:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                details.data?.commentList?.length == 0
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(4.0),
-                                        child: Center(
-                                          child: Text('Henüz yorum yok'),
-                                        ),
-                                      )
-                                    : ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            details.data?.commentList?.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return FeedbackMessage(
-                                              details.data?.commentList?[index]
-                                                      .userName ??
-                                                  '',
-                                              details.data?.commentList?[index]
-                                                      .text ??
-                                                  '',
-                                              details.data?.commentList?[index]
-                                                      .createdAt ??
-                                                  DateTime.now());
-                                        },
-                                      ),
-                              ],
                             ),
-                          ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: CupertinoButton(
+                                  child: const Text('Cevapla'),
+                                  onPressed: () {
+                                    context
+                                        .read<EmployeeFeedbackDetailsCubit>()
+                                        .sendFeedback(_replyController.text);
+                                    _replyController.clear();
+                                  }),
+                            ),
+                            const Text(
+                              'Yorumlar:',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            details.data?.commentList?.length == 0
+                                ? const Padding(
+                                    padding: EdgeInsets.all(4.0),
+                                    child: Center(
+                                      child: Text('Henüz yorum yok'),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount:
+                                        details.data?.commentList?.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return FeedbackMessage(
+                                          details.data?.commentList?[index]
+                                                  ['userName'] ??
+                                              '',
+                                          details.data?.commentList?[index]
+                                                  ['text'] ??
+                                              '',
+                                          DateTime.parse(
+                                              details.data?.commentList?[index]
+                                                  ['createdAt']));
+                                    },
+                                  ),
+                            const SizedBox(
+                              height: 50,
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  ));
-        },
-      ),
+                  ),
+                ));
+      },
     );
   }
 }

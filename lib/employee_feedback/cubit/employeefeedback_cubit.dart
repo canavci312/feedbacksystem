@@ -96,4 +96,19 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
           feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
     }
   }
+
+  void filterIsArchieved(bool isSelected) {
+    if (isSelected) {
+      filteredList.addAll(
+          feedbacks!.where((element) => element.isArchived == true).toList());
+      var tempSet = filteredList.toSet();
+      filteredList = tempSet.toList();
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    } else {
+      filteredList.removeWhere((element) => element.isArchived == true);
+      emit(EmployeeFeedbackState.success(
+          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    }
+  }
 }
