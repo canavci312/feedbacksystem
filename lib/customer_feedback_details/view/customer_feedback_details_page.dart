@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
 import 'package:reaction_repository/reaction_repository.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomerFeedbackDetailsPage extends StatelessWidget {
   final PublicFeedbackList item;
@@ -54,7 +55,11 @@ class _CustomerFeedbackDetailViewState
           onPressed: () => Navigator.of(context).pop(),
         ),
         middle: const Text('Detaylar'),
-        trailing: const Icon(Icons.share),
+        trailing: GestureDetector(
+            onTap: (() {
+              Share.share('check out my website https://example.com');
+            }),
+            child: const Icon(Icons.share)),
       ),
       child: BlocBuilder<CustomerFeedbackDetailsCubit,
           CustomerFeedbackDetailsState>(
@@ -130,6 +135,7 @@ class _CustomerFeedbackDetailViewState
                                 details.data?.text ?? '',
                                 details.data?.createdAt ?? DateTime.now(),
                                 likeCount: details.data?.likeCount,
+                                iLiked: details.data?.userReaction,
                               ),
                               const Text(
                                 'Firmadan Cevaplar:',
@@ -346,8 +352,9 @@ class FeedbackMessage extends StatelessWidget {
   final String text;
   final DateTime date;
   final int? likeCount;
+  final bool? iLiked;
   const FeedbackMessage(this.senderName, this.text, this.date,
-      {this.likeCount, Key? key})
+      {this.likeCount, this.iLiked, Key? key})
       : super(key: key);
 
   @override
@@ -377,12 +384,17 @@ class FeedbackMessage extends StatelessWidget {
                         onTap: () {
                           context
                               .read<CustomerFeedbackDetailsCubit>()
-                              .sendReaction();
+                              .sendReaction(iLiked==null?false:true);
                         },
-                        child: const Icon(
-                          Icons.thumb_up,
-                          color: Colors.grey,
-                        ),
+                        child: iLiked == null
+                            ? Icon(
+                                Icons.thumb_up,
+                                color: Colors.grey,
+                              )
+                            : Icon(
+                                Icons.thumb_up,
+                                color: Theme.of(context).primaryColor,
+                              ),
                       ),
                       const SizedBox(
                         width: 8,

@@ -28,6 +28,7 @@ class Data with _$Data {
     String? typeName,
     dynamic subTypeId,
     dynamic subTypeName,
+    bool? userReaction,
     DateTime? createdAt,
     bool? isAnonym,
     bool? isReplied,

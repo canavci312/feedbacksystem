@@ -30,6 +30,7 @@ _$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
       typeName: json['typeName'] as String?,
       subTypeId: json['subTypeId'],
       subTypeName: json['subTypeName'],
+      userReaction: json['userReaction'] as bool?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -58,6 +59,7 @@ Map<String, dynamic> _$$_DataToJson(_$_Data instance) => <String, dynamic>{
       'typeName': instance.typeName,
       'subTypeId': instance.subTypeId,
       'subTypeName': instance.subTypeName,
+      'userReaction': instance.userReaction,
       'createdAt': instance.createdAt?.toIso8601String(),
       'isAnonym': instance.isAnonym,
       'isReplied': instance.isReplied,

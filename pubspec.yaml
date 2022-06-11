@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  share_plus: ^4.0.7
   auth_repository:
     path: packages/auth_repository
   awesome_select: ^5.2.0

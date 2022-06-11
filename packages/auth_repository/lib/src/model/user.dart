@@ -10,6 +10,7 @@ class User with _$User {
     String? name,
     String? email,
     @JsonKey(name: 'RoleName') String? roleName,
+    int? companyId,
     int? nbf,
     int? exp,
     int? iat,

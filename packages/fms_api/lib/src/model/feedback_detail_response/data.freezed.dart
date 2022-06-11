@@ -39,6 +39,7 @@ mixin _$Data {
   String? get typeName => throw _privateConstructorUsedError;
   dynamic get subTypeId => throw _privateConstructorUsedError;
   dynamic get subTypeName => throw _privateConstructorUsedError;
+  bool? get userReaction => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   bool? get isAnonym => throw _privateConstructorUsedError;
   bool? get isReplied => throw _privateConstructorUsedError;
@@ -73,6 +74,7 @@ abstract class $DataCopyWith<$Res> {
       String? typeName,
       dynamic subTypeId,
       dynamic subTypeName,
+      bool? userReaction,
       DateTime? createdAt,
       bool? isAnonym,
       bool? isReplied,
@@ -108,6 +110,7 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
     Object? typeName = freezed,
     Object? subTypeId = freezed,
     Object? subTypeName = freezed,
+    Object? userReaction = freezed,
     Object? createdAt = freezed,
     Object? isAnonym = freezed,
     Object? isReplied = freezed,
@@ -190,6 +193,10 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
           ? _value.subTypeName
           : subTypeName // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      userReaction: userReaction == freezed
+          ? _value.userReaction
+          : userReaction // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -235,6 +242,7 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       String? typeName,
       dynamic subTypeId,
       dynamic subTypeName,
+      bool? userReaction,
       DateTime? createdAt,
       bool? isAnonym,
       bool? isReplied,
@@ -271,6 +279,7 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
     Object? typeName = freezed,
     Object? subTypeId = freezed,
     Object? subTypeName = freezed,
+    Object? userReaction = freezed,
     Object? createdAt = freezed,
     Object? isAnonym = freezed,
     Object? isReplied = freezed,
@@ -353,6 +362,10 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
           ? _value.subTypeName
           : subTypeName // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      userReaction: userReaction == freezed
+          ? _value.userReaction
+          : userReaction // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -396,6 +409,7 @@ class _$_Data implements _Data {
       this.typeName,
       this.subTypeId,
       this.subTypeName,
+      this.userReaction,
       this.createdAt,
       this.isAnonym,
       this.isReplied,
@@ -458,6 +472,8 @@ class _$_Data implements _Data {
   @override
   final dynamic subTypeName;
   @override
+  final bool? userReaction;
+  @override
   final DateTime? createdAt;
   @override
   final bool? isAnonym;
@@ -468,7 +484,7 @@ class _$_Data implements _Data {
 
   @override
   String toString() {
-    return 'Data(replyList: $replyList, commentList: $commentList, id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, isMine: $isMine, productName: $productName, likeCount: $likeCount, dislikeCount: $dislikeCount, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved)';
+    return 'Data(replyList: $replyList, commentList: $commentList, id: $id, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, isMine: $isMine, productName: $productName, likeCount: $likeCount, dislikeCount: $dislikeCount, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, userReaction: $userReaction, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved)';
   }
 
   @override
@@ -502,6 +518,8 @@ class _$_Data implements _Data {
             const DeepCollectionEquality().equals(other.subTypeId, subTypeId) &&
             const DeepCollectionEquality()
                 .equals(other.subTypeName, subTypeName) &&
+            const DeepCollectionEquality()
+                .equals(other.userReaction, userReaction) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.isAnonym, isAnonym) &&
             const DeepCollectionEquality().equals(other.isReplied, isReplied) &&
@@ -531,6 +549,7 @@ class _$_Data implements _Data {
         const DeepCollectionEquality().hash(typeName),
         const DeepCollectionEquality().hash(subTypeId),
         const DeepCollectionEquality().hash(subTypeName),
+        const DeepCollectionEquality().hash(userReaction),
         const DeepCollectionEquality().hash(createdAt),
         const DeepCollectionEquality().hash(isAnonym),
         const DeepCollectionEquality().hash(isReplied),
@@ -569,6 +588,7 @@ abstract class _Data implements Data {
       final String? typeName,
       final dynamic subTypeId,
       final dynamic subTypeName,
+      final bool? userReaction,
       final DateTime? createdAt,
       final bool? isAnonym,
       final bool? isReplied,
@@ -614,6 +634,8 @@ abstract class _Data implements Data {
   dynamic get subTypeId => throw _privateConstructorUsedError;
   @override
   dynamic get subTypeName => throw _privateConstructorUsedError;
+  @override
+  bool? get userReaction => throw _privateConstructorUsedError;
   @override
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @override

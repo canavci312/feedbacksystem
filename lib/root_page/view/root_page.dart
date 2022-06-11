@@ -42,7 +42,7 @@ class RootView extends StatelessWidget {
                 case Roles.customer:
                   return const CustomerHome();
                 case Roles.representative:
-                  return const CompanyRepresentetiveHome();
+                  return  CompanyRepresentetiveHome();
                 case Roles.employee:
                   return const EmployeeHome();
                 case Roles.manager:

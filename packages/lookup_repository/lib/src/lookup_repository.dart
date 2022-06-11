@@ -13,7 +13,26 @@ class LookUpRepository {
   Future<CompanyList?> getProducts({int? companyId}) async {
     return await _fmsApi.getProducts(companyId);
   }
-    Future<GetSectorResponse?> getSectors() async {
+
+  Future<bool> upsertProduct(String name, {int? id}) async {
+    try {
+      await _fmsApi.upsertProduct(id, name);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<GetSectorResponse?> getSectors() async {
     return await _fmsApi.getSectors();
+  }
+
+  Future<bool> deleteProduct(int id) async {
+    try {
+      await _fmsApi.deleteProduct(id);
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 }

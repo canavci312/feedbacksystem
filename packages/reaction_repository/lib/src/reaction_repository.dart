@@ -6,7 +6,7 @@ import 'package:fms_api/fms_api.dart';
 class ReactionRepository {
   ReactionRepository(this._fmsApi);
   final FmsApi _fmsApi;
-  Future<void> reactToFeedback(int feedbackId) async {
+  Future<void> reactToFeedback(int feedbackId,) async {
     _fmsApi.reactFeedback(feedbackId, true);
   }
 

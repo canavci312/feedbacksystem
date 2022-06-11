@@ -26,6 +26,7 @@ mixin _$User {
   String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'RoleName')
   String? get roleName => throw _privateConstructorUsedError;
+  int? get companyId => throw _privateConstructorUsedError;
   int? get nbf => throw _privateConstructorUsedError;
   int? get exp => throw _privateConstructorUsedError;
   int? get iat => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $UserCopyWith<$Res> {
       String? name,
       String? email,
       @JsonKey(name: 'RoleName') String? roleName,
+      int? companyId,
       int? nbf,
       int? exp,
       int? iat});
@@ -63,6 +65,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? name = freezed,
     Object? email = freezed,
     Object? roleName = freezed,
+    Object? companyId = freezed,
     Object? nbf = freezed,
     Object? exp = freezed,
     Object? iat = freezed,
@@ -84,6 +87,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.roleName
           : roleName // ignore: cast_nullable_to_non_nullable
               as String?,
+      companyId: companyId == freezed
+          ? _value.companyId
+          : companyId // ignore: cast_nullable_to_non_nullable
+              as int?,
       nbf: nbf == freezed
           ? _value.nbf
           : nbf // ignore: cast_nullable_to_non_nullable
@@ -110,6 +117,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? name,
       String? email,
       @JsonKey(name: 'RoleName') String? roleName,
+      int? companyId,
       int? nbf,
       int? exp,
       int? iat});
@@ -130,6 +138,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = freezed,
     Object? roleName = freezed,
+    Object? companyId = freezed,
     Object? nbf = freezed,
     Object? exp = freezed,
     Object? iat = freezed,
@@ -151,6 +160,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.roleName
           : roleName // ignore: cast_nullable_to_non_nullable
               as String?,
+      companyId: companyId == freezed
+          ? _value.companyId
+          : companyId // ignore: cast_nullable_to_non_nullable
+              as int?,
       nbf: nbf == freezed
           ? _value.nbf
           : nbf // ignore: cast_nullable_to_non_nullable
@@ -175,6 +188,7 @@ class _$_User implements _User {
       this.name,
       this.email,
       @JsonKey(name: 'RoleName') this.roleName,
+      this.companyId,
       this.nbf,
       this.exp,
       this.iat});
@@ -192,6 +206,8 @@ class _$_User implements _User {
   @JsonKey(name: 'RoleName')
   final String? roleName;
   @override
+  final int? companyId;
+  @override
   final int? nbf;
   @override
   final int? exp;
@@ -200,7 +216,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, roleName: $roleName, nbf: $nbf, exp: $exp, iat: $iat)';
+    return 'User(id: $id, name: $name, email: $email, roleName: $roleName, companyId: $companyId, nbf: $nbf, exp: $exp, iat: $iat)';
   }
 
   @override
@@ -212,6 +228,7 @@ class _$_User implements _User {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.roleName, roleName) &&
+            const DeepCollectionEquality().equals(other.companyId, companyId) &&
             const DeepCollectionEquality().equals(other.nbf, nbf) &&
             const DeepCollectionEquality().equals(other.exp, exp) &&
             const DeepCollectionEquality().equals(other.iat, iat));
@@ -225,6 +242,7 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(roleName),
+      const DeepCollectionEquality().hash(companyId),
       const DeepCollectionEquality().hash(nbf),
       const DeepCollectionEquality().hash(exp),
       const DeepCollectionEquality().hash(iat));
@@ -246,6 +264,7 @@ abstract class _User implements User {
       final String? name,
       final String? email,
       @JsonKey(name: 'RoleName') final String? roleName,
+      final int? companyId,
       final int? nbf,
       final int? exp,
       final int? iat}) = _$_User;
@@ -262,6 +281,8 @@ abstract class _User implements User {
   @override
   @JsonKey(name: 'RoleName')
   String? get roleName => throw _privateConstructorUsedError;
+  @override
+  int? get companyId => throw _privateConstructorUsedError;
   @override
   int? get nbf => throw _privateConstructorUsedError;
   @override

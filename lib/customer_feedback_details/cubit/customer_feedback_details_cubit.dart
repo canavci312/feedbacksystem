@@ -44,9 +44,13 @@ class CustomerFeedbackDetailsCubit extends Cubit<CustomerFeedbackDetailsState> {
     fetchDetails();
   }
 
-  void sendReaction() async {
+  void sendReaction(bool isDelete) async {
     emit(CustomerFeedbackDetailsState.loading());
-    await _reactionRepository.reactToFeedback(feedbackId);
+    if (isDelete) {
+      await _reactionRepository.deleteFeedbackReaction(feedbackId);
+    } else {
+      await _reactionRepository.reactToFeedback(feedbackId);
+    }
     await fetchDetails();
   }
 

@@ -91,7 +91,7 @@ class FmsApi {
     try {
       print('hey');
       final response = await _dioClient.post<Map<String, dynamic>>(
-        baseURL + '/Account/UserLogin',
+        '$baseURL/Account/UserLogin',
         data: {'email': email, 'password': password},
       );
       final parsedResponse = UserLoginResponse.fromJson(response.data!);
@@ -118,7 +118,7 @@ class FmsApi {
   Future<void> registerUser(RegisterUserRequest registerUserRequest) async {
     try {
       final response = await _dioClient.post<Map<String, dynamic>>(
-        baseURL + '/Account/RegisterUser',
+        '$baseURL/Account/RegisterUser',
         data: registerUserRequest.toJson(),
       );
       var meta = Meta.fromJson(response.data?['meta'] as Map<String, dynamic>);
@@ -134,7 +134,7 @@ class FmsApi {
   Future<void> verifyEmail() async {
     try {
       final response = await _dioClient.get<Map<String, dynamic>>(
-        baseURL + '/Account/VerifyEmail',
+        '$baseURL/Account/VerifyEmail',
       );
     } catch (e) {
       log(e.toString());
@@ -145,9 +145,28 @@ class FmsApi {
   Future<void> upsertReply(int id, int feedbackId, String text) async {
     try {
       final response = await _dioClient.post<Map<String, dynamic>>(
-        baseURL + '/Reply/UpsertReply',
+        '$baseURL/Reply/UpsertReply',
         data: <String, dynamic>{'feedbackId': feedbackId, 'text': text},
       );
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> upsertProduct(int? id, String productName) async {
+    try {
+      if (id == null) {
+             final response = await _dioClient.post<Map<String, dynamic>>(
+          '$baseURL/Product/Upsert',
+          data: <String, dynamic>{ 'productName': productName},
+        );
+      } else {
+        final response = await _dioClient.post<Map<String, dynamic>>(
+          '$baseURL/Product/Upsert',
+          data: <String, dynamic>{'id': id, 'productName': productName},
+        );
+      }
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -157,7 +176,7 @@ class FmsApi {
   Future<FeedbackList?> getFeedbackList(FeedbackGetListRequest request) async {
     try {
       final response = await _dioClient.post<Map<String, dynamic>>(
-        baseURL + '/Feedback/GetList',
+        '$baseURL/Feedback/GetList',
         data: request.toJson(),
       );
       if (response.data != null) {
@@ -172,7 +191,7 @@ class FmsApi {
   Future<FeedbackDetailResponse?> getFeedbackDetail(int id) async {
     try {
       final response = await _dioClient.get<Map<String, dynamic>>(
-        baseURL + '/Feedback/GetDetail/$id',
+        '$baseURL/Feedback/GetDetail/$id',
       );
       if (response.data != null) {
         return FeedbackDetailResponse.fromJson(response.data!);
@@ -183,7 +202,7 @@ class FmsApi {
   Future<CompanyFeedbackDetailsResponse?> getCompanyFeedbackDetail(
       int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Feedback/GetCompanyFeedbackDetail/$id',
+      '$baseURL/Feedback/GetCompanyFeedbackDetail/$id',
     );
     if (response != null) {
       return CompanyFeedbackDetailsResponse.fromJson(response.data!);
@@ -192,7 +211,7 @@ class FmsApi {
 
   Future<AdminFeedbackDetailsResponse?> getAdminFeedbackDetail(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Feedback/GetAdminFeedbackDetail/$id',
+      '$baseURL/Feedback/GetAdminFeedbackDetail/$id',
     );
     if (response != null) {
       return AdminFeedbackDetailsResponse.fromJson(response.data!);
@@ -201,105 +220,109 @@ class FmsApi {
 
   Future<void> toggleFeedbackAbility(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Feedback/ToggleFeedbackAbility/$id',
+      '$baseURL/Feedback/ToggleFeedbackAbility/$id',
     );
   }
 
   Future<void> toggleFeedbackChecked(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Feedback/ToggleFeedbackChecked/$id',
+      '$baseURL/Feedback/ToggleFeedbackChecked/$id',
     );
   }
 
   Future<void> toggleFeedbackSolved(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Feedback/ToggleFeedbackSolved/$id',
+      '$baseURL/Feedback/ToggleFeedbackSolved/$id',
     );
   }
 
   Future<void> toggleFeedbackArchived(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Feedback/ToggleFeedbackArchived/$id',
+      '$baseURL/Feedback/ToggleFeedbackArchived/$id',
     );
   }
 
   Future<void> deleteFeedback(int id) async {
     final response = await _dioClient.delete<Map<String, dynamic>>(
-      baseURL + '/Feedback/Delete/$id',
+      '$baseURL/Feedback/Delete/$id',
     );
   }
-
+  Future<void> deleteProduct(int id) async {
+    final response = await _dioClient.delete<Map<String, dynamic>>(
+      '$baseURL/Product/Delete/$id',
+    );
+  }
   Future<void> upsertFeedback(
       UpsertFeedbackRequest upsertFeedbackRequest) async {
     final response = await _dioClient.post<Map<String, dynamic>>(
-      baseURL + '/Feedback/UpsertFeedback',
+      '$baseURL/Feedback/UpsertFeedback',
       data: upsertFeedbackRequest.toJson(),
     );
   }
 
   Future<void> directFeedback(int feedbackId, int employeeId) async {
     final response = await _dioClient.put<Map<String, dynamic>>(
-      baseURL + '/Feedback/DirectFeedback',
+      '$baseURL/Feedback/DirectFeedback',
       data: {"feedbackId": feedbackId, "employeeId": employeeId},
     );
   }
 
   Future<void> upsertComment(UpsertCommentRequest upsertCommentRequest) async {
     final response = await _dioClient.post<Map<String, dynamic>>(
-      baseURL + '/Comment/UpsertComment',
+      '$baseURL/Comment/UpsertComment',
       data: upsertCommentRequest.toJson(),
     );
   }
 
   Future<void> toggleCommentChecked(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Comment/ToggleCommentChecked/$id',
+      '$baseURL/Comment/ToggleCommentChecked/$id',
     );
   }
 
   Future<void> toggleCommentAbility(int id) async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Comment/ToggleCommentAbility/$id',
+      '$baseURL/Comment/ToggleCommentAbility/$id',
     );
   }
 
   Future<void> commentDelete(int id) async {
     final response = await _dioClient.delete<Map<String, dynamic>>(
-      baseURL + '/Comment/Delete/$id',
+      '$baseURL/Comment/Delete/$id',
     );
   }
 
-  Future<void> reactFeedback(int feedbackId, bool sentiment) async {
+  Future<void> reactFeedback(int feedbackId, bool? sentiment) async {
     final response = await _dioClient.post<Map<String, dynamic>>(
-      baseURL + '/Reaction/ReactFeedback',
+      '$baseURL/Reaction/ReactFeedback',
       data: {"feedbackId": feedbackId, "sentiment": sentiment},
     );
   }
 
   Future<void> reactComment(int commentId, bool sentiment) async {
     final response = await _dioClient.post<Map<String, dynamic>>(
-      baseURL + '/Reaction/ReactComment',
+      '$baseURL/Reaction/ReactComment',
       data: {"commentId": commentId, "sentiment": sentiment},
     );
   }
 
   Future<void> deleteFeedbackReaction(int feedbackId) async {
     final response = await _dioClient.delete<Map<String, dynamic>>(
-      baseURL + '/Reaction/DeleteFeedbackReaction',
+      '$baseURL/Reaction/DeleteFeedbackReaction',
       data: {"feedbackId": feedbackId},
     );
   }
 
   Future<void> deleteCommentReaction(int commentId) async {
     final response = await _dioClient.delete<Map<String, dynamic>>(
-      baseURL + '/Reaction/DeleteCommentReaction',
+      '$baseURL/Reaction/DeleteCommentReaction',
       data: {"commentId": commentId},
     );
   }
 
   Future<GetSectorResponse?> getSectors() async {
     Response<dynamic> response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Lookup/Sector',
+      '$baseURL/Lookup/Sector',
     );
 
     return GetSectorResponse.fromJson(response.data as Map<String, dynamic>);
@@ -309,11 +332,11 @@ class FmsApi {
     Response<dynamic> response;
     if (sectorId == null) {
       response = await _dioClient.get<Map<String, dynamic>>(
-        baseURL + '/Lookup/Company',
+        '$baseURL/Lookup/Company',
       );
     } else {
       response = await _dioClient.get<Map<String, dynamic>>(
-          baseURL + '/Lookup/Company',
+          '$baseURL/Lookup/Company',
           queryParameters: <String, dynamic>{'sectorId': sectorId});
     }
 
@@ -324,11 +347,11 @@ class FmsApi {
     Response<dynamic> response;
     if (companyId == null) {
       response = await _dioClient.get<Map<String, dynamic>>(
-        baseURL + '/Lookup/Product',
+        '$baseURL/Lookup/Product',
       );
     } else {
       response = await _dioClient.get<Map<String, dynamic>>(
-          baseURL + '/Lookup/Product',
+          '$baseURL/Lookup/Product',
           queryParameters: <String, dynamic>{'companyId': companyId});
     }
     return CompanyList.fromJson(response.data as Map<String, dynamic>);
@@ -336,7 +359,7 @@ class FmsApi {
 
   Future<EducationResponse?> getEducation() async {
     final response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/Lookup/Education',
+      '$baseURL/Lookup/Education',
     );
     return EducationResponse.fromJson(response.data!);
   }
@@ -344,46 +367,46 @@ class FmsApi {
   Future<UserGetListResponse?> getUserList() async {
     Response<dynamic> response;
     response = await _dioClient.post<Map<String, dynamic>>(
-        baseURL + '/User/GetList',
+        '$baseURL/User/GetList',
         data: <String, dynamic>{'objectsPerPage': 200});
     return UserGetListResponse.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<void> setModeOfOperation(int modeId) async {
     await _dioClient.put<Map<String, dynamic>>(
-        baseURL + '/System/SetModeOfOperation',
+        '$baseURL/System/SetModeOfOperation',
         data: <String, dynamic>{"modeId": modeId});
   }
 
   Future<int> getModeOfOperation() async {
     var response = await _dioClient.get<Map<String, dynamic>>(
-      baseURL + '/System/GetModeOfOperation',
+      '$baseURL/System/GetModeOfOperation',
     );
     return response.data?['data']['id'] as int;
   }
 
   Future<FeedbackCountsResponse> getFeedbackCounts() async {
     var response = await _dioClient
-        .get<Map<String, dynamic>>(baseURL + '/Report/FeedbackCounts');
+        .get<Map<String, dynamic>>('$baseURL/Report/FeedbackCounts');
     return FeedbackCountsResponse.fromJson(response.data!);
   }
 
   Future<EmployeeReportResponse> getEmployeeReport() async {
     var response = await _dioClient
-        .get<Map<String, dynamic>>(baseURL + '/Report/EmployeeReport');
+        .get<Map<String, dynamic>>('$baseURL/Report/EmployeeReport');
     return EmployeeReportResponse.fromJson(response.data!);
   }
 
   Future<CustomerStatisticsResponse> getCustomerStatistics() async {
     var response = await _dioClient
-        .get<Map<String, dynamic>>(baseURL + '/Report/CustomerStatistics');
+        .get<Map<String, dynamic>>('$baseURL/Report/CustomerStatistics');
     return CustomerStatisticsResponse.fromJson(response.data!);
   }
 
   Future<bool> toggleUserAbility(int userId) async {
     try {
-      var response = await _dioClient.get<Map<String, dynamic>>(
-          baseURL + '/User/ToggleUserAbility/$userId');
+      var response = await _dioClient
+          .get<Map<String, dynamic>>('$baseURL/User/ToggleUserAbility/$userId');
       if (response.data!['meta']['successStatus'] == false) {
         return false;
       }
@@ -392,4 +415,5 @@ class FmsApi {
       return false;
     }
   }
+
 }
