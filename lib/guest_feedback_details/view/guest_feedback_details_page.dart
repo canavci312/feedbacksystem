@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
 import 'package:reaction_repository/reaction_repository.dart';
+import 'package:share_plus/share_plus.dart';
 
 class GuestFeedbackDetailsPage extends StatelessWidget {
   final PublicFeedbackList item;
@@ -52,7 +53,10 @@ class _GuestFeedbackDetailViewState extends State<GuestFeedbackDetailView> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         middle: const Text('Detaylar'),
-        trailing: const Icon(Icons.share),
+        trailing: GestureDetector(
+            onTap: () => Share.share(
+                'FMS de paylaşılan bu geribildirimi gördün mü? 😲\nhttp://fms.uluoglakci.com/Feedback/GetDetail/${context.read<GuestFeedbackDetailsCubit>().feedbackId}'),
+            child: const Icon(Icons.share)),
       ),
       child: BlocBuilder<GuestFeedbackDetailsCubit, GuestFeedbackDetailsState>(
         builder: (context, state) {

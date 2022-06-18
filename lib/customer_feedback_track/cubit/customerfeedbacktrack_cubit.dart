@@ -18,7 +18,7 @@ class CustomerFeedbackTrackCubit extends Cubit<CustomerFeedbackTrackState> {
     var user = await _authRepository.currentUser();
     final feedbackList = await _feedbackRepository.getPublicFeedbackList(
         FeedbackGetListRequest(
-            objectsPerPage: 50, pageNumber: 1, userId: int.parse(user!.id!)));
+            objectsPerPage: 50, pageNumber: 1, userId: user!.id!));
     if (feedbackList != null)
       emit(CustomerFeedbackTrackState.success(feedbackList));
     else

@@ -57,7 +57,8 @@ class _CustomerFeedbackDetailViewState
         middle: const Text('Detaylar'),
         trailing: GestureDetector(
             onTap: (() {
-              Share.share('check out my website https://example.com');
+              Share.share(
+                  'FMS de paylaşılan bu geribildirimi gördün mü? 😲\nhttp://fms.uluoglakci.com/Feedback/GetDetail/${context.read<CustomerFeedbackDetailsCubit>().feedbackId}');
             }),
             child: const Icon(Icons.share)),
       ),

@@ -21,7 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   @JsonKey(name: 'Id')
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'RoleName')
@@ -41,7 +41,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'Id') String? id,
+      {@JsonKey(name: 'Id') int? id,
       String? name,
       String? email,
       @JsonKey(name: 'RoleName') String? roleName,
@@ -74,7 +74,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -113,7 +113,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$_UserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'Id') String? id,
+      {@JsonKey(name: 'Id') int? id,
       String? name,
       String? email,
       @JsonKey(name: 'RoleName') String? roleName,
@@ -147,7 +147,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -197,7 +197,7 @@ class _$_User implements _User {
 
   @override
   @JsonKey(name: 'Id')
-  final String? id;
+  final int? id;
   @override
   final String? name;
   @override
@@ -260,7 +260,7 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   factory _User(
-      {@JsonKey(name: 'Id') final String? id,
+      {@JsonKey(name: 'Id') final int? id,
       final String? name,
       final String? email,
       @JsonKey(name: 'RoleName') final String? roleName,
@@ -273,7 +273,7 @@ abstract class _User implements User {
 
   @override
   @JsonKey(name: 'Id')
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override

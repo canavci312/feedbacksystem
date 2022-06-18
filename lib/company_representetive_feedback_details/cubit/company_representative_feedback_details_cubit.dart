@@ -43,7 +43,7 @@ class CompanyRepresentativeFeedbackDetailsCubit
     var curUser = await _authRepository.currentUser();
 
     final response = await _feedbackRepository.upsertReply(
-        int.parse(curUser!.id!), feedbackId, text);
+        curUser!.id!, feedbackId, text);
     await fetchDetails();
   }
 }
