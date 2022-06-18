@@ -1,6 +1,7 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:feedback_repository/feedback_repository.dart';
+import 'package:feedbacksystem/company_filter_feedbacks/model/feedback_filter_model.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -27,88 +28,41 @@ class EmployeeFeedbackCubit extends Cubit<EmployeeFeedbackState> {
     }
   }
 
-  directedToMe(bool isTrue) {
-    if (isTrue) {
-      filteredList.addAll(feedbacks!
-          .where((element) =>
-              element.directedToEmployeeId.toString() == _curUser?.id)
-          .toList());
-      var tempSet = filteredList.toSet();
-      filteredList = tempSet.toList();
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-    } else {
-      filteredList.removeWhere(
-          (element) => element.directedToEmployeeId.toString() == _curUser?.id);
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+  void searchFeedbacks(String value) async{
+        if (value.length >= 3) {
+      final feedbackList = await _feedbackRepository.getCompanyFeedbackList(
+          FeedbackGetListRequest(
+              objectsPerPage: 50, pageNumber: 1, titleQuery: value));
+      if (feedbackList != null) {
+        state.whenOrNull(success: ((list, filteredList, hasReachedMax) {
+          emit(EmployeeFeedbackState.success(list, feedbackList, _curUser?.roleName ?? 'Company Employee'));
+        }));
+      }
+    }
+    if (value.length < 3) {
+      state.whenOrNull(success: ((list, filteredLis, hasReachedMax) {
+        emit(EmployeeFeedbackState.success(list, [], _curUser?.roleName ?? 'Company Employee'));
+      }));
     }
   }
 
-  void searchFeedbacks(String value) {
-    if (filteredList.isNotEmpty) {
-      filteredList = filteredList
-          .where((element) => element.title!.contains(value))
-          .toList();
-    } else {
-      filteredList.addAll(feedbacks ?? []);
-      var tempSet = filteredList.toSet();
-      filteredList = tempSet.toList();
-      filteredList = filteredList
-          .where((element) => element.title!.contains(value))
-          .toList();
-    }
-    if (value.length < 2) {
-      filteredList.addAll(feedbacks ?? []);
-      var tempSet = filteredList.toSet();
-      filteredList = tempSet.toList();
-    }
-    emit(EmployeeFeedbackState.success(
-        feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-  }
+  void applyFilter(CompanyFeedbackFilterModel? model) async{
+    bool? isSolved = model?.feedbackStatus == 1 ? true : null;
+    bool? isReplied = model?.feedbackStatus == 3 ? true : null;
+    isSolved = model?.feedbackStatus == 2 ? false : isSolved;
 
-  void filterIsAnswered(bool bool) {
-    if (bool) {
-      filteredList.addAll(
-          feedbacks!.where((element) => element.isReplied == true).toList());
-      var tempSet = filteredList.toSet();
-      filteredList = tempSet.toList();
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-    } else {
-      filteredList.removeWhere((element) => element.isReplied == true);
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
+    final feedbackList = await _feedbackRepository.getCompanyFeedbackList(
+        FeedbackGetListRequest(
+            objectsPerPage: 100,
+            typeId: model?.feedbackType,
+            isArchived: model?.isArchieved,
+            isDirected: model?.isDirected,
+            productId: model?.productId));
+    if (feedbackList != null) {
+      state.whenOrNull(success: ((list, filteredList, hasReachedMax) {
+        emit(EmployeeFeedbackState.success(list, feedbackList, _curUser?.roleName ?? 'Company Employee'));
+      }));
     }
   }
 
-  void filterNotSolved(bool bool) {
-    if (bool) {
-      filteredList.addAll(
-          feedbacks!.where((element) => element.isSolved == false).toList());
-      var tempSet = filteredList.toSet();
-      filteredList = tempSet.toList();
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-    } else {
-      filteredList.removeWhere((element) => element.isSolved == false);
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-    }
-  }
-
-  void filterIsArchieved(bool isSelected) {
-    if (isSelected) {
-      filteredList.addAll(
-          feedbacks!.where((element) => element.isArchived == true).toList());
-      var tempSet = filteredList.toSet();
-      filteredList = tempSet.toList();
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-    } else {
-      filteredList.removeWhere((element) => element.isArchived == true);
-      emit(EmployeeFeedbackState.success(
-          feedbacks!, filteredList, _curUser?.roleName ?? 'Company Employee'));
-    }
-  }
 }

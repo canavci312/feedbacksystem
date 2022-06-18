@@ -1,5 +1,7 @@
 import 'package:auth_repository/auth_repository.dart';
 import 'package:feedback_repository/feedback_repository.dart';
+import 'package:feedbacksystem/company_filter_feedbacks/model/feedback_filter_model.dart';
+import 'package:feedbacksystem/company_filter_feedbacks/view/company_filter_feedbacks.dart';
 import 'package:feedbacksystem/company_representetive_feedback_details/view/company_representetive_feedback_details_page.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
 import 'package:feedbacksystem/employee_feedback/cubit/employeefeedback_cubit.dart';
@@ -41,10 +43,7 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
     super.dispose();
   }
 
-  bool isAnswered = false;
-  bool directedToMe = false;
-  bool notSolved = false;
-  bool isArchieved = false;
+  CompanyFeedbackFilterModel? model;
 
   @override
   Widget build(BuildContext context) {
@@ -56,79 +55,39 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
         const SizedBox(
           height: 60,
         ),
-        Padding(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).viewPadding.top, bottom: 8),
-          child: CupertinoSearchTextField(
-            placeholder: 'Geribildirim Ara',
-            controller: controller,
-            onChanged: (String value) {
-              context.read<EmployeeFeedbackCubit>().searchFeedbacks(value);
-            },
-          ),
-        ),
-        Material(
-          child: SizedBox(
-            height: 30,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                FilterChip(
-                  label: Text('Bana Yönlendirilen'),
-                  onSelected: (isSelected) {
-                    directedToMe = isSelected;
-                    setState(() {});
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).viewPadding.top, bottom: 8),
+                child: CupertinoSearchTextField(
+                  placeholder: 'Geribildirim Ara',
+                  controller: controller,
+                  onChanged: (String value) {
                     context
                         .read<EmployeeFeedbackCubit>()
-                        .directedToMe(isSelected);
+                        .searchFeedbacks(value);
                   },
-                  selected: directedToMe,
                 ),
-                SizedBox(
-                  width: 5,
-                ),
-                FilterChip(
-                  label: Text('Cevaplanan'),
-                  onSelected: (isSelected) {
-                    isAnswered = isSelected;
-                    setState(() {});
-                    context
-                        .read<EmployeeFeedbackCubit>()
-                        .filterIsAnswered(isSelected);
-                  },
-                  selected: isAnswered,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                FilterChip(
-                  label: Text('Arşivlenen'),
-                  onSelected: (isSelected) {
-                    isArchieved = isSelected;
-                    setState(() {});
-                    context
-                        .read<EmployeeFeedbackCubit>()
-                        .filterIsArchieved(isSelected);
-                  },
-                  selected: isArchieved,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                FilterChip(
-                  label: Text('Çözülmemiş'),
-                  onSelected: (isSelected) {
-                    notSolved = isSelected;
-                    setState(() {});
-                    context
-                        .read<EmployeeFeedbackCubit>()
-                        .filterNotSolved(isSelected);
-                  },
-                  selected: notSolved,
-                ),
-              ],
+              ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                  onTap: () async {
+                    model =
+                        await showCupertinoDialog<CompanyFeedbackFilterModel?>(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (BuildContext context) =>
+                                CompanyFilterFeedbacksDialog());
+                    context.read<EmployeeFeedbackCubit>().applyFilter(model);
+                  },
+                  child: Icon(Icons.filter_alt)),
+            )
+          ],
         ),
         BlocBuilder<EmployeeFeedbackCubit, EmployeeFeedbackState>(
           builder: (context, state) {

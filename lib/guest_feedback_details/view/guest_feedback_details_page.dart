@@ -84,16 +84,16 @@ class _GuestFeedbackDetailViewState extends State<GuestFeedbackDetailView> {
                                   Text(details.data?.title ?? '',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   details.data?.typeId == 1
-                                      ? Icon(
+                                      ? const Icon(
                                           CupertinoIcons.heart_slash_fill,
                                           color: Colors.red,
                                         )
                                       : details.data?.typeId == 2
-                                          ? Icon(
+                                          ? const Icon(
                                               CupertinoIcons.smiley,
                                               color: Colors.green,
                                             )
@@ -270,7 +270,7 @@ class FeedbackMessage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(likeCount.toString()),
-                      Icon(
+                      const Icon(
                         Icons.thumb_up,
                         color: Colors.grey,
                       ),
