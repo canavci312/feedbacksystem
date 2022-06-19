@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:reaction_repository/reaction_repository.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -44,11 +45,22 @@ class _CustomerFeedbackDetailViewState
   void dispose() {
     _commentController.dispose();
     _replyController.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
   @override
   Widget build(BuildContext context) {
+    void _onRefresh() async {
+      // monitor network fetch
+      await context.read<CustomerFeedbackDetailsCubit>().fetchDetails();
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    }
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: CupertinoNavigationBarBackButton(
@@ -80,238 +92,248 @@ class _CustomerFeedbackDetailViewState
                       padding:
                           const EdgeInsets.only(top: 70, right: 8, left: 8),
                       child: Center(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(details.data?.title ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  details.data?.typeId == 1
-                                      ? Icon(
-                                          CupertinoIcons.heart_slash_fill,
-                                          color: Colors.red,
-                                        )
-                                      : details.data?.typeId == 2
-                                          ? Icon(
-                                              CupertinoIcons.smiley,
-                                              color: Colors.green,
-                                            )
-                                          : Icon(
-                                              CupertinoIcons.light_max,
-                                              color: Colors.yellow[900],
-                                            )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    details.data?.productName ?? '',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                  const Text(
-                                    ' - ',
-                                    style:
-                                        TextStyle(fontStyle: FontStyle.italic),
-                                  ),
-                                  Text(
-                                    details.data?.companyName ?? '',
-                                    style: const TextStyle(
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                  width: double.infinity,
-                                  child: CustomStepper(status)),
-                              FeedbackMessage(
-                                details.data?.customerFirstName ?? '',
-                                details.data?.text ?? '',
-                                details.data?.createdAt ?? DateTime.now(),
-                                likeCount: details.data?.likeCount,
-                                iLiked: details.data?.userReaction,
-                              ),
-                              const Text(
-                                'Firmadan Cevaplar:',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              details.data?.replyList?.length == 0
-                                  ? const Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: Center(
-                                        child: Text('Henüz cevap yok'),
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          details.data?.replyList?.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return FeedbackMessage(
-                                            details.data?.replyList?[index]
-                                                    .userName ??
-                                                '',
-                                            details.data?.replyList?[index]
-                                                    .text ??
-                                                '',
-                                            details.data?.replyList?[index]
-                                                    .createdAt ??
-                                                DateTime.now());
-                                      },
+                        child: SmartRefresher(
+                          controller: _refreshController,
+                          enablePullDown: true,
+                          enablePullUp: false,
+                          onRefresh: _onRefresh,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(details.data?.title ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    SizedBox(
+                                      width: 5,
                                     ),
-                              details.data?.isMine ?? false
-                                  ? Visibility(
-                                      visible:
-                                          details.data!.replyList!.isNotEmpty,
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: CupertinoTextFormFieldRow(
-                                          validator: ((value) {
-                                            if (value == null ||
-                                                value.length < 10) {
-                                              return 'En az 10 karakter içermeli';
-                                            }
-                                          }),
-                                          placeholder: 'Cevabınız',
-                                          expands: true,
-                                          maxLines: null,
-                                          minLines: null,
-                                          keyboardType: TextInputType.multiline,
-                                          controller: _replyController,
-                                          prefix: const Icon(
-                                            CupertinoIcons.bubble_right,
-                                            color: Colors.grey,
+                                    details.data?.typeId == 1
+                                        ? Icon(
+                                            CupertinoIcons.heart_slash_fill,
+                                            color: Colors.red,
+                                          )
+                                        : details.data?.typeId == 2
+                                            ? Icon(
+                                                CupertinoIcons.smiley,
+                                                color: Colors.green,
+                                              )
+                                            : Icon(
+                                                CupertinoIcons.light_max,
+                                                color: Colors.yellow[900],
+                                              )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      details.data?.productName ?? '',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    const Text(
+                                      ' - ',
+                                      style: TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                    Text(
+                                      details.data?.companyName ?? '',
+                                      style: const TextStyle(
+                                          fontStyle: FontStyle.italic),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    width: double.infinity,
+                                    child: CustomStepper(status)),
+                                FeedbackMessage(
+                                  details.data?.customerFirstName ?? '',
+                                  details.data?.text ?? '',
+                                  details.data?.createdAt ?? DateTime.now(),
+                                  likeCount: details.data?.likeCount,
+                                  iLiked: details.data?.userReaction,
+                                ),
+                                const Text(
+                                  'Firmadan Cevaplar:',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                details.data?.replyList?.length == 0
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(4.0),
+                                        child: Center(
+                                          child: Text('Henüz cevap yok'),
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount:
+                                            details.data?.replyList?.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return FeedbackMessage(
+                                              details.data?.replyList?[index]
+                                                      .userName ??
+                                                  '',
+                                              details.data?.replyList?[index]
+                                                      .text ??
+                                                  '',
+                                              details.data?.replyList?[index]
+                                                      .createdAt ??
+                                                  DateTime.now());
+                                        },
+                                      ),
+                                details.data?.isMine ?? false
+                                    ? Visibility(
+                                        visible:
+                                            details.data!.replyList!.isNotEmpty,
+                                        child: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: CupertinoTextFormFieldRow(
+                                            validator: ((value) {
+                                              if (value == null ||
+                                                  value.length < 10) {
+                                                return 'En az 10 karakter içermeli';
+                                              }
+                                            }),
+                                            placeholder: 'Cevabınız',
+                                            expands: true,
+                                            maxLines: null,
+                                            minLines: null,
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                            controller: _replyController,
+                                            prefix: const Icon(
+                                              CupertinoIcons.bubble_right,
+                                              color: Colors.grey,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                              details.data?.isMine ?? false
-                                  ? Visibility(
-                                      visible:
-                                          details.data!.replyList!.isNotEmpty,
-                                      child: Align(
-                                        alignment: Alignment.topRight,
-                                        child: CupertinoButton(
-                                          child: const Text('Gönder'),
-                                          onPressed: () {
-                                            context
-                                                .read<
-                                                    CustomerFeedbackDetailsCubit>()
-                                                .sendReply(
-                                                  _replyController.text,
-                                                );
-                                            _replyController.clear();
-                                          },
+                                      )
+                                    : const SizedBox(),
+                                details.data?.isMine ?? false
+                                    ? Visibility(
+                                        visible:
+                                            details.data!.replyList!.isNotEmpty,
+                                        child: Align(
+                                          alignment: Alignment.topRight,
+                                          child: CupertinoButton(
+                                            child: const Text('Gönder'),
+                                            onPressed: () {
+                                              context
+                                                  .read<
+                                                      CustomerFeedbackDetailsCubit>()
+                                                  .sendReply(
+                                                    _replyController.text,
+                                                  );
+                                              _replyController.clear();
+                                            },
+                                          ),
                                         ),
+                                      )
+                                    : const SizedBox(),
+                                details.data!.isMine! &&
+                                        !details.data!.isSolved!
+                                    ? Center(
+                                        child: CupertinoButton(
+                                            child: const Text(
+                                                'Çözüldü olarak işeretle'),
+                                            onPressed: () =>
+                                                showCupertinoDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        _solveConfirmDialog())),
+                                      )
+                                    : const SizedBox(),
+                                const Text(
+                                  'Yorumlar:',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                details.data?.commentList?.length == 0
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(4.0),
+                                        child: Center(
+                                          child: Text('Henüz yorum yok'),
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount:
+                                            details.data?.commentList?.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return FeedbackMessage(
+                                              details.data?.commentList?[index]
+                                                      .userName ??
+                                                  '',
+                                              details.data?.commentList?[index]
+                                                      .text ??
+                                                  '',
+                                              details.data?.commentList?[index]
+                                                      .createdAt ??
+                                                  DateTime.now());
+                                        },
                                       ),
-                                    )
-                                  : const SizedBox(),
-                              details.data!.isMine! && !details.data!.isSolved!
-                                  ? Center(
-                                      child: CupertinoButton(
-                                          child: const Text(
-                                              'Çözüldü olarak işeretle'),
-                                          onPressed: () => showCupertinoDialog(
-                                              context: context,
-                                              builder: (context) =>
-                                                  _solveConfirmDialog())),
-                                    )
-                                  : const SizedBox(),
-                              const Text(
-                                'Yorumlar:',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              details.data?.commentList?.length == 0
-                                  ? const Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: Center(
-                                        child: Text('Henüz yorum yok'),
-                                      ),
-                                    )
-                                  : ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          details.data?.commentList?.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return FeedbackMessage(
-                                            details.data?.commentList?[index]
-                                                    .userName ??
-                                                '',
-                                            details.data?.commentList?[index]
-                                                    .text ??
-                                                '',
-                                            details.data?.commentList?[index]
-                                                    .createdAt ??
-                                                DateTime.now());
-                                      },
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: CupertinoTextField(
+                                    placeholder: 'Yorumunuz',
+                                    expands: true,
+                                    maxLines: null,
+                                    minLines: null,
+                                    keyboardType: TextInputType.multiline,
+                                    controller: _commentController,
+                                    prefix: const Icon(
+                                      CupertinoIcons.bubble_right,
+                                      color: Colors.grey,
                                     ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: CupertinoTextField(
-                                  placeholder: 'Yorumunuz',
-                                  expands: true,
-                                  maxLines: null,
-                                  minLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  controller: _commentController,
-                                  prefix: const Icon(
-                                    CupertinoIcons.bubble_right,
-                                    color: Colors.grey,
                                   ),
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text('Anonim'),
-                                  CupertinoSwitch(
-                                    activeColor: Theme.of(context).primaryColor,
-                                    value: isCommentAnonym,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        isCommentAnonym = value;
-                                      });
-                                    },
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: CupertinoButton(
-                                      child: const Text('Gönder'),
-                                      onPressed: () {
-                                        context
-                                            .read<
-                                                CustomerFeedbackDetailsCubit>()
-                                            .sendComment(
-                                                _commentController.text,
-                                                isCommentAnonym);
-                                        _commentController.clear();
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text('Anonim'),
+                                    CupertinoSwitch(
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      value: isCommentAnonym,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          isCommentAnonym = value;
+                                        });
                                       },
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                            ],
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: CupertinoButton(
+                                        child: const Text('Gönder'),
+                                        onPressed: () {
+                                          context
+                                              .read<
+                                                  CustomerFeedbackDetailsCubit>()
+                                              .sendComment(
+                                                  _commentController.text,
+                                                  isCommentAnonym);
+                                          _commentController.clear();
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 100,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),

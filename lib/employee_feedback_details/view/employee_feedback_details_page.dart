@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmployeeFeedbackDetailsPage extends StatelessWidget {
@@ -36,15 +37,24 @@ class EmployeeFeedbackDetailView extends StatefulWidget {
 class _EmployeeFeedbackDetailViewState
     extends State<EmployeeFeedbackDetailView> {
   final TextEditingController _replyController = TextEditingController();
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   @override
   void dispose() {
     _replyController.dispose();
+    _refreshController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<EmployeeFeedbackDetailsCubit>();
+    void _onRefresh() {
+      cubit.fetchDetails();
+    }
+
     return BlocBuilder<EmployeeFeedbackDetailsCubit,
         EmployeeFeedbackDetailsState>(
       builder: (context, state) {
@@ -150,165 +160,172 @@ class _EmployeeFeedbackDetailViewState
                         right: 8,
                         left: 8),
                     child: Center(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(details.data?.title ?? '',
-                                    style: !details.data!.isArchived!
-                                        ? const TextStyle(fontWeight: FontWeight.bold)
-                                        : const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontStyle: FontStyle.italic,
-                                            decoration:
-                                                TextDecoration.lineThrough)),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                details.data!.isArchived!
-                                    ? Icon(
-                                        CupertinoIcons.archivebox_fill,
-                                        color: Theme.of(context).primaryColor,
-                                      )
-                                    : const SizedBox(),
-                                details.data?.typeId == 1
-                                    ? const Icon(
-                                        CupertinoIcons.heart_slash_fill,
-                                        color: Colors.red,
-                                      )
-                                    : details.data?.typeId == 2
-                                        ? const Icon(
-                                            CupertinoIcons.smiley,
-                                            color: Colors.green,
-                                          )
-                                        : Icon(
-                                            CupertinoIcons.light_max,
-                                            color: Colors.yellow[900],
-                                          )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  details.data?.productName ?? '',
-                                  style: const TextStyle(
-                                      fontStyle: FontStyle.italic),
-                                ),
-                                const Text(
-                                  ' - ',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
-                                Text(
-                                  details.data?.companyName ?? '',
-                                  style: const TextStyle(
-                                      fontStyle: FontStyle.italic),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                                width: double.infinity,
-                                child: CustomStepper(status)),
-                            FeedbackMessage(
-                              details.data?.customerFirstName ?? '',
-                              details.data?.text ?? '',
-                              details.data?.createdAt ?? DateTime.now(),
-                              likeCount: details.data?.likeCount,
-                            ),
-                            const Text(
-                              'Firmadan Cevaplar:',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            details.data?.replyList?.length == 0
-                                ? const Padding(
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Center(
-                                      child: Text('Henüz cevap yok'),
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: details.data?.replyList?.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return FeedbackMessage(
-                                          details.data?.replyList?[index]
-                                                  .userName ??
-                                              '',
-                                          details.data?.replyList?[index]
-                                                  .text ??
-                                              '',
-                                          DateTime.parse(details.data!
-                                              .replyList![index].createdAt!));
-                                    },
+                      child: SmartRefresher(
+                        controller: _refreshController,
+                        onRefresh: _onRefresh,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(details.data?.title ?? '',
+                                      style: !details.data!.isArchived!
+                                          ? const TextStyle(
+                                              fontWeight: FontWeight.bold)
+                                          : const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+                                              decoration:
+                                                  TextDecoration.lineThrough)),
+                                  const SizedBox(
+                                    width: 5,
                                   ),
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: CupertinoTextField(
-                                placeholder: 'Cevabınız',
-                                expands: true,
-                                maxLines: null,
-                                minLines: null,
-                                keyboardType: TextInputType.multiline,
-                                controller: _replyController,
-                                prefix: const Icon(
-                                  CupertinoIcons.bubble_right,
-                                  color: Colors.grey,
+                                  details.data!.isArchived!
+                                      ? Icon(
+                                          CupertinoIcons.archivebox_fill,
+                                          color: Theme.of(context).primaryColor,
+                                        )
+                                      : const SizedBox(),
+                                  details.data?.typeId == 1
+                                      ? const Icon(
+                                          CupertinoIcons.heart_slash_fill,
+                                          color: Colors.red,
+                                        )
+                                      : details.data?.typeId == 2
+                                          ? const Icon(
+                                              CupertinoIcons.smiley,
+                                              color: Colors.green,
+                                            )
+                                          : Icon(
+                                              CupertinoIcons.light_max,
+                                              color: Colors.yellow[900],
+                                            )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    details.data?.productName ?? '',
+                                    style: const TextStyle(
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                  const Text(
+                                    ' - ',
+                                    style:
+                                        TextStyle(fontStyle: FontStyle.italic),
+                                  ),
+                                  Text(
+                                    details.data?.companyName ?? '',
+                                    style: const TextStyle(
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                  width: double.infinity,
+                                  child: CustomStepper(status)),
+                              FeedbackMessage(
+                                details.data?.customerFirstName ?? '',
+                                details.data?.text ?? '',
+                                details.data?.createdAt ?? DateTime.now(),
+                                likeCount: details.data?.likeCount,
+                              ),
+                              const Text(
+                                'Firmadan Cevaplar:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              details.data?.replyList?.length == 0
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Center(
+                                        child: Text('Henüz cevap yok'),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount:
+                                          details.data?.replyList?.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return FeedbackMessage(
+                                            details.data?.replyList?[index]
+                                                    .userName ??
+                                                '',
+                                            details.data?.replyList?[index]
+                                                    .text ??
+                                                '',
+                                            DateTime.parse(details.data!
+                                                .replyList![index].createdAt!));
+                                      },
+                                    ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: CupertinoTextField(
+                                  placeholder: 'Cevabınız',
+                                  expands: true,
+                                  maxLines: null,
+                                  minLines: null,
+                                  keyboardType: TextInputType.multiline,
+                                  controller: _replyController,
+                                  prefix: const Icon(
+                                    CupertinoIcons.bubble_right,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: CupertinoButton(
-                                  child: const Text('Cevapla'),
-                                  onPressed: () {
-                                    context
-                                        .read<EmployeeFeedbackDetailsCubit>()
-                                        .sendFeedback(_replyController.text);
-                                    _replyController.clear();
-                                  }),
-                            ),
-                            const Text(
-                              'Yorumlar:',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            details.data?.commentList?.length == 0
-                                ? const Padding(
-                                    padding: EdgeInsets.all(4.0),
-                                    child: Center(
-                                      child: Text('Henüz yorum yok'),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: CupertinoButton(
+                                    child: const Text('Cevapla'),
+                                    onPressed: () {
+                                      context
+                                          .read<EmployeeFeedbackDetailsCubit>()
+                                          .sendFeedback(_replyController.text);
+                                      _replyController.clear();
+                                    }),
+                              ),
+                              const Text(
+                                'Yorumlar:',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              details.data?.commentList?.length == 0
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Center(
+                                        child: Text('Henüz yorum yok'),
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount:
+                                          details.data?.commentList?.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return FeedbackMessage(
+                                            details.data?.commentList?[index]
+                                                    ['userName'] ??
+                                                '',
+                                            details.data?.commentList?[index]
+                                                    ['text'] ??
+                                                '',
+                                            DateTime.parse(details
+                                                    .data?.commentList?[index]
+                                                ['createdAt']));
+                                      },
                                     ),
-                                  )
-                                : ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount:
-                                        details.data?.commentList?.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return FeedbackMessage(
-                                          details.data?.commentList?[index]
-                                                  ['userName'] ??
-                                              '',
-                                          details.data?.commentList?[index]
-                                                  ['text'] ??
-                                              '',
-                                          DateTime.parse(
-                                              details.data?.commentList?[index]
-                                                  ['createdAt']));
-                                    },
-                                  ),
-                            const SizedBox(
-                              height: 50,
-                            )
-                          ],
+                              const SizedBox(
+                                height: 50,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

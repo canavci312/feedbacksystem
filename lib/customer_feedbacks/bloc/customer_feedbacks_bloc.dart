@@ -30,6 +30,7 @@ class CustomerFeedbacksBloc
       _onFeedbacksFetched,
       transformer: throttleDroppable(throttleDuration),
     );
+    on<_FeedbacksRefreshed>(_onFeedbacksRefreshed);
     on<_FeedbacksSearched>(_onFeedbacksSearched);
     on<_FilterApplied>(_onFilterApplied);
   }
@@ -49,12 +50,25 @@ class CustomerFeedbacksBloc
       objectsPerPage: 50,
       pageNumber: _pageNumber,
     ));
+
+    emit(CustomerFeedbacksState.success(fetchedList!, [], true));
+  }
+
+  FutureOr<void> _onFeedbacksRefreshed(
+      _FeedbacksRefreshed event, Emitter<CustomerFeedbacksState> emit) async {
+    emit(CustomerFeedbacksState.loading());
+
+    _pageNumber = 1;
+    final fetchedList =
+        await _feedbackRepository.getPublicFeedbackList(FeedbackGetListRequest(
+      objectsPerPage: 50,
+      pageNumber: 1,
+    ));
     if (fetchedList != null) {
       if (fetchedList.isEmpty)
         emit(CustomerFeedbacksState.success(_feedbackList, [], true));
       else {
         _pageNumber++;
-        emit(CustomerFeedbacksState.loading());
         emit(CustomerFeedbacksState.success(
             _feedbackList..addAll(fetchedList), [], false));
       }

@@ -1,6 +1,8 @@
 import 'package:feedback_repository/feedback_repository.dart';
 import 'package:feedbacksystem/admin_feedback_details/view/admin_feedback_details_page.dart';
 import 'package:feedbacksystem/admin_feedback_list/cubit/admin_feedback_list_cubit.dart';
+import 'package:feedbacksystem/admin_filter_feedbacks/model/feedback_filter_model.dart';
+import 'package:feedbacksystem/admin_filter_feedbacks/view/admin_filter_feedbacks.dart';
 import 'package:feedbacksystem/customer_feedback_details/view/customer_feedback_details_page.dart';
 import 'package:feedbacksystem/locator.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,6 +40,7 @@ class _AdminFeedbackListViewState extends State<AdminFeedbackListView> {
     super.dispose();
   }
 
+  AdminFeedbackFilterModel? model;
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('tr', timeago.TrMessages());
@@ -54,22 +57,44 @@ class _AdminFeedbackListViewState extends State<AdminFeedbackListView> {
         const SizedBox(
           height: 70,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CupertinoSearchTextField(
-            placeholder: 'Geribildirim Ara',
-            controller: controller,
-            onChanged: (String value) {
-              context.read<AdminFeedbackListCubit>().searchFeedbacks(value);
-            },
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CupertinoSearchTextField(
+                  placeholder: 'Geribildirim Ara',
+                  controller: controller,
+                  onChanged: (String value) {
+                    context
+                        .read<AdminFeedbackListCubit>()
+                        .searchFeedbacks(value);
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                  onTap: () async {
+                    model =
+                        await showCupertinoDialog<AdminFeedbackFilterModel?>(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (BuildContext context) =>
+                                AdminFilterFeedbacksDialog());
+                    context.read<AdminFeedbackListCubit>()..applyFilter(model);
+                  },
+                  child: Icon(Icons.filter_alt)),
+            )
+          ],
         ),
         BlocBuilder<AdminFeedbackListCubit, AdminFeedbackListState>(
           builder: (context, state) {
             return state.when(
               initial: () => const SizedBox(),
               loading: () => const CircularProgressIndicator(),
-              success: (list, filteredList) => controller.text.length > 2
+              success: (list, filteredList) => filteredList.isNotEmpty
                   ? Expanded(
                       child: Material(
                         child: ListView.separated(

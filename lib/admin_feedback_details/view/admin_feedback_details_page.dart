@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdminFeedbackDetailsPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class AdminFeedbackDetailsPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           AdminFeedbackDetailsCubit(getIt(), item.id!)..fetchDetails(),
-      child: AdminFeedbackDetailsView(),
+      child: const AdminFeedbackDetailsView(),
     );
   }
 }
@@ -31,20 +32,27 @@ class AdminFeedbackDetailsView extends StatefulWidget {
 
 class _AdminFeedbackDetailsViewState extends State<AdminFeedbackDetailsView> {
   TextEditingController _replyController = TextEditingController();
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   @override
   void dispose() {
     _replyController.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AdminFeedbackDetailsCubit>();
+    void _onRefresh() {
+      cubit.fetchDetails();
+    }
+
     return BlocBuilder<AdminFeedbackDetailsCubit, AdminFeedbackDetailsState>(
       builder: (context, state) {
         return state.when(
             initial: () => const SizedBox(),
-            loading: () => Center(child: const CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator()),
             success: (details, status) => GestureDetector(
                   onTap: (() {
                     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -67,10 +75,10 @@ class _AdminFeedbackDetailsViewState extends State<AdminFeedbackDetailsView> {
                               success: (response, status) => Material(
                                     child: IconButton(
                                       icon: response.data!.isChecked!
-                                          ? Icon(
+                                          ? const Icon(
                                               CupertinoIcons.eye_slash,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               CupertinoIcons.eye,
                                             ),
                                       onPressed: () {
@@ -78,7 +86,7 @@ class _AdminFeedbackDetailsViewState extends State<AdminFeedbackDetailsView> {
                                       },
                                     ),
                                   ),
-                              orElse: () => SizedBox()),
+                              orElse: () => const SizedBox()),
                           GestureDetector(
                               onTap: (() {
                                 showCupertinoModalPopup(
@@ -161,37 +169,38 @@ class _AdminFeedbackDetailsViewState extends State<AdminFeedbackDetailsView> {
                           top: 50 + MediaQuery.of(context).viewPadding.top,
                           right: 8,
                           left: 8),
-                      child: Center(
+                      child: SmartRefresher(
+                        controller: _refreshController,
+                        onRefresh: _onRefresh,
                         child: SingleChildScrollView(
                           child: Container(
-                            height: MediaQuery.of(context).size.height,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                                     Row(
-                                children: [
-                                  Text(details.data?.title ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  details.data?.typeId == 1
-                                      ? Icon(
-                                          CupertinoIcons.heart_slash_fill,
-                                          color: Colors.red,
-                                        )
-                                      : details.data?.typeId == 2
-                                          ? Icon(
-                                              CupertinoIcons.smiley,
-                                              color: Colors.green,
-                                            )
-                                          : Icon(
-                                              CupertinoIcons.light_max,
-                                              color: Colors.yellow[900],
-                                            )
-                                ],
-                              ),
+                                Row(
+                                  children: [
+                                    Text(details.data?.title ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    details.data?.typeId == 1
+                                        ? const Icon(
+                                            CupertinoIcons.heart_slash_fill,
+                                            color: Colors.red,
+                                          )
+                                        : details.data?.typeId == 2
+                                            ? const Icon(
+                                                CupertinoIcons.smiley,
+                                                color: Colors.green,
+                                              )
+                                            : Icon(
+                                                CupertinoIcons.light_max,
+                                                color: Colors.yellow[900],
+                                              )
+                                  ],
+                                ),
                                 Row(
                                   children: [
                                     Text(
@@ -285,6 +294,9 @@ class _AdminFeedbackDetailsViewState extends State<AdminFeedbackDetailsView> {
                                                   DateTime.now());
                                         },
                                       ),
+                                SizedBox(
+                                  height: 100,
+                                ),
                               ],
                             ),
                           ),

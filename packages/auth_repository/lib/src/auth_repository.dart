@@ -40,6 +40,7 @@ class AuthRepository {
 
   Future<void> logout() async {
     try {
+      
       await _fmsApi.unauthenticate();
       await storage.deleteAll();
       _user = null;

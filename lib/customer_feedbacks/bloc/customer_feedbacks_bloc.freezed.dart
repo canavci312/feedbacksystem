@@ -19,6 +19,7 @@ mixin _$CustomerFeedbacksEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchFeedbacks,
+    required TResult Function() refreshFeedbacks,
     required TResult Function(String input) searchFeedbacks,
     required TResult Function(FeedbackFilterModel? model) applyFilter,
   }) =>
@@ -26,6 +27,7 @@ mixin _$CustomerFeedbacksEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
   }) =>
@@ -33,6 +35,7 @@ mixin _$CustomerFeedbacksEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
     required TResult orElse(),
@@ -41,6 +44,7 @@ mixin _$CustomerFeedbacksEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FeedbacksFetched value) fetchFeedbacks,
+    required TResult Function(_FeedbacksRefreshed value) refreshFeedbacks,
     required TResult Function(_FeedbacksSearched value) searchFeedbacks,
     required TResult Function(_FilterApplied value) applyFilter,
   }) =>
@@ -48,6 +52,7 @@ mixin _$CustomerFeedbacksEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
   }) =>
@@ -55,6 +60,7 @@ mixin _$CustomerFeedbacksEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
     required TResult orElse(),
@@ -121,6 +127,7 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchFeedbacks,
+    required TResult Function() refreshFeedbacks,
     required TResult Function(String input) searchFeedbacks,
     required TResult Function(FeedbackFilterModel? model) applyFilter,
   }) {
@@ -131,6 +138,7 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
   }) {
@@ -141,6 +149,7 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
     required TResult orElse(),
@@ -155,6 +164,7 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FeedbacksFetched value) fetchFeedbacks,
+    required TResult Function(_FeedbacksRefreshed value) refreshFeedbacks,
     required TResult Function(_FeedbacksSearched value) searchFeedbacks,
     required TResult Function(_FilterApplied value) applyFilter,
   }) {
@@ -165,6 +175,7 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
   }) {
@@ -175,6 +186,7 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
     required TResult orElse(),
@@ -188,6 +200,123 @@ class _$_FeedbacksFetched implements _FeedbacksFetched {
 
 abstract class _FeedbacksFetched implements CustomerFeedbacksEvent {
   const factory _FeedbacksFetched() = _$_FeedbacksFetched;
+}
+
+/// @nodoc
+abstract class _$$_FeedbacksRefreshedCopyWith<$Res> {
+  factory _$$_FeedbacksRefreshedCopyWith(_$_FeedbacksRefreshed value,
+          $Res Function(_$_FeedbacksRefreshed) then) =
+      __$$_FeedbacksRefreshedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_FeedbacksRefreshedCopyWithImpl<$Res>
+    extends _$CustomerFeedbacksEventCopyWithImpl<$Res>
+    implements _$$_FeedbacksRefreshedCopyWith<$Res> {
+  __$$_FeedbacksRefreshedCopyWithImpl(
+      _$_FeedbacksRefreshed _value, $Res Function(_$_FeedbacksRefreshed) _then)
+      : super(_value, (v) => _then(v as _$_FeedbacksRefreshed));
+
+  @override
+  _$_FeedbacksRefreshed get _value => super._value as _$_FeedbacksRefreshed;
+}
+
+/// @nodoc
+
+class _$_FeedbacksRefreshed implements _FeedbacksRefreshed {
+  const _$_FeedbacksRefreshed();
+
+  @override
+  String toString() {
+    return 'CustomerFeedbacksEvent.refreshFeedbacks()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_FeedbacksRefreshed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchFeedbacks,
+    required TResult Function() refreshFeedbacks,
+    required TResult Function(String input) searchFeedbacks,
+    required TResult Function(FeedbackFilterModel? model) applyFilter,
+  }) {
+    return refreshFeedbacks();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
+    TResult Function(String input)? searchFeedbacks,
+    TResult Function(FeedbackFilterModel? model)? applyFilter,
+  }) {
+    return refreshFeedbacks?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
+    TResult Function(String input)? searchFeedbacks,
+    TResult Function(FeedbackFilterModel? model)? applyFilter,
+    required TResult orElse(),
+  }) {
+    if (refreshFeedbacks != null) {
+      return refreshFeedbacks();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FeedbacksFetched value) fetchFeedbacks,
+    required TResult Function(_FeedbacksRefreshed value) refreshFeedbacks,
+    required TResult Function(_FeedbacksSearched value) searchFeedbacks,
+    required TResult Function(_FilterApplied value) applyFilter,
+  }) {
+    return refreshFeedbacks(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
+    TResult Function(_FeedbacksSearched value)? searchFeedbacks,
+    TResult Function(_FilterApplied value)? applyFilter,
+  }) {
+    return refreshFeedbacks?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
+    TResult Function(_FeedbacksSearched value)? searchFeedbacks,
+    TResult Function(_FilterApplied value)? applyFilter,
+    required TResult orElse(),
+  }) {
+    if (refreshFeedbacks != null) {
+      return refreshFeedbacks(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FeedbacksRefreshed implements CustomerFeedbacksEvent {
+  const factory _FeedbacksRefreshed() = _$_FeedbacksRefreshed;
 }
 
 /// @nodoc
@@ -257,6 +386,7 @@ class _$_FeedbacksSearched implements _FeedbacksSearched {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchFeedbacks,
+    required TResult Function() refreshFeedbacks,
     required TResult Function(String input) searchFeedbacks,
     required TResult Function(FeedbackFilterModel? model) applyFilter,
   }) {
@@ -267,6 +397,7 @@ class _$_FeedbacksSearched implements _FeedbacksSearched {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
   }) {
@@ -277,6 +408,7 @@ class _$_FeedbacksSearched implements _FeedbacksSearched {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
     required TResult orElse(),
@@ -291,6 +423,7 @@ class _$_FeedbacksSearched implements _FeedbacksSearched {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FeedbacksFetched value) fetchFeedbacks,
+    required TResult Function(_FeedbacksRefreshed value) refreshFeedbacks,
     required TResult Function(_FeedbacksSearched value) searchFeedbacks,
     required TResult Function(_FilterApplied value) applyFilter,
   }) {
@@ -301,6 +434,7 @@ class _$_FeedbacksSearched implements _FeedbacksSearched {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
   }) {
@@ -311,6 +445,7 @@ class _$_FeedbacksSearched implements _FeedbacksSearched {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
     required TResult orElse(),
@@ -397,6 +532,7 @@ class _$_FilterApplied implements _FilterApplied {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchFeedbacks,
+    required TResult Function() refreshFeedbacks,
     required TResult Function(String input) searchFeedbacks,
     required TResult Function(FeedbackFilterModel? model) applyFilter,
   }) {
@@ -407,6 +543,7 @@ class _$_FilterApplied implements _FilterApplied {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
   }) {
@@ -417,6 +554,7 @@ class _$_FilterApplied implements _FilterApplied {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchFeedbacks,
+    TResult Function()? refreshFeedbacks,
     TResult Function(String input)? searchFeedbacks,
     TResult Function(FeedbackFilterModel? model)? applyFilter,
     required TResult orElse(),
@@ -431,6 +569,7 @@ class _$_FilterApplied implements _FilterApplied {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_FeedbacksFetched value) fetchFeedbacks,
+    required TResult Function(_FeedbacksRefreshed value) refreshFeedbacks,
     required TResult Function(_FeedbacksSearched value) searchFeedbacks,
     required TResult Function(_FilterApplied value) applyFilter,
   }) {
@@ -441,6 +580,7 @@ class _$_FilterApplied implements _FilterApplied {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
   }) {
@@ -451,6 +591,7 @@ class _$_FilterApplied implements _FilterApplied {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_FeedbacksFetched value)? fetchFeedbacks,
+    TResult Function(_FeedbacksRefreshed value)? refreshFeedbacks,
     TResult Function(_FeedbacksSearched value)? searchFeedbacks,
     TResult Function(_FilterApplied value)? applyFilter,
     required TResult orElse(),

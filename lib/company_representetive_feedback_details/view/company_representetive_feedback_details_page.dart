@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CompanyRepresentativeFeedbackDetailsPage extends StatelessWidget {
@@ -41,12 +42,20 @@ class _EmployeeFeedbackDetailViewState
   @override
   void dispose() {
     _replyController.dispose();
+    _refreshController.dispose();
+
     super.dispose();
   }
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<CompanyRepresentativeFeedbackDetailsCubit>();
+    void _onRefresh() {
+      cubit.fetchDetails();
+    }
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: CupertinoNavigationBarBackButton(
@@ -58,12 +67,16 @@ class _EmployeeFeedbackDetailViewState
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
-                onTap: (() {
+                onTap: (() async {
                   showCupertinoDialog<void>(
-                      barrierDismissible: true,
-                      context: context,
-                      builder: (BuildContext context) =>
-                          DirectFeedbackDialogPage(cubit.feedbackId));
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (BuildContext context) =>
+                              DirectFeedbackDialogPage(cubit.feedbackId))
+                      .then((value) async {
+                    Future.delayed(Duration(milliseconds: 300));
+                    return cubit.fetchDetails();
+                  });
                 }),
                 child: Icon(Icons.forward_outlined)),
             GestureDetector(
@@ -144,165 +157,151 @@ class _EmployeeFeedbackDetailViewState
                         currentFocus.focusedChild?.unfocus();
                       }
                     }),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: 50 + MediaQuery.of(context).viewPadding.top,
-                          right: 8,
-                          left: 8),
-                      child: Center(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                                           Row(
+                    child: SmartRefresher(
+                      enablePullDown: true,
+                      controller: _refreshController,
+                      onRefresh: _onRefresh,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: 50 + MediaQuery.of(context).viewPadding.top,
+                              right: 8,
+                              left: 8),
+                          child: Center(
+                            child: Container(
+                              height: MediaQuery.of(context).size.height,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(details.data?.title ?? '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  details.data?.typeId == 1
-                                      ? Icon(
-                                          CupertinoIcons.heart_slash_fill,
-                                          color: Colors.red,
-                                        )
-                                      : details.data?.typeId == 2
+                                  Row(
+                                    children: [
+                                      Text(details.data?.title ?? '',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      details.data?.typeId == 1
                                           ? Icon(
-                                              CupertinoIcons.smiley,
-                                              color: Colors.green,
+                                              CupertinoIcons.heart_slash_fill,
+                                              color: Colors.red,
                                             )
-                                          : Icon(
-                                              CupertinoIcons.light_max,
-                                              color: Colors.yellow[900],
-                                            )
+                                          : details.data?.typeId == 2
+                                              ? Icon(
+                                                  CupertinoIcons.smiley,
+                                                  color: Colors.green,
+                                                )
+                                              : Icon(
+                                                  CupertinoIcons.light_max,
+                                                  color: Colors.yellow[900],
+                                                )
+                                    ],
+                                  ),
+                                  Text(
+                                      'Yönlendilen kişi: ${details.data?.directedToEmployeeName ?? '-'}'),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        details.data?.productName ?? '',
+                                        style: const TextStyle(
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                      const Text(
+                                        ' - ',
+                                        style: TextStyle(
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                      Text(
+                                        details.data?.companyName ?? '',
+                                        style: const TextStyle(
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                      width: double.infinity,
+                                      child: CustomStepper(status)),
+                                  FeedbackMessage(
+                                    details.data?.customerFirstName ?? '',
+                                    details.data?.text ?? '',
+                                    details.data?.createdAt ?? DateTime.now(),
+                                    likeCount: details.data?.likeCount,
+                                  ),
+                                  const Text(
+                                    'Firmadan Cevaplar:',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  details.data?.replyList?.length == 0
+                                      ? const Padding(
+                                          padding: EdgeInsets.all(4.0),
+                                          child: Center(
+                                            child: Text('Henüz cevap yok'),
+                                          ),
+                                        )
+                                      : ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              details.data?.replyList?.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return FeedbackMessage(
+                                                details.data?.replyList?[index]
+                                                        .userName ??
+                                                    '',
+                                                details.data?.replyList?[index]
+                                                        .text ??
+                                                    '',
+                                                DateTime.parse(details
+                                                    .data!
+                                                    .replyList![index]
+                                                    .createdAt!));
+                                          },
+                                        ),
+                                  const Text(
+                                    'Yorumlar:',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  details.data?.commentList?.length == 0
+                                      ? const Padding(
+                                          padding: EdgeInsets.all(4.0),
+                                          child: Center(
+                                            child: Text('Henüz yorum yok'),
+                                          ),
+                                        )
+                                      : ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              details.data?.commentList?.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return FeedbackMessage(
+                                                details
+                                                        .data
+                                                        ?.commentList?[index]
+                                                        .userName ??
+                                                    '',
+                                                details
+                                                        .data
+                                                        ?.commentList?[index]
+                                                        .text ??
+                                                    '',
+                                                details
+                                                        .data
+                                                        ?.commentList?[index]
+                                                        .createdAt ??
+                                                    DateTime.now());
+                                          },
+                                        ),
                                 ],
                               ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      details.data?.productName ?? '',
-                                      style: const TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    const Text(
-                                      ' - ',
-                                      style: TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                    Text(
-                                      details.data?.companyName ?? '',
-                                      style: const TextStyle(
-                                          fontStyle: FontStyle.italic),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                    width: double.infinity,
-                                    child: CustomStepper(status)),
-                                FeedbackMessage(
-                                  details.data?.customerFirstName ?? '',
-                                  details.data?.text ?? '',
-                                  details.data?.createdAt ?? DateTime.now(),
-                                  likeCount: details.data?.likeCount,
-                                ),
-                                const Text(
-                                  'Firmadan Cevaplar:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                details.data?.replyList?.length == 0
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(4.0),
-                                        child: Center(
-                                          child: Text('Henüz cevap yok'),
-                                        ),
-                                      )
-                                    : ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            details.data?.replyList?.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return FeedbackMessage(
-                                              details.data?.replyList?[index]
-                                                      .userName ??
-                                                  '',
-                                              details.data?.replyList?[index]
-                                                      .text ??
-                                                  '',
-                                              DateTime.parse(details
-                                                  .data!
-                                                  .replyList![index]
-                                                  .createdAt!));
-                                        },
-                                      ),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: CupertinoTextField(
-                                    placeholder: 'Cevabınız',
-                                    expands: true,
-                                    maxLines: null,
-                                    minLines: null,
-                                    keyboardType: TextInputType.multiline,
-                                    controller: _replyController,
-                                    prefix: const Icon(
-                                      CupertinoIcons.bubble_right,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: CupertinoButton(
-                                      child: const Text('Cevapla'),
-                                      onPressed: () {
-                                        context
-                                            .read<
-                                                CompanyRepresentativeFeedbackDetailsCubit>()
-                                            .sendFeedback(
-                                                _replyController.text);
-                                        _replyController.clear();
-                                      }),
-                                ),
-                                const Text(
-                                  'Yorumlar:',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                details.data?.commentList?.length == 0
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(4.0),
-                                        child: Center(
-                                          child: Text('Henüz yorum yok'),
-                                        ),
-                                      )
-                                    : ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            details.data?.commentList?.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return FeedbackMessage(
-                                              details.data?.commentList?[index]
-                                                      .userName ??
-                                                  '',
-                                              details.data?.commentList?[index]
-                                                      .text ??
-                                                  '',
-                                              details.data?.commentList?[index]
-                                                      .createdAt ??
-                                                  DateTime.now());
-                                        },
-                                      ),
-                              ],
                             ),
                           ),
                         ),

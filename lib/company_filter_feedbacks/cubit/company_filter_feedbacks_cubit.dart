@@ -1,14 +1,18 @@
+import 'package:auth_repository/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:fms_api/fms_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:lookup_repository/lookup_repository.dart';
 
 part 'company_filter_feedbacks_state.dart';
 part 'company_filter_feedbacks_cubit.freezed.dart';
 
-class CompanyFilterFeedbacksCubit extends Cubit<CompanyFilterFeedbacksState> {
+class CompanyFilterFeedbacksCubit
+    extends HydratedCubit<CompanyFilterFeedbacksState> {
   LookUpRepository _lookUpRepository;
-  CompanyFilterFeedbacksCubit(this._lookUpRepository)
+  AuthRepository _authRepository;
+  CompanyFilterFeedbacksCubit(this._lookUpRepository, this._authRepository)
       : super(CompanyFilterFeedbacksState.initial(
           isLoading: false,
         ));
@@ -20,7 +24,9 @@ class CompanyFilterFeedbacksCubit extends Cubit<CompanyFilterFeedbacksState> {
         emit(state.copyWith(isLoading: true));
       },
     );
-    var fetchedProducts = await _lookUpRepository.getProducts();
+    var curUser = await _authRepository.currentUser();
+    var fetchedProducts =
+        await _lookUpRepository.getProducts(companyId: curUser?.companyId);
     state.when(
       initial: (isLoading, isArchieved, isDirected, selectedFeedbackType,
           selectedFeedbackSituation, product, selectedProduct) {
@@ -72,5 +78,29 @@ class CompanyFilterFeedbacksCubit extends Cubit<CompanyFilterFeedbacksState> {
         emit(state.copyWith(isArchieved: newValue));
       },
     );
+  }
+
+  @override
+  CompanyFilterFeedbacksState? fromJson(Map<String, dynamic> json) {
+    return CompanyFilterFeedbacksState.initial(
+        isLoading: false,
+        isArchieved: json['isArchieved'],
+        isDirected: json['isDirected'],
+        selectedFeedbackType: json['selectedFeedbackType'],
+        selectedFeedbackSituation: json['selectedFeedbackSituation'],
+        products: json['products'],
+        selectedProduct: json['selectedProduct']);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(CompanyFilterFeedbacksState state) {
+    return <String, dynamic>{
+      'isArchieved': state.isArchieved,
+      'isDirected': state.isDirected,
+      'selectedFeedbackType': state.selectedFeedbackType,
+      'selectedFeedbackSituation': state.selectedFeedbackSituation,
+      'products': state.products,
+      'selectedProduct': state.selectedProduct
+    };
   }
 }

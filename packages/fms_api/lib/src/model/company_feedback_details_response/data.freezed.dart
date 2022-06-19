@@ -25,7 +25,8 @@ mixin _$Data {
   String? get customerEmail => throw _privateConstructorUsedError;
   String? get customerPhone => throw _privateConstructorUsedError;
   String? get customerLastName => throw _privateConstructorUsedError;
-  dynamic get directedToEmploteeId => throw _privateConstructorUsedError;
+  int? get directedToEmployeeId => throw _privateConstructorUsedError;
+  int? get directedToEmployeeName => throw _privateConstructorUsedError;
   bool? get isArchived => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   int? get userId => throw _privateConstructorUsedError;
@@ -66,7 +67,8 @@ abstract class $DataCopyWith<$Res> {
       String? customerEmail,
       String? customerPhone,
       String? customerLastName,
-      dynamic directedToEmploteeId,
+      int? directedToEmployeeId,
+      int? directedToEmployeeName,
       bool? isArchived,
       int? id,
       int? userId,
@@ -108,7 +110,8 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
     Object? customerEmail = freezed,
     Object? customerPhone = freezed,
     Object? customerLastName = freezed,
-    Object? directedToEmploteeId = freezed,
+    Object? directedToEmployeeId = freezed,
+    Object? directedToEmployeeName = freezed,
     Object? isArchived = freezed,
     Object? id = freezed,
     Object? userId = freezed,
@@ -155,10 +158,14 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
           ? _value.customerLastName
           : customerLastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      directedToEmploteeId: directedToEmploteeId == freezed
-          ? _value.directedToEmploteeId
-          : directedToEmploteeId // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      directedToEmployeeId: directedToEmployeeId == freezed
+          ? _value.directedToEmployeeId
+          : directedToEmployeeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      directedToEmployeeName: directedToEmployeeName == freezed
+          ? _value.directedToEmployeeName
+          : directedToEmployeeName // ignore: cast_nullable_to_non_nullable
+              as int?,
       isArchived: isArchived == freezed
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
@@ -270,7 +277,8 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       String? customerEmail,
       String? customerPhone,
       String? customerLastName,
-      dynamic directedToEmploteeId,
+      int? directedToEmployeeId,
+      int? directedToEmployeeName,
       bool? isArchived,
       int? id,
       int? userId,
@@ -313,7 +321,8 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
     Object? customerEmail = freezed,
     Object? customerPhone = freezed,
     Object? customerLastName = freezed,
-    Object? directedToEmploteeId = freezed,
+    Object? directedToEmployeeId = freezed,
+    Object? directedToEmployeeName = freezed,
     Object? isArchived = freezed,
     Object? id = freezed,
     Object? userId = freezed,
@@ -360,10 +369,14 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
           ? _value.customerLastName
           : customerLastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      directedToEmploteeId: directedToEmploteeId == freezed
-          ? _value.directedToEmploteeId
-          : directedToEmploteeId // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      directedToEmployeeId: directedToEmployeeId == freezed
+          ? _value.directedToEmployeeId
+          : directedToEmployeeId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      directedToEmployeeName: directedToEmployeeName == freezed
+          ? _value.directedToEmployeeName
+          : directedToEmployeeName // ignore: cast_nullable_to_non_nullable
+              as int?,
       isArchived: isArchived == freezed
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
@@ -473,7 +486,8 @@ class _$_Data implements _Data {
       this.customerEmail,
       this.customerPhone,
       this.customerLastName,
-      this.directedToEmploteeId,
+      this.directedToEmployeeId,
+      this.directedToEmployeeName,
       this.isArchived,
       this.id,
       this.userId,
@@ -528,7 +542,9 @@ class _$_Data implements _Data {
   @override
   final String? customerLastName;
   @override
-  final dynamic directedToEmploteeId;
+  final int? directedToEmployeeId;
+  @override
+  final int? directedToEmployeeName;
   @override
   final bool? isArchived;
   @override
@@ -580,7 +596,7 @@ class _$_Data implements _Data {
 
   @override
   String toString() {
-    return 'Data(replyList: $replyList, commentList: $commentList, customerEmail: $customerEmail, customerPhone: $customerPhone, customerLastName: $customerLastName, directedToEmploteeId: $directedToEmploteeId, isArchived: $isArchived, id: $id, userId: $userId, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, likeCount: $likeCount, dislikeCount: $dislikeCount, userReaction: $userReaction, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved, isMine: $isMine)';
+    return 'Data(replyList: $replyList, commentList: $commentList, customerEmail: $customerEmail, customerPhone: $customerPhone, customerLastName: $customerLastName, directedToEmployeeId: $directedToEmployeeId, directedToEmployeeName: $directedToEmployeeName, isArchived: $isArchived, id: $id, userId: $userId, customerFirstName: $customerFirstName, title: $title, text: $text, sectorId: $sectorId, sectorName: $sectorName, companyId: $companyId, companyName: $companyName, productId: $productId, productName: $productName, typeId: $typeId, typeName: $typeName, subTypeId: $subTypeId, subTypeName: $subTypeName, likeCount: $likeCount, dislikeCount: $dislikeCount, userReaction: $userReaction, createdAt: $createdAt, isAnonym: $isAnonym, isReplied: $isReplied, isSolved: $isSolved, isMine: $isMine)';
   }
 
   @override
@@ -598,7 +614,9 @@ class _$_Data implements _Data {
             const DeepCollectionEquality()
                 .equals(other.customerLastName, customerLastName) &&
             const DeepCollectionEquality()
-                .equals(other.directedToEmploteeId, directedToEmploteeId) &&
+                .equals(other.directedToEmployeeId, directedToEmployeeId) &&
+            const DeepCollectionEquality()
+                .equals(other.directedToEmployeeName, directedToEmployeeName) &&
             const DeepCollectionEquality()
                 .equals(other.isArchived, isArchived) &&
             const DeepCollectionEquality().equals(other.id, id) &&
@@ -642,7 +660,8 @@ class _$_Data implements _Data {
         const DeepCollectionEquality().hash(customerEmail),
         const DeepCollectionEquality().hash(customerPhone),
         const DeepCollectionEquality().hash(customerLastName),
-        const DeepCollectionEquality().hash(directedToEmploteeId),
+        const DeepCollectionEquality().hash(directedToEmployeeId),
+        const DeepCollectionEquality().hash(directedToEmployeeName),
         const DeepCollectionEquality().hash(isArchived),
         const DeepCollectionEquality().hash(id),
         const DeepCollectionEquality().hash(userId),
@@ -687,7 +706,8 @@ abstract class _Data implements Data {
       final String? customerEmail,
       final String? customerPhone,
       final String? customerLastName,
-      final dynamic directedToEmploteeId,
+      final int? directedToEmployeeId,
+      final int? directedToEmployeeName,
       final bool? isArchived,
       final int? id,
       final int? userId,
@@ -726,7 +746,9 @@ abstract class _Data implements Data {
   @override
   String? get customerLastName => throw _privateConstructorUsedError;
   @override
-  dynamic get directedToEmploteeId => throw _privateConstructorUsedError;
+  int? get directedToEmployeeId => throw _privateConstructorUsedError;
+  @override
+  int? get directedToEmployeeName => throw _privateConstructorUsedError;
   @override
   bool? get isArchived => throw _privateConstructorUsedError;
   @override

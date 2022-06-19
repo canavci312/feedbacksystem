@@ -48,7 +48,11 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
+      navigationBar: CupertinoNavigationBar(
+        trailing: GestureDetector(
+            onTap: (() =>
+                context.read<EmployeeFeedbackCubit>().getFeedbackList()),
+            child: const Icon(Icons.refresh)),
         middle: const Text('Geribildirimler'),
       ),
       child: Column(children: [

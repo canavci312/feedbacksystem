@@ -52,11 +52,21 @@ class _CustomerFeedbackViewState extends State<CustomerFeedbackView> {
     timeago.setLocaleMessages('tr', timeago.TrMessages());
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        trailing: GestureDetector(
-            onTap: () => Navigator.of(context).push(CupertinoPageRoute(
-                  builder: (context) => CustomerAddFeedbackPage(),
-                )),
-            child: Icon(Icons.add)),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+                onTap: (() => context
+                    .read<CustomerFeedbacksBloc>()
+                    .add(CustomerFeedbacksEvent.refreshFeedbacks())),
+                child: const Icon(Icons.refresh)),
+            GestureDetector(
+                onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => CustomerAddFeedbackPage(),
+                    )),
+                child: Icon(Icons.add)),
+          ],
+        ),
         middle: Text('Geribildirimler'),
       ),
       child: Column(children: [
