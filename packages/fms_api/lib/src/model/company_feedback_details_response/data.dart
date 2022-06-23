@@ -13,7 +13,7 @@ class Data with _$Data {
     String? customerPhone,
     String? customerLastName,
     int? directedToEmployeeId,
-    int? directedToEmployeeName,
+    String? directedToEmployeeName,
     bool? isArchived,
     int? id,
     int? userId,

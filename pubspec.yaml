@@ -44,6 +44,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^5.0.2
+  fluttertoast: ^8.0.9
   fms_api:
     path: packages/fms_api
   freezed_annotation: any

@@ -15,7 +15,7 @@ _$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
       customerPhone: json['customerPhone'] as String?,
       customerLastName: json['customerLastName'] as String?,
       directedToEmployeeId: json['directedToEmployeeId'] as int?,
-      directedToEmployeeName: json['directedToEmployeeName'] as int?,
+      directedToEmployeeName: json['directedToEmployeeName'] as String?,
       isArchived: json['isArchived'] as bool?,
       id: json['id'] as int?,
       userId: json['userId'] as int?,

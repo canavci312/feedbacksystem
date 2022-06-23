@@ -23,7 +23,6 @@ void main() async {
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6MTA4LCJuYW1lIjoiU2VsZW5hIiwiZW1haWwiOiJzcHJvdWdodGVuMnpAdGVkLmNvbSIsIlJvbGVOYW1lIjoiQ29tcGFueSBSZXByZXNlbnRhdGl2ZSIsImNvbXBhbnlJZCI6MywibmJmIjoxNjU1NTU4Njg1LCJleHAiOjE2NjQxOTg2ODUsImlhdCI6MTY1NTU1ODY4NX0.mJ8t0ALgMDE3wvbFN4ijFexYQ6R56VD47l4AJWEML7A';
   const customer_18 =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6MTgsIm5hbWUiOiJCb2JieSIsImVtYWlsIjoiYnJvc2VibGFkZWhAY2FuYWxibG9nLmNvbSIsIlJvbGVOYW1lIjoiQ3VzdG9tZXIiLCJuYmYiOjE2NTU1NTg1MzEsImV4cCI6MTY2NDE5ODUzMSwiaWF0IjoxNjU1NTU4NTMxfQ.TgAv6dGOgZD3P7oiAAysTfAER2DW8Dpc0lNjhZWJtg4';
-  await storage.write(key: 'token', value: representative);
   HydratedBlocOverrides.runZoned(() => runApp(MyApp()), storage: blocStorage);
 }
 

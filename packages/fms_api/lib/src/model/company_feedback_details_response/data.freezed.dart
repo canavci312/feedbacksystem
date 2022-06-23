@@ -26,7 +26,7 @@ mixin _$Data {
   String? get customerPhone => throw _privateConstructorUsedError;
   String? get customerLastName => throw _privateConstructorUsedError;
   int? get directedToEmployeeId => throw _privateConstructorUsedError;
-  int? get directedToEmployeeName => throw _privateConstructorUsedError;
+  String? get directedToEmployeeName => throw _privateConstructorUsedError;
   bool? get isArchived => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   int? get userId => throw _privateConstructorUsedError;
@@ -68,7 +68,7 @@ abstract class $DataCopyWith<$Res> {
       String? customerPhone,
       String? customerLastName,
       int? directedToEmployeeId,
-      int? directedToEmployeeName,
+      String? directedToEmployeeName,
       bool? isArchived,
       int? id,
       int? userId,
@@ -165,7 +165,7 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       directedToEmployeeName: directedToEmployeeName == freezed
           ? _value.directedToEmployeeName
           : directedToEmployeeName // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       isArchived: isArchived == freezed
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
@@ -278,7 +278,7 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       String? customerPhone,
       String? customerLastName,
       int? directedToEmployeeId,
-      int? directedToEmployeeName,
+      String? directedToEmployeeName,
       bool? isArchived,
       int? id,
       int? userId,
@@ -376,7 +376,7 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       directedToEmployeeName: directedToEmployeeName == freezed
           ? _value.directedToEmployeeName
           : directedToEmployeeName // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       isArchived: isArchived == freezed
           ? _value.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
@@ -544,7 +544,7 @@ class _$_Data implements _Data {
   @override
   final int? directedToEmployeeId;
   @override
-  final int? directedToEmployeeName;
+  final String? directedToEmployeeName;
   @override
   final bool? isArchived;
   @override
@@ -707,7 +707,7 @@ abstract class _Data implements Data {
       final String? customerPhone,
       final String? customerLastName,
       final int? directedToEmployeeId,
-      final int? directedToEmployeeName,
+      final String? directedToEmployeeName,
       final bool? isArchived,
       final int? id,
       final int? userId,
@@ -748,7 +748,7 @@ abstract class _Data implements Data {
   @override
   int? get directedToEmployeeId => throw _privateConstructorUsedError;
   @override
-  int? get directedToEmployeeName => throw _privateConstructorUsedError;
+  String? get directedToEmployeeName => throw _privateConstructorUsedError;
   @override
   bool? get isArchived => throw _privateConstructorUsedError;
   @override
